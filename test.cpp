@@ -1,10 +1,21 @@
 #include <iostream>
 #include <string>
 
+
+bool	is_string_composed_f(const std::string& str, int (*f)(int))
+{
+	if (str.empty())
+		return false;
+	for (std::string::size_type i = 0; i < str.length(); ++i)
+	{
+		if (!f(static_cast<unsigned char>(str[i])))
+			return false;
+	}
+	return true;
+}
+
 int main()
 {
-	std::string s;
-	std::getline(std::cin, s); // 標準入力から 1 行を読み込む
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
+	std::string str = "1";
+	std::cout << is_string_composed_f(str, std::isdigit) << '\n';
 }

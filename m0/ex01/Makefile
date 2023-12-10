@@ -5,7 +5,7 @@ CC = c++
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -std=c++98
 
-SRCS = main.cpp PhoneBook.cpp Contact.cpp get_colored_string.cpp
+SRCS = main.cpp PhoneBook.cpp Contact.cpp Libft.cpp
 
 SRCS_DIR	= ./srcs/
 OBJS_DIR	= ./objs/
