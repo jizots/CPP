@@ -1,9 +1,6 @@
-#include <iostream>
-#include <ctype.h>
-#include <iomanip>
-#include "Libft.hpp"
-#include "Contact.hpp"
 #include "PhoneBook.hpp"
+
+extern std::string	_contact_item[];
 
 void	main_loop(PhoneBook& book)
 {
@@ -12,19 +9,20 @@ void	main_loop(PhoneBook& book)
 	while(1)
 	{
 		std::cout << "PhoneBook> ";
-		if (!std::getline(std::cin, input) || std::cin.eof())
-			break;
+		if (!std::getline(std::cin, input) || std::cin.eof() || input == "EXIT")
+		{
+			Libft::print_colored_string_endl("Oh! bye forever!", green);
+			return ;
+		}
 		else if (input == "ADD")
 			book.PhoneBook::add();
 		else if (input == "SEARCH")
 			book.PhoneBook::search();
-		else if (input == "EXIT")
-		{
-			std::cout << Libft::get_colored_string("bye!", green) << std::endl;
-			return ;
-		}
 		else if (!input.empty())
-			std::cout << "No function: " << Libft::get_colored_string(input, red) << std::endl;
+		{
+			std::cout << "No function: ";
+			Libft::print_colored_string_endl(input, red);
+		}
 	}
 }
 
@@ -35,7 +33,7 @@ int main(int ac, char **av)
 	(void)av;
 	if (1 < ac)
 	{
-		std::cout << Libft::get_colored_string("Error. Program can't accept arguments.", red) << std::endl;
+		Libft::print_colored_string_endl("Error. Program can't accept arguments.", red);
 		return (-1);
 	}
 	book.init_book();

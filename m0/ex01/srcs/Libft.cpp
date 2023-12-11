@@ -10,7 +10,12 @@ std::string Libft::get_colored_string(const std::string& msg, Font_Color font_co
 	return color_codes[font_color] + msg + reset_color;
 }
 
-bool	Libft::is_string_composedof(const std::string& str, const std::string& expected_set)
+void	Libft::print_colored_string_endl(const std::string& msg, Font_Color font_color)
+{
+	std::cout << Libft::get_colored_string(msg, font_color) << std::endl;
+}
+
+bool	Libft::is_string_composed_with_chars(const std::string& str, const std::string& expected_set)
 {
 	if (str.empty() || expected_set.empty())
 		return (false);
@@ -22,7 +27,7 @@ bool	Libft::is_string_composedof(const std::string& str, const std::string& expe
 	return (true);
 }
 
-bool	Libft::is_string_composed_f(const std::string& str, int (*f)(int))
+bool	Libft::is_string_composed_with_func(const std::string& str, int (*f)(int))
 {
 	if (str.empty())
 		return (false);
@@ -32,4 +37,27 @@ bool	Libft::is_string_composed_f(const std::string& str, int (*f)(int))
 			return (false);
 	}
 	return (true);
+}
+
+std::string	Libft::get_first_n_charactors(const std::string& str,const size_t n)
+{
+	return (str.substr(0, n));
+}
+
+std::string	Libft::end_with_c_over_n(const std::string& str, const char c, const size_t n)
+{
+	if (str.length() > n)
+		return (str.substr(0, n - 1) + c);
+	else
+		return (str);
+}
+
+int	Libft::ft_atoi(std::string& str)
+{
+	std::stringstream	ss;
+	int					num;
+
+	ss << str;
+	ss >> num;
+	return (num);
 }

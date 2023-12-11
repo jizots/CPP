@@ -1,7 +1,50 @@
 #include "Contact.hpp"
 
+const std::string	contact_item[] = {
+		"first name", "last name", "nickname", "phone number", "darkest secret"
+};
+
+int		Contact::get_index()
+{
+	return (this->m_index);
+}
+
+clock_t		Contact::get_time_register()
+{
+	return (this->m_time_register);
+}
+
+std::string	Contact::get_contact(int data_id)
+{
+	switch (data_id)
+	{
+	case first_name:
+		return (this->m_first_name);
+		break;
+	case last_name:
+		return (this->m_last_name);
+		break;
+	case nickname:
+		return (this->m_nickname);
+		break;
+	case phone_number:
+		return (this->m_phone_number);
+		break;
+	case darkest_secret:
+		return (this->m_darkest_secret);
+		break;
+	default:
+		return("");
+	}
+}
+
 void	Contact::set_index(int index)
 {
+	if (index < 0)
+	{
+		std::cout << "index can't set minus: " << index << std::endl; 
+		return ;
+	}
 	this->m_index = index;
 }
 
@@ -10,42 +53,7 @@ void	Contact::set_time_register(clock_t time)
 	this->m_time_register = time;
 }
 
-int		Contact::get_index()
-{
-	return (this->m_index);
-}
-
-clock_t	Contact::get_time_register()
-{
-	return (this->m_time_register);
-}
-
-std::string	Contact::get_fname()
-{
-	return (this->m_first_name);
-}
-
-std::string	Contact::get_lname()
-{
-	return (this->m_last_name);
-}
-
-std::string	Contact::get_nickname()
-{
-	return (this->m_nickname);
-}
-
-std::string	Contact::get_phonenumber()
-{
-	return (this->m_phone_number);
-}
-
-std::string	Contact::get_darkest_secret()
-{
-	return (this->m_darkest_secret);
-}
-
-void	Contact::to_contact(int data_id, std::string data_string)
+void	Contact::set_contact(int data_id, std::string data_string)
 {
 	switch (data_id)
 	{
@@ -67,30 +75,29 @@ void	Contact::to_contact(int data_id, std::string data_string)
 	}
 }
 
-int	Contact::adding_loop()
+int	Contact::add_loop(int index, clock_t time)
 {
-	std::string	contact_item[] = {
-		"[first name]", "[last name]", "[nickname]", "[phone number]", "[darkest secret]"
-	};
 	std::string	input;
-	int			i;
+	int			data_id;
 
-	i = 0;
-	while(i < 5)
+	this->Contact::set_index(index);
+	this->Contact::set_time_register(time);
+	data_id = first_name;
+	while(data_id < darkest_secret)
 	{
-		std::cout << "	" << contact_item[i] << " > ";
+		std::cout << "  " << contact_item[data_id] << " > ";
 		if (!std::getline(std::cin, input) || std::cin.eof())
-			return (-1);
-		else if (input.empty())
-			continue;
-		else if (i == phone_number && Libft::is_string_composed_f(input, std::isdigit) == false)
-			std::cout << Libft::get_colored_string("  Use only numeric.", red) << std::endl;
-		else
 		{
-			this->Contact::to_contact(i, input);
-			i++;
+			Libft::print_colored_string_endl("Oh! bye forever!", green);
+			exit (0);
 		}
+		else if (input.empty() || Libft::is_string_composed_with_func(input, std::isspace) == true)
+			continue;
+		else if (data_id == phone_number && Libft::is_string_composed_with_func(input, std::isdigit) == false)
+			Libft::print_colored_string_endl("  Use only numeric.", red);
+		else
+			this->Contact::set_contact(data_id++, input);
 	}
-	this->Contact::to_contact(i, input);
+	this->Contact::set_contact(data_id, input);
 	return (0);
 }

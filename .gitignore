@@ -1,0 +1,4 @@
+*.o
+PhoneBook
+a.out
+test.cpp

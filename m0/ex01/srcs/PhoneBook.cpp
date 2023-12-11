@@ -7,6 +7,11 @@ int		PhoneBook::get_volume()
 
 void	PhoneBook::set_volume(int volume)
 {
+	if (volume < 0)
+	{
+		std::cout << "volume can't set minus: " << volume << std::endl; 
+		return ;
+	}
 	this->m_volume = volume;
 }
 
@@ -36,34 +41,81 @@ int	PhoneBook::get_oldest_index()
 
 void	PhoneBook::add_to_phonebook(Contact& tmp_contact)
 {
-	this->m_book[tmp_contact.Contact::get_index()].to_contact(0, tmp_contact.Contact::get_fname());
-	this->m_book[tmp_contact.Contact::get_index()].to_contact(1, tmp_contact.Contact::get_lname());
-	this->m_book[tmp_contact.Contact::get_index()].to_contact(2, tmp_contact.Contact::get_nickname());
-	this->m_book[tmp_contact.Contact::get_index()].to_contact(3, tmp_contact.Contact::get_phonenumber());
-	this->m_book[tmp_contact.Contact::get_index()].to_contact(4, tmp_contact.Contact::get_darkest_secret());
-	this->m_book[tmp_contact.Contact::get_index()].set_time_register(tmp_contact.get_time_register());
+	int	index;
+
+	index = tmp_contact.Contact::get_index();
+	for (int data_id = 0; data_id <= darkest_secret; ++data_id)
+		this->m_book[index].set_contact(data_id, tmp_contact.Contact::get_contact(data_id));
+	this->m_book[index].set_time_register(tmp_contact.get_time_register());
 }
 
 void	PhoneBook::add()
 {
 	Contact	tmp_contact;
 
-	std::cout << Libft::get_colored_string("Mode: Add", blue) << std::endl;
-	tmp_contact.Contact::set_index(this->get_oldest_index());
-	tmp_contact.Contact::set_time_register(clock());
-	if (tmp_contact.Contact::adding_loop() == -1)
-		return ;
-	PhoneBook::add_to_phonebook(tmp_contact);
+	Libft::print_colored_string_endl("Mode: Add", blue);
+	tmp_contact.Contact::add_loop(this->PhoneBook::get_oldest_index(), clock());
+	this->PhoneBook::add_to_phonebook(tmp_contact);
 	if (PhoneBook::get_volume() < 8)
 		this->PhoneBook::set_volume(this->get_volume() + 1);
-	std::cout << Libft::get_colored_string("Success!", green) << std::endl;
+	Libft::print_colored_string_endl("Success!", green);
+}
+
+void	PhoneBook::display_summary_Contact()
+{
+	std::string	item_data;
+
+	std::cout << std::setw(10) << "index" << '|';
+	for (int data_id = first_name; data_id <= nickname; ++data_id)
+		std::cout << std::setw(10) << Libft::end_with_c_over_n(contact_item[data_id], '.', 10) << '|';
+	std::cout << std::endl;
+	for (int index = 0; index < 8; ++index)
+	{
+		std::cout << std::setw(10) << std::to_string(index) << '|';
+		for (int data_id = 0; data_id <= nickname; ++data_id)
+		{
+			item_data = Libft::end_with_c_over_n(this->m_book[index].Contact::get_contact(data_id), '.', 10);
+			std::cout << std::setw(10) << item_data <<'|';
+		}
+		std::cout << std::endl;
+	}
+}
+
+void	PhoneBook::search_loop()
+{
+	std::string	input;
+	int			flag_digit;
+
+	while (1)
+	{
+		std::cout << "  " << " input index less than " << this->get_volume() << " > ";
+		if (!std::getline(std::cin, input) || std::cin.eof())
+		{
+			Libft::print_colored_string_endl("Oh! bye forever!", green);
+			exit (0);
+		}
+		if (input.empty())
+			continue;
+		flag_digit = Libft::is_string_composed_with_func(input, std::isdigit);
+		if (flag_digit == false)
+			Libft::print_colored_string_endl("  Use only numeric.", red);
+		else if (this->get_volume() - 1 < Libft::ft_atoi(input))
+			Libft::print_colored_string_endl("  No data available.", red);
+		else
+		{
+			for (int data_id = 0; data_id <= darkest_secret; ++data_id)
+			{
+				std::cout << contact_item[data_id] << ": ";
+				std::cout << this->m_book[Libft::ft_atoi(input)].get_contact(data_id) << std::endl;
+			}
+			break ;
+		}
+	}
 }
 
 void	PhoneBook::search()
 {
-	std::cout << Libft::get_colored_string("Mode: Search", blue) << std::endl;
-	for (int i = 0; i < 8; ++i)
-	{
-		std::cout << this->m_book[i].get_index() << "|" << this->m_book[i].get_fname() << std::endl;
-	}
+	Libft::print_colored_string_endl("Mode: Search", blue);
+	PhoneBook::display_summary_Contact();
+	PhoneBook::search_loop();
 }
