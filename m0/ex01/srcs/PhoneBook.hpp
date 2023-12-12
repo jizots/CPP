@@ -22,6 +22,7 @@ private:
 	void	set_volume(int volume);
 	int		get_volume();
 	void	display_summary_Contact();
+	void	display_detail_Contact(int index);
 	void	search_loop();
 };
 

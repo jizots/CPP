@@ -61,3 +61,15 @@ int	Libft::ft_atoi(std::string& str)
 	ss >> num;
 	return (num);
 }
+
+int	Libft::getline_wrap(std::string& str)
+{
+	if (!std::getline(std::cin, str))
+	{
+		if (std::cin.eof())
+			return (1);
+		else if (std::cin.fail())
+			return (-1);
+	}
+	return (0);
+}

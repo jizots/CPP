@@ -83,7 +83,7 @@ int	Contact::add_loop(int index, clock_t time)
 	this->Contact::set_index(index);
 	this->Contact::set_time_register(time);
 	data_id = first_name;
-	while(data_id < darkest_secret)
+	while(data_id <= darkest_secret)
 	{
 		std::cout << "  " << contact_item[data_id] << " > ";
 		if (!std::getline(std::cin, input) || std::cin.eof())

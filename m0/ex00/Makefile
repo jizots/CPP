@@ -1,9 +1,9 @@
 .PHONY: all clean fclean re
 
 NAME = Megaphone
-CC = c++
-CFLAGS = -Wall -Wextra -Werror
-CFLAGS += -std=c++98
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror
+CXXFLAGS += -std=c++98
 
 SRCS = megaphone.cpp
 
@@ -18,10 +18,10 @@ ${OBJS_DIR}:
 	mkdir -p ${OBJS_DIR}
 
 ${OBJS_DIR}%.o:	${SRCS_DIR}%.cpp
-	${CC} ${CFLAGS} -c $< -o $@
+	${CXX} ${CXXFLAGS} -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 
 clean:
 	rm -rf $(OBJS_DIR)

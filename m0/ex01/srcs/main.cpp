@@ -9,7 +9,7 @@ void	main_loop(PhoneBook& book)
 	while(1)
 	{
 		std::cout << "PhoneBook> ";
-		if (!std::getline(std::cin, input) || std::cin.eof() || input == "EXIT")
+		if (Libft::getline_wrap(input) || input == "EXIT")
 		{
 			Libft::print_colored_string_endl("Oh! bye forever!", green);
 			return ;

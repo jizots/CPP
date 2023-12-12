@@ -52,6 +52,7 @@ public:
     static std::string  get_first_n_charactors(const std::string& str, const size_t n);
     static std::string  end_with_c_over_n(const std::string& str, const char c, const size_t n);
     static int          ft_atoi(std::string& str);
+    static int          getline_wrap(std::string& str);
 private:
 };
 

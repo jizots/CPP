@@ -52,10 +52,10 @@ void	PhoneBook::add_to_phonebook(Contact& tmp_contact)
 void	PhoneBook::add()
 {
 	Contact	tmp_contact;
-
+	
 	Libft::print_colored_string_endl("Mode: Add", blue);
 	tmp_contact.Contact::add_loop(this->PhoneBook::get_oldest_index(), clock());
-	this->PhoneBook::add_to_phonebook(tmp_contact);
+		this->PhoneBook::add_to_phonebook(tmp_contact);
 	if (PhoneBook::get_volume() < 8)
 		this->PhoneBook::set_volume(this->get_volume() + 1);
 	Libft::print_colored_string_endl("Success!", green);
@@ -81,6 +81,15 @@ void	PhoneBook::display_summary_Contact()
 	}
 }
 
+void	PhoneBook::display_detail_Contact(int index)
+{
+	for (int data_id = first_name; data_id <= darkest_secret; ++data_id)
+	{
+		std::cout << contact_item[data_id] << ": ";
+		std::cout << this->m_book[index].get_contact(data_id) << std::endl;
+	}
+}
+
 void	PhoneBook::search_loop()
 {
 	std::string	input;
@@ -89,25 +98,19 @@ void	PhoneBook::search_loop()
 	while (1)
 	{
 		std::cout << "  " << " input index less than " << this->get_volume() << " > ";
-		if (!std::getline(std::cin, input) || std::cin.eof())
+		if (Libft::getline_wrap(input))
 		{
 			Libft::print_colored_string_endl("Oh! bye forever!", green);
 			exit (0);
 		}
-		if (input.empty())
-			continue;
 		flag_digit = Libft::is_string_composed_with_func(input, std::isdigit);
 		if (flag_digit == false)
 			Libft::print_colored_string_endl("  Use only numeric.", red);
 		else if (this->get_volume() - 1 < Libft::ft_atoi(input))
 			Libft::print_colored_string_endl("  No data available.", red);
-		else
+		else if (!input.empty())
 		{
-			for (int data_id = 0; data_id <= darkest_secret; ++data_id)
-			{
-				std::cout << contact_item[data_id] << ": ";
-				std::cout << this->m_book[Libft::ft_atoi(input)].get_contact(data_id) << std::endl;
-			}
+			this->display_detail_Contact(Libft::ft_atoi(input));
 			break ;
 		}
 	}
