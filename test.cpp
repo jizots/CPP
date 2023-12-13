@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <time.h>
 
 
 bool	is_string_composed_f(const std::string& str, int (*f)(int))
@@ -16,6 +17,14 @@ bool	is_string_composed_f(const std::string& str, int (*f)(int))
 
 int main()
 {
-	std::string str = "1";
-	std::cout << is_string_composed_f(str, std::isdigit) << '\n';
+	time_t  	tmp;
+	struct tm	*timeinfo;
+
+	time(&tmp);
+	timeinfo = localtime(&tmp);
+	std::cout << '['\
+	<< timeinfo->tm_year + 1900 << timeinfo->tm_mon + 1 << timeinfo->tm_mday\
+	<< '_'\
+	<< timeinfo->tm_hour << timeinfo->tm_min << timeinfo->tm_sec\
+	<< ']' << ' ';
 }
