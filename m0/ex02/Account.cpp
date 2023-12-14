@@ -7,17 +7,17 @@ int Account::_totalAmount = 0;
 int Account::_totalNbDeposits = 0;
 int Account::_totalNbWithdrawals = 0;
 
-enum Account_Each_Item {
-	Account_index, Account_amount, Account_depo, Account_withdraw
-};
+// enum Account_Each_Item {
+// 	Account_index, Account_amount, Account_depo, Account_withdraw
+// };
 
-enum Account_Total_Item {
-	Account_totalAccount, Account_totalAmount, Account_tatalDepo, Account_totalWithdraw
-};
+// enum Account_Total_Item {
+// 	Account_totalAccount, Account_totalAmount, Account_tatalDepo, Account_totalWithdraw
+// };
 
-const std::string	Info_Item_Name[] = {
-	"accounts", "total", "deposits", "withdrawals"
-};
+// const std::string	Info_Item_Name[] = {
+// 	"accounts", "total", "deposits", "withdrawals"
+// };
 
 int Account::getNbAccounts(void)
 {
@@ -114,6 +114,30 @@ void	Account::makeDeposit(int deposit)
 	std::cout << "nb_deposits:" << _nbDeposits;
 	std::cout << std::endl;
 }
+
+bool	Account::makeWithdrawal(int withdrawal)
+{
+	Account::_displayTimestamp();
+	std::cout << "index:" << _accountIndex;
+	std::cout << ';';
+	std::cout << "p_amount:" << _amount;
+	std::cout << ';';
+	if (_amount >= withdrawal)
+	{
+		std::cout << "withdrawal:" << withdrawal;
+		_amount -= withdrawal;
+		_nbWithdrawals++;
+		_totalNbWithdrawals++;
+		std::cout << "amount:" << _amount;
+		std::cout << ';';
+		std::cout << "nb_withdrawals:" << _nbWithdrawals;
+		std::cout << std::endl;
+		return (true);
+	}
+	std::cout << "withdrawal:" << "refused";
+	std::cout << std::endl;
+	return (false);
+};
 
 void	Account::displayStatus(void) const
 {
