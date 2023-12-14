@@ -7,18 +7,6 @@ int Account::_totalAmount = 0;
 int Account::_totalNbDeposits = 0;
 int Account::_totalNbWithdrawals = 0;
 
-// enum Account_Each_Item {
-// 	Account_index, Account_amount, Account_depo, Account_withdraw
-// };
-
-// enum Account_Total_Item {
-// 	Account_totalAccount, Account_totalAmount, Account_tatalDepo, Account_totalWithdraw
-// };
-
-// const std::string	Info_Item_Name[] = {
-// 	"accounts", "total", "deposits", "withdrawals"
-// };
-
 int Account::getNbAccounts(void)
 {
 	return (_nbAccounts);
@@ -84,7 +72,6 @@ Account::Account(int deposit)
 	std::cout << std::endl;
 }
 
-//出力がindex 7 からの降順になる。
 Account::~Account(void)
 {
 	Account::_displayTimestamp();
