@@ -95,6 +95,9 @@ int	Contact::add_loop(int index, clock_t time)
 			continue;
 		else if (data_id == phone_number && Libft::is_string_composed_with_func(input, std::isdigit) == false)
 			Libft::print_colored_string_endl("  Use only numeric.", red);
+		else if (Libft::is_string_composed_with_func(input, std::isprint) == true
+				&& input.find('^') != std::string::npos)
+			Libft::print_colored_string_endl("  Cant use '^'.", red);
 		else
 			this->Contact::set_contact(data_id++, input);
 	}

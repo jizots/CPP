@@ -28,7 +28,7 @@ int	PhoneBook::get_oldest_index()
 {
 	int	oldest;
 
-	if (this->m_volume < 7)
+	if (this->m_volume <= 7)
 		return (this->m_volume);
 	oldest = 0;
 	for (int i = 1; i < 8; ++i)
