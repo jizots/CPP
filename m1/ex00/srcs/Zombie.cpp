@@ -15,7 +15,7 @@ std::string Zombie::get_name(void)
 
 void    Zombie::announce(void)
 {
-    std::cout << get_name();
+    std::cout << Zombie::get_name();
     std::cout << ": ";
     std::cout << "BraiiiiiiinnnzzzZ...";
     std::cout << std::endl;

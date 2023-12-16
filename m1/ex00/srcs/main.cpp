@@ -1,7 +1,7 @@
 #include "Zombie.hpp"
 #include "libc.h"
 
-int	main(int ac, char **av)
+int	main()
 {
 	Zombie	foo;
 
@@ -18,7 +18,8 @@ int	main(int ac, char **av)
 	std::cout << std::endl;
 	delete new_foo;
 /*************************************/
-	
+	std::cout << "---using randomChump(std::string name)---" << std::endl;
+	randomChump("foofoo");
 
 	return (0);
 }
