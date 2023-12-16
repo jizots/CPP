@@ -52,6 +52,11 @@ std::string	Libft::end_with_c_over_n(const std::string& str, const char c, const
 		return (str);
 }
 
+int	Libft::ft_isascii(int c)
+{
+	return (0 <= c && c <= 127);
+}
+
 int	Libft::ft_atoi(std::string& str)
 {
 	std::stringstream	ss;

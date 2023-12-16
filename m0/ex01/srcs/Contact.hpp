@@ -32,6 +32,7 @@ public:
 	std::string	get_contact(int data_id);
 	void		set_contact(int data_id, std::string data_string);
 	int			add_loop(int index, clock_t time);
+	bool		is_string_fit_standard(std::string& str, int data_id);
 private:
 	int			m_index;
 	clock_t		m_time_register;

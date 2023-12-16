@@ -75,6 +75,25 @@ void	Contact::set_contact(int data_id, std::string data_string)
 	}
 }
 
+bool	Contact::is_string_fit_standard(std::string& str, int data_id)
+{
+	if (str.empty() || Libft::is_string_composed_with_func(str, std::isspace) == true)
+		return (false);
+	else if (data_id == phone_number
+		&& Libft::is_string_composed_with_func(str, std::isdigit) == false)
+	{
+		Libft::print_colored_string_endl("  Use only numeric.", red);
+		return (false);
+	}
+	else if (Libft::is_string_composed_with_func(str, Libft::ft_isascii) == false
+			|| str.find('^') != std::string::npos)
+	{
+		Libft::print_colored_string_endl("  Cant use '^' or 'Non alphabet'.", red);
+		return (false);
+	}
+	return (true);
+}
+
 int	Contact::add_loop(int index, clock_t time)
 {
 	std::string	input;
@@ -91,13 +110,8 @@ int	Contact::add_loop(int index, clock_t time)
 			Libft::print_colored_string_endl("Oh! bye forever!", green);
 			exit (0);
 		}
-		else if (input.empty() || Libft::is_string_composed_with_func(input, std::isspace) == true)
+		else if (Contact::is_string_fit_standard(input, data_id) == false)
 			continue;
-		else if (data_id == phone_number && Libft::is_string_composed_with_func(input, std::isdigit) == false)
-			Libft::print_colored_string_endl("  Use only numeric.", red);
-		else if (Libft::is_string_composed_with_func(input, std::isprint) == true
-				&& input.find('^') != std::string::npos)
-			Libft::print_colored_string_endl("  Cant use '^'.", red);
 		else
 			this->Contact::set_contact(data_id++, input);
 	}
