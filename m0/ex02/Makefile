@@ -1,4 +1,4 @@
-`.PHONY: all clean fclean re
+.PHONY: all clean fclean re
 
 NAME = Account
 CXX = c++
