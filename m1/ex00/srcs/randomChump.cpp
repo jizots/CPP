@@ -2,10 +2,12 @@
 
 void	randomChump( std::string name )
 {
-    Zombie  *new_zomb;
+	Zombie  *_new;
 
-    new_zomb = newZombie(name);
-    new_zomb->Zombie::announce();
-
-    delete new_zomb;
+	_new = newZombie(name);
+	if (_new != NULL)
+    {
+		_new->Zombie::announce();
+		delete _new;
+    }
 }

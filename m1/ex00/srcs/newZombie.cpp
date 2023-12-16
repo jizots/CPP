@@ -2,12 +2,10 @@
 
 Zombie* newZombie(std::string name)
 {
-	Zombie  *new_Zombie;
+	Zombie  *_new;
 
-	new_Zombie = new (std::nothrow) Zombie;
-	if (new_Zombie == NULL)
+	_new = new (std::nothrow) Zombie(name);
+	if (_new == NULL)
 		std::cout << name << ": allocation faild!" << std::endl;
-	else
-		new_Zombie->Zombie::set_name(name);
-	return (new_Zombie);
+	return (_new);
 }
