@@ -13,7 +13,8 @@ Zombie*	zombieHorde( int N, std::string name )
 	{
 		_newHorde = new Zombie[N];
 		std::cout << "new -> start address: " << &(_newHorde[0]) << std::endl;
-		for ()
+		for (int i = 0; i < N; ++i)
+			_newHorde[i].Zombie::set_name(name);
 	}
 	catch(std::bad_alloc)
 	{
