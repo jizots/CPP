@@ -1,15 +1,14 @@
 #include "HumanA.hpp"
 
-HumanA::HumanA(std::string name, Weapon &weapon)
+HumanA::HumanA(std::string name, Weapon &weapon):m_Refweapon(weapon)
 {
-    m_name = name;
-    m_weapon = weapon;
+	m_name = name;
 }
 
 void    HumanA::attack(void)
 {
-    std::cout << m_name;
-    std::cout << " attacks with their ";
-    std::cout << m_weapon.getType();
-    std::cout << std::endl;
+	std::cout << m_name;
+	std::cout << " attacks with their ";
+	std::cout << m_Refweapon.getType();
+	std::cout << std::endl;
 }

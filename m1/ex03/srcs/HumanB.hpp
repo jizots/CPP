@@ -11,7 +11,7 @@ public:
 	void	setWeapon(Weapon& name);
 private:
 	std::string	m_name;
-	Weapon		&m_weapon;    
+	Weapon		&m_type;    
 };
 
 #endif
