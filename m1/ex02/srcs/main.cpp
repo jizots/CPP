@@ -14,6 +14,11 @@ int	main()
 	std::cout << "value of the string variable  : " << s1 << std::endl;
 	std::cout << "value pointed to by stringPTR : " << *sPTR << std::endl;
 	std::cout << "value pointed to by stringREF : " << sREF << std::endl;
+	/**************************************************************************/
+	std::cout << std::endl;
+	std::cout << std::endl;
+
+	
 	return (0);
 }
 

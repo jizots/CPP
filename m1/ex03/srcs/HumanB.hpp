@@ -9,9 +9,12 @@ class HumanB
 public:
 	void	attack();
 	void	setWeapon(Weapon& name);
+
+	HumanB(const std::string name);
+
 private:
 	std::string	m_name;
-	Weapon		&m_type;    
+	Weapon		*m_Ptrweapon;    
 };
 
 #endif
