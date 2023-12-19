@@ -6,6 +6,12 @@ HumanB::HumanB(const std::string name)
 	m_Ptrweapon = NULL;
 }
 
+HumanB::HumanB(void)
+{
+	m_name = "Nameless";
+	m_Ptrweapon = NULL;
+}
+
 void	HumanB::setWeapon(Weapon& name)
 {
 	m_Ptrweapon = &name;

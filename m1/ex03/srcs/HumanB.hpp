@@ -11,6 +11,7 @@ public:
 	void	setWeapon(Weapon& name);
 
 	HumanB(const std::string name);
+	HumanB(void);
 
 private:
 	std::string	m_name;
