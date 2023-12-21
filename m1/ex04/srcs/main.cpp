@@ -8,11 +8,10 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	StringReplace sr(av[1]);
-	std::string	s0(av[1]);
-	std::string	s1(av[2]);
-	std::string	s2(av[3]);
+	std::string	s0(av[1]), s1(av[2]), s2(av[3]);
 	sr.StringReplace::set_ofstream(s0 + ".replace");
-	std::cout << sr.StringReplace::replace_to_newfile(s1, s2) << ": New file created!" << std::endl;
+	sr.replace_to_newfile(s1, s2);
+	std::cout << "New file created!" << std::endl;
 }
 
 __attribute__((destructor))

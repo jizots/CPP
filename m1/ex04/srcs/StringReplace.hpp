@@ -10,7 +10,8 @@ class StringReplace
 {
 public:
 	void	set_ofstream(std::string _newname);
-	const std::string& replace_to_newfile(const std::string& s1, const std::string& s2);
+	void	create_copy_file(void);
+	void	replace_to_newfile(const std::string& s1, const std::string& s2);
 
 	StringReplace(char *filename);
 
