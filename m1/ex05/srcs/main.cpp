@@ -2,8 +2,13 @@
 
 int	main()
 {
-	Harl::complain("DEBUG");
-	Harl::complain("INFO");
-	Harl::complain("WARNING");
-	Harl::complain("ERROR");
+	Harl	harl;
+
+	harl.Harl::complain("DEBUG");
+	harl.Harl::complain("INFO");
+	harl.Harl::complain("WARNING");
+	harl.Harl::complain("ERROR");
+	harl.Harl::complain("Nothing");
+
+	return (0);
 }
