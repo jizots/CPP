@@ -1,11 +1,11 @@
 .PHONY: all clean fclean re
 
-NAME = Moar
+NAME = Canonical_Form
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror
 CXXFLAGS += -std=c++98
 
-SRCS = main.cpp Zombie.cpp zombieHorde.cpp
+SRCS = main.cpp Fixed.cpp
 
 SRCS_DIR	= ./srcs/
 OBJS_DIR	= ./objs/
