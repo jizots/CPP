@@ -1,6 +1,6 @@
 .PHONY: all clean fclean re
 
-NAME = Canonical_Form
+NAME = cpp02ex01
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror
 CXXFLAGS += -std=c++98
