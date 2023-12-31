@@ -24,4 +24,6 @@ private:
 	static const int	m_frac_bits = 8;
 };
 
+std::ostream& operator<<(std::ostream& os, const Fixed& rhs);
+
 #endif
