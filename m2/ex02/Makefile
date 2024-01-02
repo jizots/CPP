@@ -1,11 +1,11 @@
 .PHONY: all clean fclean re
 
-NAME = cpp02ex00
+NAME = cpp02ex02
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror
 CXXFLAGS += -std=c++98
 
-SRCS = main.cpp Fixed.cpp
+SRCS = main.cpp Fixed.cpp Operator.cpp
 
 SRCS_DIR	= ./srcs/
 OBJS_DIR	= ./objs/
