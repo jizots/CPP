@@ -5,7 +5,7 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror
 CXXFLAGS += -std=c++98
 
-SRCS = main.cpp Fixed.cpp Operator.cpp
+SRCS = main.cpp Fixed.cpp
 
 SRCS_DIR	= ./srcs/
 OBJS_DIR	= ./objs/

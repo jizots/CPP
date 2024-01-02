@@ -41,16 +41,8 @@ Fixed::Fixed(const float num)
 	setRawBits(static_cast<int>(roundf(num * shift)));
 }
 
-Fixed& Fixed::operator=(const Fixed& rhs)
-{
-	std::cout << "Copy assignment operator called" << std::endl;
-	setRawBits(rhs.m_fixed_point);
-	return (*this);
-}
-
 int	Fixed::getRawBits(void) const
 {
-	std::cout << "getRawBits member function called" << std::endl;
 	return (m_fixed_point);
 }
 
@@ -87,4 +79,128 @@ int		Fixed::toInt( void ) const
 	while (exponent--)
 		shift *= 2;
 	return (roundf(m_fixed_point / shift));
+}
+
+/*----------Comparison Operator----------*/
+Fixed& Fixed::operator=(const Fixed& rhs)
+{
+	std::cout << "Copy assignment operator called" << std::endl;
+	setRawBits(rhs.m_fixed_point);
+	return (*this);
+}
+
+bool	Fixed::operator>(const Fixed& rhs)
+{
+	return (this->getRawBits() > rhs.getRawBits());
+}
+
+bool	Fixed::operator<(const Fixed& rhs)
+{
+	return (this->getRawBits() < rhs.getRawBits());
+}
+
+bool	Fixed::operator>=(const Fixed& rhs)
+{
+	return (this->getRawBits() >= rhs.getRawBits());
+}
+
+bool	Fixed::operator<=(const Fixed& rhs)
+{
+	return (this->getRawBits() <= rhs.getRawBits());
+}
+
+bool	Fixed::operator==(const Fixed& rhs)
+{
+	return (this->getRawBits() == rhs.getRawBits());
+}
+
+bool	Fixed::operator!=(const Fixed& rhs)
+{
+	return (this->getRawBits() != rhs.getRawBits());
+}
+
+/*----------Arithmetic Operator----------*/
+float	Fixed::operator+(const Fixed& rhs)
+{
+	return (this->toFloat() + rhs.toFloat());
+}
+
+float	Fixed::operator-(const Fixed& rhs)
+{
+	return (this->toFloat() - rhs.toFloat());
+}
+
+float	Fixed::operator*(const Fixed& rhs)
+{
+	return (this->toFloat() * rhs.toFloat());
+}
+
+float	Fixed::operator/(const Fixed& rhs)
+{
+	return (this->toFloat() / rhs.toFloat());
+}
+
+/*----------Increment & Decrement----------*/
+float	Fixed::operator++()
+{
+	setRawBits(++m_fixed_point);
+	return (toFloat());
+}
+
+float	Fixed::operator++(int)
+{
+	Fixed	temp = *this;
+	this->setRawBits(++m_fixed_point);
+	return (temp.toFloat());
+}
+
+float	Fixed::operator--()
+{
+	setRawBits(--m_fixed_point);
+	return (toFloat());
+}
+
+float	Fixed::operator--(int)
+{
+	Fixed	temp = *this;
+	this->setRawBits(--m_fixed_point);
+	return (temp.toFloat());
+}
+
+/*----------Min & Max----------*/
+Fixed&	Fixed::min(Fixed& a, Fixed& b)
+{
+	std::cout << "Non-const Arg called" << std::endl;
+	if (a <= b)
+		return (a);
+	return (b);
+}
+
+Fixed&	Fixed::min(const Fixed& a, const Fixed& b)
+{
+	if (const_cast<Fixed&>(a) <= b)
+		return (const_cast<Fixed&>(a));
+	return (const_cast<Fixed&>(b));
+}
+
+Fixed&	Fixed::max(Fixed& a, Fixed& b)
+{
+	std::cout << "Non-const Arg called" << std::endl;
+	if (a >= b)
+		return (a);
+	return (b);	
+}
+
+Fixed&	Fixed::max(const Fixed& a, const Fixed& b)
+{
+	if (const_cast<Fixed&>(a) >= b)
+		return (const_cast<Fixed&>(a));
+	return (const_cast<Fixed&>(b));
+}
+
+
+std::ostream& operator<<(std::ostream& os, const Fixed& rhs)
+{
+	os << rhs.Fixed::toFloat();
+	return (os);
 }

@@ -88,3 +88,9 @@ int		Fixed::toInt( void ) const
 		shift *= 2;
 	return (roundf(m_fixed_point / shift));
 }
+
+std::ostream& operator<<(std::ostream& os, const Fixed& rhs)
+{
+	os << rhs.Fixed::toFloat();
+	return (os);
+}

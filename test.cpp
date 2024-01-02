@@ -17,14 +17,7 @@ bool	is_string_composed_f(const std::string& str, int (*f)(int))
 
 int main()
 {
-	time_t  	tmp;
-	struct tm	*timeinfo;
+	float a = 2.2;
 
-	time(&tmp);
-	timeinfo = localtime(&tmp);
-	std::cout << '['\
-	<< timeinfo->tm_year + 1900 << timeinfo->tm_mon + 1 << timeinfo->tm_mday\
-	<< '_'\
-	<< timeinfo->tm_hour << timeinfo->tm_min << timeinfo->tm_sec\
-	<< ']' << ' ';
+	std::cout << ++a << std::endl;
 }
