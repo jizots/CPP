@@ -8,7 +8,6 @@ Fixed::Fixed(void)
 
 Fixed::Fixed(const Fixed& other)
 {
-	std::cout << "Copy constructor called" << std::endl;
 	*this = other;
 }
 
@@ -34,7 +33,6 @@ Fixed::Fixed(const float num)
 	int				shift;
 	unsigned int	exponent = m_frac_bits;
 
-	std::cout << "Float constructor called" << std::endl;
 	shift = 1;
 	while (exponent--)
 		shift *= 2;
@@ -53,7 +51,6 @@ void	Fixed::setRawBits(int const raw)
 
 Fixed::~Fixed(void)
 {
-	std::cout << "Destructor called" << std::endl;
 }
 
 float	Fixed::toFloat( void ) const
@@ -84,7 +81,6 @@ int		Fixed::toInt( void ) const
 /*----------Comparison Operator----------*/
 Fixed& Fixed::operator=(const Fixed& rhs)
 {
-	std::cout << "Copy assignment operator called" << std::endl;
 	setRawBits(rhs.m_fixed_point);
 	return (*this);
 }
@@ -201,7 +197,6 @@ Fixed&	Fixed::max(const Fixed& a, const Fixed& b)
 
 std::ostream& operator<<(std::ostream& os, const Fixed& rhs)
 {
-	std::cout << "<< operator called" << std::endl;
 	os << rhs.Fixed::toFloat();
 	return (os);
 }
