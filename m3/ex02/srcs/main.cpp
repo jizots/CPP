@@ -1,14 +1,15 @@
 #include <iostream>
-#include "ClapTrap.hpp"
+#include "FragTrap.hpp"
 
 int main( void )
 {
-	ClapTrap	a("nop");
+	FragTrap	a("nop");
 	a.attack("target");
 	a.beRepaired(10);
 	a.beRepaired(UINT32_MAX);
 	a.takeDamage(5);
 	a.takeDamage(UINT32_MAX);
+	a.highFivesGuys();
 	return 0;
 }
 

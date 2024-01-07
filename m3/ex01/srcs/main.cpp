@@ -1,14 +1,15 @@
 #include <iostream>
-#include "ClapTrap.hpp"
+#include "ScavTrap.hpp"
 
 int main( void )
 {
-	ClapTrap	a("nop");
+	ScavTrap	a("nop");
 	a.attack("target");
 	a.beRepaired(10);
 	a.beRepaired(UINT32_MAX);
 	a.takeDamage(5);
 	a.takeDamage(UINT32_MAX);
+	a.guardGata();
 	return 0;
 }
 

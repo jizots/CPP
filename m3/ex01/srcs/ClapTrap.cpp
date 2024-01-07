@@ -8,7 +8,7 @@ m_Hit_points(10),
 m_Energy_points(10),
 m_Attack_damage(0)
 {
-	Libft::print_colored_string_endl("Constructor(void) called", green);
+	Libft::print_colored_string_endl("Clap Constructor(void) called", green);
 }
 
 ClapTrap::ClapTrap(const std::string& name):
@@ -17,25 +17,25 @@ m_Hit_points(10),
 m_Energy_points(10),
 m_Attack_damage(0)
 {
-	Libft::print_colored_string_endl("Constructor(with name) called", green);
+	Libft::print_colored_string_endl("Clap Constructor(with name) called", green);
 }
 
 ClapTrap::ClapTrap(const ClapTrap& other)
 	:m_Energy_points(other.m_Energy_points), m_Attack_damage(other.m_Attack_damage)
 {
-	Libft::print_colored_string_endl("Copy constructor called", blue);
+	Libft::print_colored_string_endl("Clap Copy constructor called", blue);
 	this->m_Hit_points = other.get_Hit_points();
 }
 
 ClapTrap::~ClapTrap(void)
 {
-	Libft::print_colored_string_endl("Destructor called", red);
+	Libft::print_colored_string_endl("Clap Destructor called", red);
 }
 
 ClapTrap& ClapTrap::operator=(const ClapTrap& rhs)
 {
 	(void)rhs;
-	Libft::print_colored_string_endl("Copy assingment operator can't used", red);
+	Libft::print_colored_string_endl("Clap Copy assingment operator can't used", red);
 	std::exit(EXIT_FAILURE);
 }
 
@@ -108,6 +108,12 @@ unsigned int	ClapTrap::get_Energy_points(void) const
 {
 	return (m_Energy_points);
 }
+
+void	ClapTrap::set_Attack_damage(const unsigned int points)
+{
+	m_Attack_damage = points;
+}
+
 
 unsigned int	ClapTrap::get_Attack_damage(void) const
 {
