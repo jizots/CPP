@@ -33,11 +33,6 @@ ScavTrap::~ScavTrap(void)
 	Libft::print_colored_string_endl("Scav Destructor called", red);
 }
 
-ScavTrap&	ScavTrap::operator=(const ScavTrap& rhs)
-{
-
-}
-
 void	ScavTrap::attack(const std::string& target)
 {
 	if (get_Hit_points() == 0 || get_Energy_points() == 0)

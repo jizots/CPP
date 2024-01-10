@@ -7,7 +7,7 @@ ScavTrap::ScavTrap(void)
 	set_Hit_points(100);
 	set_Energy_points(50);
 	set_Attack_damage(20);
-	Libft::print_colored_string_endl("Scav Constructor(void) called", green);
+	Libft::print_colored_string_endl("Scav Constructor(default) called", green);
 }
 
 ScavTrap::ScavTrap(const std::string& name)
@@ -17,6 +17,15 @@ ScavTrap::ScavTrap(const std::string& name)
 	set_Energy_points(50);
 	set_Attack_damage(20);
 	Libft::print_colored_string_endl("Scav Constructor(with name) called", green);
+}
+
+ScavTrap::ScavTrap(const ScavTrap& other)
+	:ClapTrap(other.get_name())
+{
+	set_Hit_points(other.get_Hit_points());
+	set_Energy_points(other.get_Energy_points());
+	set_Attack_damage(other.get_Attack_damage());
+	Libft::print_colored_string_endl("Scav Copy Constructor called", green);
 }
 
 ScavTrap::~ScavTrap(void)

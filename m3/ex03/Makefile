@@ -4,6 +4,7 @@ NAME = cpp03ex03
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror
 CXXFLAGS += -std=c++98
+CXXFLAGS += -Wshadow
 
 SRCS = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp DiamondTrap.cpp Libft.cpp
 

@@ -10,7 +10,7 @@ public:
 	ClapTrap(const std::string& name);
 	ClapTrap(const ClapTrap& other);
 	~ClapTrap(void);
-	ClapTrap&	operator=(const ClapTrap& rhs);
+	ClapTrap&		operator=(const ClapTrap& rhs);
 	virtual void	attack(const std::string& target);
 	void			takeDamage(unsigned int amount);
 	void			beRepaired(unsigned int amount);

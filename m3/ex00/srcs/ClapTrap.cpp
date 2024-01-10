@@ -3,28 +3,29 @@
 #include "Libft.hpp"
 
 ClapTrap::ClapTrap(void):
-m_name("Nameless"),
-m_Hit_points(10),
-m_Energy_points(10),
-m_Attack_damage(0)
+	m_name("Nameless"),
+	m_Hit_points(10),
+	m_Energy_points(10),
+	m_Attack_damage(0)
 {
 	Libft::print_colored_string_endl("Constructor(void) called", green);
 }
 
 ClapTrap::ClapTrap(const std::string& name):
-m_name(name),
-m_Hit_points(10),
-m_Energy_points(10),
-m_Attack_damage(0)
+	m_name(name),
+	m_Hit_points(10),
+	m_Energy_points(10),
+	m_Attack_damage(0)
 {
 	Libft::print_colored_string_endl("Constructor(with name) called", green);
 }
 
 ClapTrap::ClapTrap(const ClapTrap& other)
-	:m_Energy_points(other.m_Energy_points), m_Attack_damage(other.m_Attack_damage)
+	:m_Hit_points(other.get_Hit_points()),
+	m_Energy_points(other.get_Energy_points()),
+	m_Attack_damage(other.get_Attack_damage())
 {
 	Libft::print_colored_string_endl("Copy constructor called", blue);
-	this->m_Hit_points = other.get_Hit_points();
 }
 
 ClapTrap::~ClapTrap(void)
@@ -32,11 +33,13 @@ ClapTrap::~ClapTrap(void)
 	Libft::print_colored_string_endl("Destructor called", red);
 }
 
-ClapTrap& ClapTrap::operator=(const ClapTrap& rhs)
+ClapTrap&	ClapTrap::operator=(const ClapTrap& rhs)
 {
-	(void)rhs;
-	Libft::print_colored_string_endl("Copy assingment operator can't used", red);
-	std::exit(EXIT_FAILURE);
+	Libft::print_colored_string_endl("Copy assingment operator called. But can't change name!", red);
+	m_Hit_points = rhs.get_Hit_points();
+	m_Energy_points = rhs.get_Energy_points();
+	m_Attack_damage = rhs.get_Attack_damage();
+	return (*this);
 }
 
 void	ClapTrap::attack(const std::string& target)
@@ -84,7 +87,7 @@ void	ClapTrap::beRepaired(unsigned int amount)
 	std::cout << get_name() << ": loss 1 Energy points. Remaining: " << get_Energy_points() << std::endl;
 }
 
-const std::string&	ClapTrap::get_name(void)
+const std::string&	ClapTrap::get_name(void) const
 {
 	return (m_name);
 }
@@ -107,6 +110,11 @@ void	ClapTrap::set_Energy_points(const unsigned int points)
 unsigned int	ClapTrap::get_Energy_points(void) const
 {
 	return (m_Energy_points);
+}
+
+void	ClapTrap::set_Attack_damage(const unsigned int points)
+{
+	m_Attack_damage = points;
 }
 
 unsigned int	ClapTrap::get_Attack_damage(void) const
