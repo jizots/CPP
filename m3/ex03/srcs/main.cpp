@@ -4,7 +4,7 @@
 int main( void )
 {
 	DiamondTrap	a("nop");
-	a.attack("target");
+	// a.attack("target");
 	a.ScavTrap::beRepaired(10);
 	a.ScavTrap::beRepaired(UINT32_MAX);
 	a.FragTrap::takeDamage(5);

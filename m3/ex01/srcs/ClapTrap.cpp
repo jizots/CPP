@@ -84,7 +84,7 @@ void	ClapTrap::beRepaired(unsigned int amount)
 	std::cout << get_name() << ": loss 1 Energy points. Remaining: " << get_Energy_points() << std::endl;
 }
 
-const std::string&	ClapTrap::get_name(void)
+const std::string&	ClapTrap::get_name(void) const
 {
 	return (m_name);
 }

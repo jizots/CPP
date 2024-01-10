@@ -19,9 +19,23 @@ ScavTrap::ScavTrap(const std::string& name)
 	Libft::print_colored_string_endl("Scav Constructor(with name) called", green);
 }
 
+ScavTrap::ScavTrap(const ScavTrap& other)
+	:ClapTrap(other.get_name())
+{
+	set_Hit_points(other.get_Hit_points());
+	set_Energy_points(other.get_Energy_points());
+	set_Attack_damage(other.get_Attack_damage());
+	Libft::print_colored_string_endl("Scav Copy Constructor called", green);
+}
+
 ScavTrap::~ScavTrap(void)
 {
 	Libft::print_colored_string_endl("Scav Destructor called", red);
+}
+
+ScavTrap&	ScavTrap::operator=(const ScavTrap& rhs)
+{
+
 }
 
 void	ScavTrap::attack(const std::string& target)

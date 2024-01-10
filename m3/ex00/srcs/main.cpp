@@ -9,6 +9,8 @@ int main( void )
 	a.beRepaired(UINT32_MAX);
 	a.takeDamage(5);
 	a.takeDamage(UINT32_MAX);
+	ClapTrap b;
+	b = a;
 	return 0;
 }
 
