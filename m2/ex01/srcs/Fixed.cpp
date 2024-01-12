@@ -31,14 +31,8 @@ Fixed::Fixed(const int num)
 /*0.00390625 ~ 0.99609375は'0.00390625'刻みの範囲で表現できる。*/
 Fixed::Fixed(const float num)
 {
-	int				shift;
-	unsigned int	exponent = m_frac_bits;
-
 	std::cout << "Float constructor called" << std::endl;
-	shift = 1;
-	while (exponent--)
-		shift *= 2;
-	setRawBits(static_cast<int>(roundf(num * shift)));
+	setRawBits(static_cast<int>(roundf(num * (1 << m_frac_bits))));
 }
 
 Fixed& Fixed::operator=(const Fixed& rhs)
@@ -67,26 +61,15 @@ Fixed::~Fixed(void)
 float	Fixed::toFloat( void ) const
 {
 	float	ret;
-	int		shift;
-	unsigned int	exponent = m_frac_bits;
 
 	ret = static_cast<float>(this->m_fixed_point);
-	shift = 1;
-	while (exponent--)
-		shift *= 2;
-	ret = ret / shift;
+	ret = ret / (1 << m_frac_bits);
 	return (ret);
 }
 
 int		Fixed::toInt( void ) const
 {
-	int				shift;
-	unsigned int	exponent = m_frac_bits;
-
-	shift = 1;
-	while (exponent--)
-		shift *= 2;
-	return (roundf(m_fixed_point / shift));
+	return (roundf(m_fixed_point / (1 << m_frac_bits)));
 }
 
 std::ostream& operator<<(std::ostream& os, const Fixed& rhs)
