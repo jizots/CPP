@@ -10,7 +10,7 @@ public:
 	Cat(const Cat& other);
 	~Cat(void);
 	Cat&	operator=(const Cat& rhs);
-	void	makeSound(void);
+	virtual void	makeSound(void) const;
 
 private:
 

@@ -15,7 +15,7 @@ Animal::Animal(const Animal& other)
 
 Animal::~Animal(void)
 {
-	Libft::print_colored_string_endl("Animal destructor called", green);
+	Libft::print_colored_string_endl("Animal destructor called", red);
 }
 
 Animal&	Animal::operator=(const Animal& rhs)
@@ -28,4 +28,11 @@ Animal&	Animal::operator=(const Animal& rhs)
 std::string&	Animal::getType(void) const
 {
 	return (const_cast<std::string&>(m_type));
+}
+
+void	Animal::makeSound(void) const
+{
+	std::cout << Libft::get_colored_string("∧( 'Θ' )∧   ", cyan)
+		<< Libft::get_colored_string("U・x・U   ", brown) 
+		<< Libft::get_colored_string("(=^x^=)", yellow) << std::endl;
 }

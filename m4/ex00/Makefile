@@ -5,7 +5,7 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror
 CXXFLAGS += -std=c++98
 
-SRCS = main.cpp Animal.cpp Dog.cpp Cat.hpp Libft.cpp
+SRCS = main.cpp Animal.cpp Dog.cpp Cat.cpp Libft.cpp
 
 SRCS_DIR	= ./srcs/
 OBJS_DIR	= ./objs/

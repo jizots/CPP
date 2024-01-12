@@ -15,7 +15,7 @@ Cat::Cat(const Cat& other)
 
 Cat::~Cat(void)
 {
-	Libft::print_colored_string_endl("Cat destructor called", green);
+	Libft::print_colored_string_endl("Cat destructor called", red);
 }
 
 Cat&	Cat::operator=(const Cat& rhs)
@@ -23,4 +23,9 @@ Cat&	Cat::operator=(const Cat& rhs)
 	Libft::print_colored_string_endl("Cat copy assignment operator called", green);
 	m_type = rhs.getType();
 	return (*this);
+}
+
+void	Cat::makeSound(void) const
+{
+	std::cout << Libft::get_colored_string("nya~", yellow) << std::endl;
 }

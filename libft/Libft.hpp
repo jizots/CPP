@@ -17,7 +17,8 @@ enum Font_Color
 	blue,
 	magenta,
 	cyan,
-	white
+	white,
+	brown
 };
 
 /*----define----*/
