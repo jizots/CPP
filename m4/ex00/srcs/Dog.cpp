@@ -4,7 +4,7 @@
 Dog::Dog(void)
 {
 	Libft::print_colored_string_endl("Dog Default constructor called", green);
-	m_type = "Dog"; //is correct??
+	m_type = "Dog";
 }
 
 Dog::Dog(const Dog& other)

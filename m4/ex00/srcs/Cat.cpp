@@ -4,7 +4,7 @@
 Cat::Cat(void)
 {
 	Libft::print_colored_string_endl("Cat Default constructor called", green);
-	m_type = "Cat"; //is correct??
+	m_type = "Cat";
 }
 
 Cat::Cat(const Cat& other)
