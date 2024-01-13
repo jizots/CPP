@@ -1,5 +1,4 @@
 #include <iostream>
-#include <new>
 #include "Animal.hpp"
 #include "Dog.hpp"
 #include "Cat.hpp"
@@ -28,6 +27,8 @@ int main()
 	std::cout << "Animal's sound: ";
 	meta->makeSound();
 
+	delete meta;
+
 	std::cout << std::endl;
 	std::cout << "*****************My test******************" << std::endl;
 	Animal copied(*j);
@@ -35,6 +36,9 @@ int main()
 	// Cat	popy(copied); // Error. Derived can't initialize by Base.
 	copied = *i;
 	std::cout << "m_type of Class Animal's: " << copied.getType() << " " << std::endl;
+	
+	delete i;
+	delete j;
 
 	const WrongAnimal* met = new(std::nothrow) WrongAnimal();
 	const WrongAnimal* k = new(std::nothrow) WrongCat();
@@ -52,9 +56,6 @@ int main()
 	met->makeSound();
 
 
-	delete meta;
-	delete j;
-	delete i;
 	delete met;
 	delete k;
 	return 0;

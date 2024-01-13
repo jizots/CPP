@@ -2,6 +2,7 @@
 # define CAT_HPP
 
 # include "Animal.hpp"
+# include "Brain.hpp"
 
 class Cat : public Animal
 {
@@ -13,6 +14,7 @@ public:
 	virtual void	makeSound(void) const;
 
 private:
+	Brain	*m_brain;
 
 };
 
