@@ -1,8 +1,9 @@
 #include "AMateria.hpp"
 #include "Libft.hpp"
 
+//AMateria is pure abstract class, Constructor and Destructor is needed?
 AMateria::AMateria(void)
-	:m_type("undefined")
+	:m_type("undefined_AMateria")
 {
 	Libft::print_colored_string_endl("AMateria default constructor called", green);
 }
@@ -38,7 +39,7 @@ std::string const&	AMateria::getType() const
 void	AMateria::use(ICharacter& target)//Must get target name
 {
 	if (getType() == "ice")
-		std::cout << "* shoots an ice bolt at <name> *" << std::endl;
+		std::cout << "* shoots an ice bolt at " << name << "*" << std::endl;
 	else if (getType() == "cure")
-		std::cout << "* heals <name>'s wounds *" << std::endl;
+		std::cout << "* heals " << name << "'s wounds *" << std::endl;
 }

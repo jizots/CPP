@@ -8,6 +8,7 @@ class ICharacter
 {
 public:
 	ICharacter(void);
+	ICharacter(const std::string& name);
 	ICharacter(const ICharacter& other);
 	virtual ~ICharacter() {}
 	ICharacter&	operator=(const ICharacter& rhs);
@@ -17,7 +18,7 @@ public:
 	virtual void	use(int idx, ICharacter& target) = 0;
 
 private:
-
+	std::string	m_name;
 };
 
 #endif

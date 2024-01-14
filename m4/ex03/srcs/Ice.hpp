@@ -3,9 +3,13 @@
 
 # include "AMateria.hpp"
 
-class ICE_HPP : public AMateria
+class Ice : public AMateria
 {
 public:
+	Ice(void);
+	Ice(const Ice& other);
+	~Ice(void);
+	Ice&	operator=(const Ice& rhs);
 	virtual AMateria*	clone() const;
 
 private:
