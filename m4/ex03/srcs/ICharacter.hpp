@@ -17,8 +17,10 @@ public:
 	virtual void	unequip(int idx) = 0;
 	virtual void	use(int idx, ICharacter& target) = 0;
 
-private:
+protected:
 	std::string	m_name;
+
+private:
 };
 
 #endif

@@ -36,10 +36,10 @@ std::string const&	AMateria::getType() const
 	return (m_type);
 }
 
-void	AMateria::use(ICharacter& target)//Must get target name
+void	AMateria::use(ICharacter& target)
 {
 	if (getType() == "ice")
-		std::cout << "* shoots an ice bolt at " << name << "*" << std::endl;
+		std::cout << "* shoots an ice bolt at " << target.ICharacter::getName() << "*" << std::endl;
 	else if (getType() == "cure")
-		std::cout << "* heals " << name << "'s wounds *" << std::endl;
+		std::cout << "* heals " << target.ICharacter::getName() << "'s wounds *" << std::endl;
 }

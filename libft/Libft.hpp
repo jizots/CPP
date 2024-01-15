@@ -27,12 +27,18 @@ class Libft
 {
 public:
 	/**
-	 * Return Colored message.
+	 * Get colored string.
 	 * @param msg Message what want to colored.
 	 * @param font_color Font color
-	 * @return Colored message
+	 * @return Colored string
 	 */
 	static std::string	get_colored_string(const std::string& msg, Font_Color font_color);
+
+	/**
+	 * Print colored string to std::cout with endline.
+	 * @param msg Message what want to colored.
+	 * @param font_color Font color
+	 */
 	static void			print_colored_string_endl(const std::string& msg, Font_Color font_color);
 
 	/**
@@ -51,10 +57,29 @@ public:
 	 */
 	static bool	is_string_composed_with_func(const std::string& str, int (*f)(int));
 
+	/**
+	 * Get first n charactors from string.
+	 * @param str String to be checked.
+	 * @param n Number of charactors to get.
+	 * @return Return first n charactors from string.
+	 */
 	static std::string	get_first_n_charactors(const std::string& str, const size_t n);
 	static std::string	end_with_c_over_n(const std::string& str, const char c, const size_t n);
+
+	/**
+	 * Check if the character is in the ASCII code.
+	 * @param c Character to be checked.
+	 * @return Return True if the character is in the ASCII code.
+	 */
 	static int			ft_isascii(int c);
 	static int			ft_atoi(std::string& str);
+
+	/**
+	 * Get line from std::cin.
+	 * @param is std::cin
+	 * @param str String to be stored.
+	 * @return Return 1 if success, 0 if EOF, -1 if error.
+	 */
 	static int			getline_wrap(std::istream& is, std::string& str);
 private:
 };

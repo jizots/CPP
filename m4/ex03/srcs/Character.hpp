@@ -1,7 +1,6 @@
 #ifndef CHARACTER_HPP
 # define CHARACTER_HPP
 
-# include <string>
 # include "ICharacter.hpp"
 
 class Character : public ICharacter
@@ -16,9 +15,12 @@ public:
 	virtual void	equip(AMateria* m);
 	virtual void	unequip(int idx);
 	virtual void	use(int idx, Character& target);
+	void			copySlot(const Character& src);
+	void			clearSlot(void);
 
 private:
-
+	AMateria	*m_slot[4];
+	AMateria	*m_listDelete;
 };
 
 #endif
