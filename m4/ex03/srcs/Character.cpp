@@ -52,6 +52,19 @@ void	Character::equip(AMateria* m)
 	}
 	for (int i = 0; i < 4; ++i)
 	{
+		if (m == m_slot[i])
+		{
+			Libft::print_colored_string_endl("materia that is already equiped!", yellow);
+			return ;
+		}
+	}	
+	if (AMateria::isFloor(m) == true)
+	{
+		Libft::print_colored_string_endl("The materia on the floor!", yellow);
+		return ;
+	}
+	for (int i = 0; i < 4; ++i)
+	{
 		if (m_slot[i] == NULL)
 		{
 			m_slot[i] = m;
@@ -59,9 +72,10 @@ void	Character::equip(AMateria* m)
 		}
 	}
 	Libft::print_colored_string_endl("slot is full!", yellow);
+	AMateria::addToFloor(m);
 }
 
-void	Character::unequip(int idx)// Is when delete materia??
+void	Character::unequip(int idx)
 {
 	if (idx < 0 || 4 < idx)
 	{
@@ -70,10 +84,11 @@ void	Character::unequip(int idx)// Is when delete materia??
 	}
 	if (m_slot[idx] == NULL)
 		Libft::print_colored_string_endl("slot is already NULL.", magenta);
+	AMateria::addToFloor(m_slot[idx]);
 	m_slot[idx] = NULL;
 }
 
-void	Character::use(int idx, Character& target)
+void	Character::use(int idx, ICharacter& target)
 {
 	if (target.m_slot[idx] == NULL)
 	{
@@ -97,7 +112,8 @@ void	Character::copySlot(const Character& src)
 
 void	Character::clearSlot(void)//is correct? if have address with non-new, it's cause crash.
 {
-	delete [] m_slot;
+	for (int i = 0; i < 4; ++i)
+		delete m_slot[i];
 	for (int i = 0; i < 4; ++i)
 		m_slot[i] = NULL;
 }

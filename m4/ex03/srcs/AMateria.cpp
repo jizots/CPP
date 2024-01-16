@@ -23,6 +23,9 @@ AMateria::AMateria(const AMateria& other)
 AMateria::~AMateria(void)
 {
 	Libft::print_colored_string_endl("AMateria Destructor called", red);
+	for (size_t i = 0; i < m_sizeFloor; ++i)
+		delete m_listFloor[i];
+	delete [] m_listFloor;
 }
 
 AMateria&	AMateria::operator=(const AMateria& rhs)
@@ -42,4 +45,39 @@ void	AMateria::use(ICharacter& target)
 		std::cout << "* shoots an ice bolt at " << target.ICharacter::getName() << "*" << std::endl;
 	else if (getType() == "cure")
 		std::cout << "* heals " << target.ICharacter::getName() << "'s wounds *" << std::endl;
+}
+
+void	AMateria::addToFloor(AMateria *m)
+{
+	size_t	i = 0;
+
+	while (i < m_sizeFloor)
+	{
+		if (m_listFloor[i++] == m)
+			return ;
+	}
+	AMateria **newlist = new(std::nothrow) AMateria*[m_sizeFloor + 1];
+	if (newlist == NULL)
+	{
+		Libft::print_colored_string_endl("addToList allocation failed.", red);
+		std::exit(EXIT_FAILURE);
+	}
+	i = 0;
+	for ( ;i < m_sizeFloor; ++i)
+		newlist[i] = m_listFloor[i];
+	newlist[i] = m;
+	m_sizeFloor += 1;
+	delete [] m_listFloor;
+	m_listFloor = newlist;
+}
+
+
+bool	AMateria::isFloor(const AMateria* m)
+{
+	for (size_t i = 0; i < m_sizeFloor; ++i)
+	{
+		if (m == m_listFloor[i])
+			return (true);
+	}
+	return (false);
 }

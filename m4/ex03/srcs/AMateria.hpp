@@ -1,7 +1,8 @@
 #ifndef AMATERIA_HPP
 # define AMATERIA_HPP
 
-# include "ICharacter.hpp"
+# include <string>
+# include "Character.hpp"
 
 class AMateria
 {
@@ -11,12 +12,16 @@ public:
 	AMateria(std::string const & type);
 	~AMateria(void);
 	AMateria&	operator=(const AMateria& rhs);
-	std::string const&	getType() const; //Returns the materia type
+	std::string const&	getType() const;
 	virtual AMateria*	clone() const = 0;
 	virtual void		use(ICharacter& target);
+	static void		addToFloor(AMateria *m);
+	static bool		isFloor(const AMateria* m);
 
 protected:
-	std::string	m_type;
+	std::string			m_type;
+	static AMateria		**m_listFloor;
+	static size_t		m_sizeFloor;
 
 private:
 

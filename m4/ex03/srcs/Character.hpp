@@ -14,13 +14,12 @@ public:
 	virtual std::string const&	getName() const;
 	virtual void	equip(AMateria* m);
 	virtual void	unequip(int idx);
-	virtual void	use(int idx, Character& target);
+	virtual void	use(int idx, ICharacter& target);
 	void			copySlot(const Character& src);
 	void			clearSlot(void);
 
 private:
-	AMateria	*m_slot[4];
-	AMateria	*m_listDelete;
+
 };
 
 #endif
