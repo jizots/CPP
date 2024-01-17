@@ -2,6 +2,7 @@
 # define ICHARACTER_HPP
 
 # include "AMateria.hpp"
+class AMateria;
 
 class ICharacter
 {
@@ -18,8 +19,6 @@ public:
 
 protected:
 	std::string	m_name;
-	AMateria	*m_slot[4];
-	AMateria	*m_listDelete;
 
 private:
 };

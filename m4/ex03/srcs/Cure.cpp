@@ -4,7 +4,7 @@
 Cure::Cure(void)
 	:AMateria("cure")
 {
-	Libft::print_colored_string_endl("AMateria default constructor called", green);
+	Libft::print_colored_string_endl("Cure default constructor called", green);
 }
 
 Cure::Cure(const Cure& other)
@@ -22,6 +22,7 @@ Cure&	Cure::operator=(const Cure& rhs)
 {
 	Libft::print_colored_string_endl("Cure copy assingnment called", blue);
 	m_type = rhs.m_type;
+	return (*this);
 }
 
 AMateria*	Cure::clone() const

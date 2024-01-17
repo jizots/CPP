@@ -27,6 +27,7 @@ MateriaSource&	MateriaSource::operator=(const MateriaSource& rhs)
 	Libft::print_colored_string_endl("MateriaSource copy assignment operator called", blue);
 	clearSlot();
 	copySlot(rhs);
+	return (*this);
 }
 
 void		MateriaSource::learnMateria(AMateria* m)
@@ -44,7 +45,7 @@ void		MateriaSource::learnMateria(AMateria* m)
 			return ;
 		}
 	}
-	Libft::print_colored_string_endl("MateriaSource slot is FULL!", yellow);
+	Libft::print_colored_string_endl("MateriaSource slot is FULL! Drop to Floor", yellow);
 	AMateria::addToFloor(m);
 }
 
@@ -52,9 +53,10 @@ AMateria*	MateriaSource::createMateria(std::string const & type)
 {
 	for (int i = 0; i < 4; ++i)
 	{
-		if (m_slot[i]->getType() == type)
+		if (m_slot[i] != NULL && m_slot[i]->getType() == type)
 			return (m_slot[i]->clone());
 	}
+	return (NULL);
 }
 
 void	MateriaSource::copySlot(const MateriaSource& src)
@@ -62,7 +64,7 @@ void	MateriaSource::copySlot(const MateriaSource& src)
 	for (int i = 0; i < 4; ++i)
 	{
 		if (src.m_slot[i] != NULL)
-			m_slot[i] = src.m_slot[i]->AMateria::clone();
+			m_slot[i] = src.m_slot[i]->clone();
 		else
 			m_slot[i] = NULL;
 	}

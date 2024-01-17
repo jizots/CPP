@@ -4,7 +4,7 @@
 Ice::Ice(void)
 	:AMateria("ice")
 {
-	Libft::print_colored_string_endl("AMateria default constructor called", green);
+	Libft::print_colored_string_endl("Ice default constructor called", green);
 }
 
 Ice::Ice(const Ice& other)
@@ -22,6 +22,7 @@ Ice&	Ice::operator=(const Ice& rhs)
 {
 	Libft::print_colored_string_endl("Ice copy assingnment called", blue);
 	m_type = rhs.m_type;
+	return (*this);
 }
 
 AMateria*	Ice::clone() const

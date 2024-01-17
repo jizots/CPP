@@ -10,7 +10,7 @@ public:
 	MateriaSource(const MateriaSource& other);
 	virtual ~MateriaSource(void);
 	MateriaSource&		operator=(const MateriaSource& rhs);
-	virtual void		learnMateria(AMateria*);
+	virtual void		learnMateria(AMateria* m);
 	virtual AMateria*	createMateria(std::string const & type);
 	void	copySlot(const MateriaSource& src);
 	void	clearSlot(void);

@@ -36,6 +36,7 @@ Character&	Character::operator=(const Character& rhs)//clear is correct? unequip
 	m_name = rhs.m_name;
 	clearSlot();
 	copySlot(rhs);
+	return (*this);
 }
 
 std::string const&	Character::getName() const
@@ -71,7 +72,7 @@ void	Character::equip(AMateria* m)
 			return ;
 		}
 	}
-	Libft::print_colored_string_endl("slot is full!", yellow);
+	Libft::print_colored_string_endl("slot is full! Drop to Floor", yellow);
 	AMateria::addToFloor(m);
 }
 
@@ -83,20 +84,29 @@ void	Character::unequip(int idx)
 		return ;
 	}
 	if (m_slot[idx] == NULL)
+	{
 		Libft::print_colored_string_endl("slot is already NULL.", magenta);
+		return ;
+	}
 	AMateria::addToFloor(m_slot[idx]);
 	m_slot[idx] = NULL;
 }
 
 void	Character::use(int idx, ICharacter& target)
 {
-	if (target.m_slot[idx] == NULL)
+	if (idx < 0 || 4 < idx)
 	{
-		std::cout << Libft::get_colored_string("NULL slot!! ", yellow)
-			<< target.Character::getName() << ",s slot#" << idx << std::endl;
+		std::cout << Libft::get_colored_string("id is out of Index ", yellow)
+			<< target.getName() << ",s slot#" << idx << std::endl;
 		return ;
 	}
-	target.m_slot[idx]->AMateria::use(target);	
+	if (m_slot[idx] == NULL)
+	{
+		std::cout << Libft::get_colored_string("NULL slot!! ", yellow)
+			<< target.getName() << ",s slot#" << idx << std::endl;
+		return ;
+	}
+	m_slot[idx]->AMateria::use(target);
 }
 
 void	Character::copySlot(const Character& src)
@@ -104,7 +114,7 @@ void	Character::copySlot(const Character& src)
 	for (int i = 0; i < 4; ++i)
 	{
 		if (src.m_slot[i] != NULL)
-			m_slot[i] = src.m_slot[i]->AMateria::clone();
+			m_slot[i] = src.m_slot[i]->clone();
 		else
 			m_slot[i] = NULL;
 	}
@@ -112,6 +122,7 @@ void	Character::copySlot(const Character& src)
 
 void	Character::clearSlot(void)//is correct? if have address with non-new, it's cause crash.
 {
+	Libft::print_colored_string_endl("Character clearSlot called", yellow);
 	for (int i = 0; i < 4; ++i)
 		delete m_slot[i];
 	for (int i = 0; i < 4; ++i)

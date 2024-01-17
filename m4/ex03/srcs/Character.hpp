@@ -1,6 +1,7 @@
 #ifndef CHARACTER_HPP
 # define CHARACTER_HPP
 
+# include "AMateria.hpp"
 # include "ICharacter.hpp"
 
 class Character : public ICharacter
@@ -19,6 +20,7 @@ public:
 	void			clearSlot(void);
 
 private:
+	AMateria	*m_slot[4];
 
 };
 

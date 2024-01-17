@@ -19,13 +19,9 @@ ICharacter::ICharacter(const ICharacter& other)
 	Libft::print_colored_string_endl("ICharacter copy constructor(with type) called", green);
 }
 
-ICharacter::~ICharacter()
-{
-	Libft::print_colored_string_endl("ICharacter Destructor called", red);
-}
-
 ICharacter&	ICharacter::operator=(const ICharacter& rhs)
 {
 	Libft::print_colored_string_endl("ICharacter copy assingnment called", blue);
 	m_name = rhs.m_name;
+	return (*this);
 }

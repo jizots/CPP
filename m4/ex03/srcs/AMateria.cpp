@@ -1,6 +1,9 @@
 #include "AMateria.hpp"
 #include "Libft.hpp"
 
+AMateria** AMateria::m_listFloor = NULL;
+size_t AMateria::m_sizeFloor = 0;
+
 //AMateria is pure abstract class, Constructor and Destructor is needed?
 AMateria::AMateria(void)
 	:m_type("undefined_AMateria")
@@ -23,15 +26,13 @@ AMateria::AMateria(const AMateria& other)
 AMateria::~AMateria(void)
 {
 	Libft::print_colored_string_endl("AMateria Destructor called", red);
-	for (size_t i = 0; i < m_sizeFloor; ++i)
-		delete m_listFloor[i];
-	delete [] m_listFloor;
 }
 
 AMateria&	AMateria::operator=(const AMateria& rhs)
 {
 	Libft::print_colored_string_endl("AMateria copy assingnment called", blue);
 	m_type = rhs.m_type;
+	return (*this);
 }
 
 std::string const&	AMateria::getType() const
@@ -42,9 +43,9 @@ std::string const&	AMateria::getType() const
 void	AMateria::use(ICharacter& target)
 {
 	if (getType() == "ice")
-		std::cout << "* shoots an ice bolt at " << target.ICharacter::getName() << "*" << std::endl;
+		std::cout << "* shoots an ice bolt at " << target.getName() << "*" << std::endl;
 	else if (getType() == "cure")
-		std::cout << "* heals " << target.ICharacter::getName() << "'s wounds *" << std::endl;
+		std::cout << "* heals " << target.getName() << "'s wounds *" << std::endl;
 }
 
 void	AMateria::addToFloor(AMateria *m)
@@ -80,4 +81,13 @@ bool	AMateria::isFloor(const AMateria* m)
 			return (true);
 	}
 	return (false);
+}
+
+void	AMateria::clearFloor(void)
+{
+	for (size_t i = 0; i < m_sizeFloor; ++i)
+		delete m_listFloor[i];
+	delete [] m_listFloor;
+	m_listFloor = NULL;
+	m_sizeFloor = 0;
 }
