@@ -20,6 +20,7 @@ public:
 	void			clearSlot(void);
 
 private:
+	std::string	m_name;
 	AMateria	*m_slot[4];
 
 };

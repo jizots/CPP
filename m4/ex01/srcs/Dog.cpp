@@ -17,13 +17,12 @@ Dog::Dog(const Dog& other)
 {
 	Libft::print_colored_string_endl("Dog copy constructor called", green);
 	m_type = other.getType();
-	m_brain = new(std::nothrow) Brain();
+	m_brain = new(std::nothrow) Brain(*other.m_brain);
 	if (m_brain == NULL)
 	{
 		Libft::print_colored_string_endl("allocation failed.", red);
 		std::exit(EXIT_FAILURE);
 	}
-	m_brain = other.m_brain;
 }
 
 Dog::~Dog(void)

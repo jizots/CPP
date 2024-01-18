@@ -5,7 +5,7 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror
 CXXFLAGS += -std=c++98
 
-SRCS = main.cpp AMateria.cpp Cure.cpp Ice.cpp ICharacter.cpp Character.cpp MateriaSource.cpp Libft.cpp
+SRCS = main.cpp AMateria.cpp Cure.cpp Ice.cpp Character.cpp MateriaSource.cpp Libft.cpp
 
 SRCS_DIR	= ./srcs/
 OBJS_DIR	= ./objs/

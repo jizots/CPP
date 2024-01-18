@@ -2,25 +2,25 @@
 #include "Libft.hpp"
 
 Character::Character(void)
-	:ICharacter("Nameless")
 {
 	Libft::print_colored_string_endl("Character default constructor called", green);
+	m_name = "Nameless";
 	for (int i = 0; i < 4; ++i)
 		m_slot[i] = NULL;
 }
 
 Character::Character(const std::string& name)
-	:ICharacter(name)
 {
 	Libft::print_colored_string_endl("Character constructor(with name) called", green);
+	m_name = name;
 	for (int i = 0; i < 4; ++i)
 		m_slot[i] = NULL;
 }
 
 Character::Character(const Character& other)
-	:ICharacter(other.getName())
 {
 	Libft::print_colored_string_endl("Character copy constructor(with type) called", green);
+	m_name = other.m_name;
 	copySlot(other);
 }
 
