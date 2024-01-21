@@ -13,6 +13,8 @@ MateriaSource::MateriaSource(void)
 MateriaSource::MateriaSource(const MateriaSource& other)
 {
 	Libft::print_colored_string_endl("MateriaSource copy constructor called", green);
+	for (int i = 0; i < 4; ++i)
+		m_slot[i] = NULL;
 	(*this) = other;
 }
 
@@ -25,8 +27,15 @@ MateriaSource::~MateriaSource()
 MateriaSource&	MateriaSource::operator=(const MateriaSource& rhs)
 {
 	Libft::print_colored_string_endl("MateriaSource copy assignment operator called", blue);
-	clearSlot();
-	copySlot(rhs);
+	if (&rhs != this)
+	{
+		clearSlot();
+		copySlot(rhs);
+	}
+	else
+	{
+		Libft::print_colored_string_endl("Self assignment is not allow.", yellow);
+	}
 	return (*this);
 }
 

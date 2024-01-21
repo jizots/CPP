@@ -33,9 +33,12 @@ Character::~Character()
 Character&	Character::operator=(const Character& rhs)//clear is correct? unequip?
 {
 	Libft::print_colored_string_endl("Character copy assingnment called", blue);
-	m_name = rhs.m_name;
-	clearSlot();
-	copySlot(rhs);
+	if (&rhs != const_cast<Character*>(this))
+	{
+		m_name = rhs.m_name;
+		clearSlot();
+		copySlot(rhs);
+	}
 	return (*this);
 }
 

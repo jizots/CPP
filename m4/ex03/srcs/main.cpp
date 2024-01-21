@@ -76,6 +76,7 @@ int main()
 	msrc->learnMateria(new Ice());
 	msrc->learnMateria(new Cure());
 	MateriaSource *src2 = new MateriaSource(*msrc);
+	*src2 = *src2;
 	me = new Character("copyme");
 	tmp = src2->createMateria("ice");
 	me->equip(tmp);
