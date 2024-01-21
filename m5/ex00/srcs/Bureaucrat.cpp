@@ -44,22 +44,16 @@ void	Bureaucrat::verifyGrade(int grade)
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
-	}
-	catch(const GradeTooHighException& e)
-	{
-		std::cerr << "koko?" << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	catch(const GradeTooLowException& e)
-	{
-		std::cerr << "kotti?" << std::endl;
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
 	}
 }
 
-void	Bureaucrat::operator=(const Bureaucrat& rhs)
+Bureaucrat&	Bureaucrat::operator=(const Bureaucrat& rhs)
 {
-	m_name = rhs.getName();
-	verifyGrade(rhs.getGrade());
+	if (this != &rhs)
+	{
+		m_name = rhs.getName();
+		verifyGrade(rhs.getGrade());
+	}
+	return (*this);
 }

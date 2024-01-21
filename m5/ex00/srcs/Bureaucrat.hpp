@@ -2,6 +2,8 @@
 # define BUREAUCRAT_HPP
 
 # include <string>
+# include <stdexcept>
+# include <iostream>
 
 class Bureaucrat
 {
@@ -18,7 +20,7 @@ public:
 	inline int			getGrade(void) const{return (m_grade);};
 	inline void			incrementGrade(void){verifyGrade(getGrade() - 1);};
 	inline void			decrementGrade(void){verifyGrade(getGrade() + 1);};
-	class GradeTooHighException : std::exception
+	class GradeTooHighException : public std::exception
 	{
 	public:
 		GradeTooHighException(const std::string& name, int grade)
@@ -30,22 +32,24 @@ public:
 		};
 
 	private:
-		const std::string&	m_ename;
+		const std::string	m_ename;
 		int					m_egrade;
 	};
 
-	class GradeTooLowException : std::exception
+	class GradeTooLowException : public std::exception
 	{
 	public:
 		GradeTooLowException(const std::string& name, int grade)
 			:m_ename(name), m_egrade(grade){};
 		inline virtual const char*	what() const _NOEXCEPT
 		{
-			(void)m_egrade; (void)m_ename;
-			return ("TooLow");
+			std::string	ret(m_ename + ", " + std::to_string(m_egrade));
+			std::cout << m_ename << std::endl;
+			std::cout << m_egrade << std::endl;
+			return (ret.c_str());
 		};
 	private:
-		const std::string&	m_ename;
+		const std::string	m_ename;
 		int					m_egrade;
 	};
 
@@ -54,7 +58,7 @@ private:
 	int			m_grade;
 
 public:
-	void	operator=(const Bureaucrat& rhs);
+	Bureaucrat&	operator=(const Bureaucrat& rhs);
 };
 
 #endif
