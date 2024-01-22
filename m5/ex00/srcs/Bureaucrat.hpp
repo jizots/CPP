@@ -20,37 +20,27 @@ public:
 	inline int			getGrade(void) const{return (m_grade);};
 	inline void			incrementGrade(void){verifyGrade(getGrade() - 1);};
 	inline void			decrementGrade(void){verifyGrade(getGrade() + 1);};
+
 	class GradeTooHighException : public std::exception
 	{
 	public:
-		GradeTooHighException(const std::string& name, int grade)
-			:m_ename(name), m_egrade(grade){};
-		inline virtual const char*	what() const _NOEXCEPT
-		{
-			(void)m_egrade; (void)m_ename;
-			return ("TooHigh");
-		};
+		GradeTooHighException(const std::string& name, int gradeToSet, int gradeCurrent);
+		virtual ~GradeTooHighException(void) _NOEXCEPT;
+		virtual const char*	what() const _NOEXCEPT;
 
 	private:
-		const std::string	m_ename;
-		int					m_egrade;
+		std::string	m_message;
 	};
 
 	class GradeTooLowException : public std::exception
 	{
 	public:
-		GradeTooLowException(const std::string& name, int grade)
-			:m_ename(name), m_egrade(grade){};
-		inline virtual const char*	what() const _NOEXCEPT
-		{
-			std::string	ret(m_ename + ", " + std::to_string(m_egrade));
-			std::cout << m_ename << std::endl;
-			std::cout << m_egrade << std::endl;
-			return (ret.c_str());
-		};
+		GradeTooLowException(const std::string& name, int gradeToSet, int gradeCurrent);
+		virtual ~GradeTooLowException(void) _NOEXCEPT;
+		virtual const char*	what() const _NOEXCEPT;
+
 	private:
-		const std::string	m_ename;
-		int					m_egrade;
+		std::string	m_message;
 	};
 
 private:
@@ -60,5 +50,7 @@ private:
 public:
 	Bureaucrat&	operator=(const Bureaucrat& rhs);
 };
+
+std::ostream& operator<<(std::ostream& os, const Bureaucrat& rhs);
 
 #endif
