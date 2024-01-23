@@ -54,7 +54,7 @@ void	Bureaucrat::verifyGrade(int grade)
 
 Bureaucrat&	Bureaucrat::operator=(const Bureaucrat& rhs)
 {
-	Libft::print_colored_string_endl("Copy assignment operator called", blue);
+	Libft::print_colored_string_endl("Bureaucrat Copy assignment operator called", blue);
 	if (this != &rhs)
 	{
 		m_name = rhs.getName();
@@ -67,34 +67,25 @@ Bureaucrat&	Bureaucrat::operator=(const Bureaucrat& rhs)
 Bureaucrat::GradeTooHighException::GradeTooHighException(const std::string& name, int gradeToSet, int gradeCurrent)
 	:m_message("TooHigh: " + name + ", try set grade to " + std::to_string(gradeToSet) + ". Current grade is " + std::to_string(gradeCurrent))
 {
-	Libft::print_colored_string_endl("TooHigh constructor called", green);
+	Libft::print_colored_string_endl("Bureaucrat TooHigh constructor called", green);
 }
 
 Bureaucrat::GradeTooHighException::~GradeTooHighException(void) _NOEXCEPT
 {
-	Libft::print_colored_string_endl("TooHigh destructor called", red);
+	Libft::print_colored_string_endl("Bureaucrat TooHigh destructor called", red);
 }
 
-const char* Bureaucrat::GradeTooHighException::what() const _NOEXCEPT
-{
-	return (m_message.c_str());
-}
 
 /*Class TooLow*/
 Bureaucrat::GradeTooLowException::GradeTooLowException(const std::string& name, int gradeToSet, int gradeCurrent)
-	:m_message("TooLow: " + name + " try set grade to " + std::to_string(gradeToSet) + ". Current grade is " + std::to_string(gradeCurrent))
+	:m_message("(Bureaucrat)TooLow: " + name + " try set grade to " + std::to_string(gradeToSet) + ". Current grade is " + std::to_string(gradeCurrent))
 {
-	Libft::print_colored_string_endl("TooLow constructor called", green);
+	Libft::print_colored_string_endl("Bureaucrat TooLow constructor called", green);
 }
 
 Bureaucrat::GradeTooLowException::~GradeTooLowException(void) _NOEXCEPT
 {
-	Libft::print_colored_string_endl("TooLow destructor called", red);
-}
-
-const char* Bureaucrat::GradeTooLowException::what() const _NOEXCEPT
-{
-	return (m_message.c_str());
+	Libft::print_colored_string_endl("Bureaucrat TooLow destructor called", red);
 }
 
 

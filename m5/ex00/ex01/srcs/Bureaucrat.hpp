@@ -4,13 +4,11 @@
 # include <string>
 # include <stdexcept>
 # include <iostream>
+# include "Form.hpp"
+class Form;
 
 class Bureaucrat
 {
-private:
-	void	setGrade(int grade);
-	void	verifyGrade(int grade);
-
 public:
 	Bureaucrat(void);
 	Bureaucrat(const std::string name, int grade);
@@ -27,7 +25,7 @@ public:
 	public:
 		GradeTooHighException(const std::string& name, int gradeToSet, int gradeCurrent);
 		virtual ~GradeTooHighException(void) _NOEXCEPT;
-		virtual const char*	what() const _NOEXCEPT;
+		inline virtual const char*	what() const _NOEXCEPT{return (m_message.c_str());};
 
 	private:
 		std::string	m_message;
@@ -38,7 +36,7 @@ public:
 	public:
 		GradeTooLowException(const std::string& name, int gradeToSet, int gradeCurrent);
 		virtual ~GradeTooLowException(void) _NOEXCEPT;
-		virtual const char*	what() const _NOEXCEPT;
+		inline virtual const char*	what() const _NOEXCEPT{return (m_message.c_str());};
 
 	private:
 		std::string	m_message;
@@ -47,6 +45,10 @@ public:
 private:
 	std::string	m_name;
 	int			m_grade;
+
+private:
+	void	setGrade(int grade);
+	void	verifyGrade(int grade);
 
 public:
 	Bureaucrat&	operator=(const Bureaucrat& rhs);
