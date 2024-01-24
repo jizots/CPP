@@ -18,7 +18,7 @@ public:
 	inline int			getGrade(void) const{return (m_grade);};
 	inline void			incrementGrade(void){verifyGrade(getGrade() - 1);};
 	inline void			decrementGrade(void){verifyGrade(getGrade() + 1);};
-	void				signForm(const Form& form);
+	void				signForm(Form& form);
 
 	class GradeTooHighException : public std::exception
 	{

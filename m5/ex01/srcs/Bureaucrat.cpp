@@ -28,6 +28,11 @@ Bureaucrat::~Bureaucrat(void)
 	Libft::print_colored_string_endl("Bureaucrat Destructor called", red);
 }
 
+void	Bureaucrat::signForm(Form& form)
+{
+	form.beSigned(*this);
+}
+
 void	Bureaucrat::setGrade(int grade)
 {
 	if (150 < grade)

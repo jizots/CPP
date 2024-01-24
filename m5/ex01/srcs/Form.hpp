@@ -12,26 +12,30 @@ public:
 	Form(const std::string& name, int grade_req_sig, int grade_req_exec);
 	Form(const Form& other);
 	~Form(void);
-	inline std::string&	getName(void) const{return (const_cast<std::string&>(m_name));};
-	inline bool			getSigned(void){return (m_isSigned);};
-	int					getGradeReqSig(void) const{return (m_grade_req_sig);};
-	int					getGradeReqExec(void) const{return (m_grade_req_exec);};
-	void				beSigned(const Bureaucrat& signer);
+	inline const std::string&	getName(void) const{return (m_name);};
+	inline const std::string& 	getSignerName(void) const {return (m_SignerName);};
+	inline bool					getIsSigned(void) const {return (m_isSigned);};
+	int							getGradeReqSig(void) const{return (m_gradeReqSig);};
+	int							getGradeReqExec(void) const{return (m_gradeReqExe);};
+	void						beSigned(const Bureaucrat& signer);
 
-	class GradeTooHighException
+	class GradeTooHighException : public std::exception
 	{
 	public:
-		GradeTooHighException();
-
+		GradeTooHighException(const std::string nameForm, const int grade);
+		~GradeTooHighException(void) _NOEXCEPT;
+		inline virtual const char*	what() const _NOEXCEPT{return (m_message.c_str());};
 	private:
 		std::string	m_message;
 	};
 
-	class GradeTooLowException
+	class GradeTooLowException : public std::exception
 	{
 	public:
 		GradeTooLowException(const std::string nameForm, const int grade);
 		GradeTooLowException(const Bureaucrat& signer, const Form& form);
+		~GradeTooLowException(void) _NOEXCEPT;
+		inline virtual const char*	what() const _NOEXCEPT{return (m_message.c_str());};
 	private:
 		std::string	m_message;
 	};
@@ -39,8 +43,9 @@ public:
 private:
 	const std::string	m_name;
 	bool				m_isSigned;
-	const int			m_grade_req_sig;
-	const int			m_grade_req_exec;
+	std::string			m_SignerName;
+	const int			m_gradeReqSig;
+	const int			m_gradeReqExe;
 
 private:
 	void	setGrade(int grade);
