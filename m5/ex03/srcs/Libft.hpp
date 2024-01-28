@@ -38,9 +38,8 @@ public:
 	 * Print colored string to std::cout with endline.
 	 * @param msg Message what want to colored.
 	 * @param font_color Font color
-	 * @param stream Output steam. std::cout or std::cerr
 	 */
-	static void			print_colored_string_endl(const std::string& msg, Font_Color font_color, std::ostream& stream);
+	static void			print_colored_string_endl(const std::string& msg, Font_Color font_color);
 
 	/**
 	 * Verify string is composed with expected string charactors.

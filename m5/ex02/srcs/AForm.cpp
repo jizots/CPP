@@ -1,7 +1,7 @@
-#include "Form.hpp"
+#include "AForm.hpp"
 #include "Libft.hpp"
 
-Form::Form(void)
+AForm::AForm(void)
 	:m_name("Nameless"),
 	m_isSigned(false),
 	m_SignerName(""),
@@ -11,7 +11,7 @@ Form::Form(void)
 	Libft::print_colored_string_endl("Form Default constructor called", green);
 };
 
-Form::Form(const std::string& name, int grade_req_sig, int grade_req_exec)
+AForm::AForm(const std::string& name, int grade_req_sig, int grade_req_exec)
 	:m_name(name),
 	m_isSigned(false),
 	m_SignerName(""),
@@ -21,7 +21,7 @@ Form::Form(const std::string& name, int grade_req_sig, int grade_req_exec)
 	Libft::print_colored_string_endl("Form Constructor called", green);
 };
 
-Form::Form(const Form& other)
+AForm::AForm(const AForm& other)
 	:m_name(other.m_name),
 	m_isSigned(other.m_isSigned),
 	m_SignerName(other.m_SignerName),
@@ -31,7 +31,7 @@ Form::Form(const Form& other)
 	Libft::print_colored_string_endl("Form Copy constructor called", green);
 };
 
-void	Form::setGrade(int grade)
+void	AForm::setGrade(int grade)
 {
 	if (150 < grade)
 		throw (GradeTooLowException(getName(), grade));
@@ -39,7 +39,7 @@ void	Form::setGrade(int grade)
 		throw (GradeTooHighException(getName(), grade));
 };
 
-int	Form::verifyGrade(int grade)
+int	AForm::verifyGrade(int grade)
 {
 	try
 	{
@@ -55,7 +55,7 @@ int	Form::verifyGrade(int grade)
 	}
 };
 
-void	Form::verifySign(const Bureaucrat& signer)
+void	AForm::verifySign(const Bureaucrat& signer)
 {
 	if (signer.getGrade() > this->getGradeReqSig() || this->getIsSigned())
 		throw (GradeTooLowException(signer, *this));
@@ -67,12 +67,21 @@ void	Form::verifySign(const Bureaucrat& signer)
 	}
 };
 
-Form::~Form(void)
+void	AForm::verifyExe(const Bureaucrat& executor) const
+{
+	if (executor.getGrade() > this->getGradeReqExec() || this->getIsSigned() == false)
+		throw (GradeTooLowException(executor, *this, getGradeReqExec()));
+	else
+		std::cout << executor.getName() << " executed " << getName() << std::endl; 
+};
+
+
+AForm::~AForm(void)
 {
 	Libft::print_colored_string_endl("Form destructor called", red);
 };
 
-void	Form::beSigned(const Bureaucrat& signer)
+void	AForm::beSigned(const Bureaucrat& signer)
 {
 	try
 	{
@@ -84,34 +93,34 @@ void	Form::beSigned(const Bureaucrat& signer)
 	}
 };
 
-Form& 	Form::operator=(const Form& rhs)
+AForm& 	AForm::operator=(const AForm& rhs)
 {
 	(void)rhs;
 	Libft::print_colored_string_endl("Form Copy assignment operator called", blue);
 	Libft::print_colored_string_endl("But copy assignment can't allow.", yellow);
-	return (const_cast<Form&>(rhs));
+	return (const_cast<AForm&>(rhs));
 };
 
 /*GradeTooHigh class*/
-Form::GradeTooHighException::GradeTooHighException(const std::string nameForm, const int grade)
-	:m_message("(Form)TooHigh: " + nameForm + " try set Requirement grade to " + std::to_string(grade))
+AForm::GradeTooHighException::GradeTooHighException(const std::string nameAForm, const int grade)
+	:m_message("(Form)TooHigh: " + nameAForm + " try set Requirement grade to " + std::to_string(grade))
 {
 	Libft::print_colored_string_endl("Form TooHigh constructor called", green);
 };
 
-Form::GradeTooHighException::~GradeTooHighException(void) _NOEXCEPT
+AForm::GradeTooHighException::~GradeTooHighException(void) _NOEXCEPT
 {
 	Libft::print_colored_string_endl("Form TooHigh destructor called", red);
 };
 
 /*GradeTooLow class*/
-Form::GradeTooLowException::GradeTooLowException(const std::string nameForm, const int grade)
-	:m_message("(Form)TooLow: " + nameForm + " try set Requirement grade to " + std::to_string(grade))
+AForm::GradeTooLowException::GradeTooLowException(const std::string nameAForm, const int grade)
+	:m_message("(Form)TooLow: " + nameAForm + " try set Requirement grade to " + std::to_string(grade))
 {
 	Libft::print_colored_string_endl("Form TooLow constructor called", green);
 };
 
-Form::GradeTooLowException::GradeTooLowException(const Bureaucrat& signer, const Form& form)
+AForm::GradeTooLowException::GradeTooLowException(const Bureaucrat& signer, const AForm& form)
 {
 	Libft::print_colored_string_endl("Form TooLow(sign) constructor called", green);
 	if (form.m_isSigned)
@@ -122,13 +131,24 @@ Form::GradeTooLowException::GradeTooLowException(const Bureaucrat& signer, const
 			+ "your Grade Too Low. Required Grade is " + std::to_string(form.getGradeReqSig());
 };
 
-Form::GradeTooLowException::~GradeTooLowException(void) _NOEXCEPT
+AForm::GradeTooLowException::GradeTooLowException(const Bureaucrat& signer, const AForm& form, const int grade)
+{
+	Libft::print_colored_string_endl("Form TooLow(sign) constructor called", green);
+	if (form.m_isSigned == false)
+		m_message = signer.getName() + " couldn't execute " + form.getName() + " because "
+			+ "not signed...";
+	else
+		m_message = signer.getName() + " couldn't execute " + form.getName() + " because "
+			+ "your Grade Too Low. Required Grade is " + std::to_string(grade);
+};
+
+AForm::GradeTooLowException::~GradeTooLowException(void) _NOEXCEPT
 {
 	Libft::print_colored_string_endl("Form TooLow destructor called", red);
 };
 
 /* << operator */
-std::ostream& operator<<(std::ostream& os, const Form& rhs)
+std::ostream& operator<<(std::ostream& os, const AForm& rhs)
 {
 	os << rhs.getName() << ": Signer(" << rhs.getSignerName() << "), "
 		<< "isSigned(" << rhs.getIsSigned() << "), "

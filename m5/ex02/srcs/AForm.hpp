@@ -1,28 +1,30 @@
-#ifndef FORM_HPP
-# define FORM_HPP
+#ifndef AFORM_HPP
+# define AFORM_HPP
 
 # include <string>
 # include "Bureaucrat.hpp"
 class Bureaucrat;
 
-class Form
+class AForm
 {
 public:
-	Form(void);
-	Form(const std::string& name, int grade_req_sig, int grade_req_exec);
-	Form(const Form& other);
-	~Form(void);
+	AForm(void);
+	AForm(const std::string& name, int grade_req_sig, int grade_req_exec);
+	AForm(const AForm& other);
+	~AForm(void);
 	inline const std::string&	getName(void) const{return (m_name);};
 	inline const std::string& 	getSignerName(void) const {return (m_SignerName);};
 	inline bool					getIsSigned(void) const {return (m_isSigned);};
 	int							getGradeReqSig(void) const{return (m_gradeReqSig);};
 	int							getGradeReqExec(void) const{return (m_gradeReqExe);};
 	void						beSigned(const Bureaucrat& signer);
+	virtual void				execute(Bureaucrat const & executor) const = 0;
+	void	verifyExe(const Bureaucrat& executor) const;
 
 	class GradeTooHighException : public std::exception
 	{
 	public:
-		GradeTooHighException(const std::string nameForm, const int grade);
+		GradeTooHighException(const std::string nameAForm, const int grade);
 		~GradeTooHighException(void) _NOEXCEPT;
 		inline virtual const char*	what() const _NOEXCEPT{return (m_message.c_str());};
 	private:
@@ -32,8 +34,9 @@ public:
 	class GradeTooLowException : public std::exception
 	{
 	public:
-		GradeTooLowException(const std::string nameForm, const int grade);
-		GradeTooLowException(const Bureaucrat& signer, const Form& form);
+		GradeTooLowException(const std::string nameAForm, const int grade);
+		GradeTooLowException(const Bureaucrat& signer, const AForm& Aform);
+		GradeTooLowException(const Bureaucrat& signer, const AForm& Aform, const int grade);
 		~GradeTooLowException(void) _NOEXCEPT;
 		inline virtual const char*	what() const _NOEXCEPT{return (m_message.c_str());};
 	private:
@@ -53,9 +56,9 @@ private:
 	void	verifySign(const Bureaucrat& signer);
 
 public:
-	Form& 	operator=(const Form& rhs);
+	AForm& 	operator=(const AForm& rhs);
 };
 
-std::ostream&	operator<<(std::ostream& os, const Form& rhs);
+std::ostream&	operator<<(std::ostream& os, const AForm& rhs);
 
 #endif

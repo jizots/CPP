@@ -11,9 +11,9 @@ std::string Libft::get_colored_string(const std::string& msg, Font_Color font_co
 	return color_codes[font_color] + msg + reset_color;
 }
 
-void	Libft::print_colored_string_endl(const std::string& msg, Font_Color font_color, std::ostream& stream)
+void	Libft::print_colored_string_endl(const std::string& msg, Font_Color font_color)
 {
-	stream << Libft::get_colored_string(msg, font_color) << std::endl;
+	std::cout << Libft::get_colored_string(msg, font_color) << std::endl;
 }
 
 bool	Libft::is_string_composed_with_chars(const std::string& str, const std::string& expected_set)
