@@ -11,7 +11,7 @@ public:
 	AForm(void);
 	AForm(const std::string& name, int grade_req_sig, int grade_req_exec);
 	AForm(const AForm& other);
-	~AForm(void);
+	virtual ~AForm(void);
 	inline const std::string&	getName(void) const{return (m_name);};
 	inline const std::string& 	getSignerName(void) const {return (m_SignerName);};
 	inline bool					getIsSigned(void) const {return (m_isSigned);};
