@@ -1,11 +1,16 @@
 .PHONY: all clean fclean re
 
-NAME = cpp05ex02
+NAME = cpp05ex03
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror
 CXXFLAGS += -std=c++98
 
-SRCS = main.cpp Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp Libft.cpp
+SRCS = 	main.cpp\
+		Bureaucrat.cpp\
+		AForm.cpp\
+		ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp\
+		Intern.cpp\
+		Libft.cpp
 
 SRCS_DIR	= ./srcs/
 OBJS_DIR	= ./objs/

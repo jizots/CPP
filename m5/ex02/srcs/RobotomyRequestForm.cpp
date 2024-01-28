@@ -1,4 +1,5 @@
-#include <random>
+#include <ctime>
+#include <cstdlib>
 #include "RobotomyRequestForm.hpp"
 #include "Libft.hpp"
 
@@ -27,9 +28,9 @@ RobotomyRequestForm::~RobotomyRequestForm(void)
 
 void	RobotomyRequestForm::robotomize(const std::string& target) const
 {
-	std::random_device	rnd;
+	std::srand(time(NULL));
 
-	if ((rnd() % 2))
+	if ((rand() % 2))
 	{
 		std::cout << target << " robotomized!: "
 			<< "gagagagagagaga..." << std::endl;
