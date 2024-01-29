@@ -9,26 +9,48 @@ int	main()
 {
 	std::cout << "----construct----" << std::endl;
 	Bureaucrat b1("shachooo", 1);
+	Bureaucrat b2("hira", 150);
 	Intern someone;
 	AForm *robo;
 	AForm *shru;
-	robo = someone.makeForm("RobotomyRequest", "R2D2");
-	shru = someone.makeForm("shrubbery  creation", "Shru");
+	AForm *pres;
+	try
+	{
+		robo = someone.makeForm("RobotomyRequest", "R2D2");	
+		b1.signForm(*robo);
+		b1.executeForm(*robo);
+		robo->execute(b2);
+		delete robo;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 
-	std::cout << "----try sign, execute from Form----" << std::endl;
-	b1.signForm(*robo);
-	b1.executeForm(*robo);
-	b1.signForm(*shru);
-	b1.executeForm(*shru);
+	try
+	{
+		shru = someone.makeForm("shrubbery  creation", "Shru");
+		b1.signForm(*shru);
+		b1.executeForm(*shru);
+		delete shru;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 
-	std::cout << "----try sign, from Bureaucrat----" << std::endl;
+	try
+	{
+		pres = someone.makeForm("Presidential onsha", "Shru");
+		b1.signForm(*pres);
+		b1.executeForm(*pres);
+		delete pres;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 
-	std::cout << "---- '<<' ----" << std::endl;
-
-	std::cout << "---- '==' ----" << std::endl;
-
-	delete robo;
-	delete shru;
 	return (0);
 }
 

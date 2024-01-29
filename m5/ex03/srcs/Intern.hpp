@@ -15,6 +15,13 @@ public:
 	inline ~Intern(void){};
 	AForm*	makeForm(const std::string& form, const std::string& target);
 
+class FormNotFoundException : public std::exception
+{
+public:
+	inline virtual const char* what() const _NOEXCEPT{return ("Form not found");}
+};
+
+
 private:
 	AForm* 	makeNewPres(const std::string& target);
 	AForm* 	makeNewRobo(const std::string& target);

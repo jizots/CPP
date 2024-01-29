@@ -1,6 +1,7 @@
 #include "Intern.hpp"
 #include <string>
 #include <strings.h>
+#include "Libft.hpp"
 
 typedef AForm* (Intern::*t_makeForm)(const std::string& target);
 
@@ -35,12 +36,10 @@ bool	Intern::isCorrectForm(const std::string& forms, const std::string& reqform)
 	}
 	if (strcasecmp(forms.c_str(), erasedReqForm.c_str()) == 0)
 		return (true);
-	std::cout << forms << std::endl;
-	std::cout << erasedReqForm << std::endl;
 	return (false);
 };
 
-AForm*	Intern::makeForm(const std::string& reqform, const std::string& target) //Must control error case, new , not fined or other case.
+AForm*	Intern::makeForm(const std::string& reqform, const std::string& target)
 {
 	t_makeForm	funcs[] = {&Intern::makeNewPres, &Intern::makeNewRobo, &Intern::makeNewShru};
 	std::string	forms[] = {"PresidentialPardon", "RobotomyRequest", "ShrubberyCreation"};
@@ -50,5 +49,6 @@ AForm*	Intern::makeForm(const std::string& reqform, const std::string& target) /
 		if (isCorrectForm(forms[i], reqform))
 			return (this->*funcs[i])(target);
 	}
+	throw (Intern::FormNotFoundException());
 	return (NULL);
 };
