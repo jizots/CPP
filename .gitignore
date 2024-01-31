@@ -1,6 +1,6 @@
 *.o
 PhoneBook
 a.out
-test.cpp
+test.*
 *gch
 test.cpp
