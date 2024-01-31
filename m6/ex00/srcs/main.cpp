@@ -16,7 +16,7 @@ int main(int ac, char **av)
 		return (1);
 	}
 	ScalarConverter::convert(literal);
-	// ScalarConverter a; //compile error. cause privete attribute.
+	// ScalarConverter a; //compile error. cause Default constructor declaration at privete attribute.
 	return (0);
 }
 

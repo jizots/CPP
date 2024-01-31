@@ -2,19 +2,36 @@
 # define SCALARCONVERTER_HPP
 
 # include <string>
+# include <sstream>
+# include <stdexcept>
 
 class ScalarConverter
 {
 public:
 	static void	convert(const std::string& literal);
 
+	class ConvertImpossibleException : public std::exception
+	{
+	public:
+		inline ConvertImpossibleException(const std::string& msg):m_msg(msg){};
+		inline virtual ~ConvertImpossibleException(void) _NOEXCEPT{};
+		inline virtual const char* what() const _NOEXCEPT{return (m_msg.c_str());};
+	private:
+		std::string	m_msg;
+	};
+
 private:
 	ScalarConverter(void);
 	~ScalarConverter(void);
-	static void	toChar();
-	static void	toInt();
-	static void	toFloat();
-	static void	toDouble();
+	static void	toChar(const std::string& literal);
+	static void	toInt(const std::string& literal);
+	static void	toFloat(const std::string& literal);
+	static void	toDouble(const std::string& literal);
+
+	static char		m_val_char;
+	static int		m_val_int;
+	static float	m_val_float;
+	static double	m_val_double;
 };
 
 /*
