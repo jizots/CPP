@@ -1,6 +1,7 @@
 #include "ScalarConverter.hpp"
-#include <cmath>
 #include "Libft.hpp"
+#include <cmath>
+#include <limits>
 
 char	ScalarConverter::m_val_char = 0;
 int		ScalarConverter::m_val_int = 0;
@@ -18,9 +19,7 @@ void	ScalarConverter::toChar(const std::string& literal)
 		return ;
 	}
 	else
-	{
 		throw (ScalarConverter::ConvertImpossibleException("Error"));
-	}
 };
 
 void	ScalarConverter::toInt(const std::string& literal)

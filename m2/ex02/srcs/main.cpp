@@ -13,7 +13,7 @@ int main( void )
 	std::cout << "d == c:" << (d == c) << std::endl;
 	std::cout << "d != c:" << (d != c) << std::endl;
 	std::cout << "d + c:" << (d + c) << std::endl;
-	std::cout << "d + c + 0.5:" << (d + c + 0.5) << std::endl;
+	std::cout << "d + c + 0.5:" << (d + c + 0.5f) << std::endl;
 	std::cout << "d - c:" << (d - c) << std::endl;
 	std::cout << "d * c:" << (d * c) << std::endl;
 	std::cout << "d / c:" << (d / c) << std::endl;
@@ -32,6 +32,9 @@ int main( void )
 	std::cout << std::endl;
 
 	std::cout << "-----------My test-----------" << std::endl;
+	std::cout << --a << std::endl;
+	std::cout << a-- << std::endl;
+	std::cout << a << std::endl;
 	std::cout << Fixed::min( const_cast<Fixed&>(a), b ) << std::endl;
 	std::cout << Fixed::min( a, b ) << std::endl;
 	std::cout << Fixed::max( const_cast<Fixed&>(a), b ) << std::endl;

@@ -1,9 +1,20 @@
 #include "Libft.hpp"
 #include "ScalarConverter.hpp"
 
+/*
+ C++ has four cast.
+ static_cast: ex.float to int, int to float. Must verify overflow from big type to little type.
+ const_cast:
+ dynamic_cast:
+ reinterpret_cast:
+*/
+
+
 int main(int ac, char **av)
 {
+	// ScalarConverter a; //compile error. cause Default constructor declaration at privete attribute.
 	std::string	literal;
+
 	if (ac != 2)
 	{
 		Libft::print_colored_string_endl("Error. Only one args accept.", red, std::cerr);
@@ -16,7 +27,6 @@ int main(int ac, char **av)
 		return (1);
 	}
 	ScalarConverter::convert(literal);
-	// ScalarConverter a; //compile error. cause Default constructor declaration at privete attribute.
 	return (0);
 }
 

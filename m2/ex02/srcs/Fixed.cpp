@@ -120,24 +120,24 @@ bool	Fixed::operator!=(const Fixed& rhs)
 }
 
 /*----------Arithmetic Operator----------*/
-float	Fixed::operator+(const Fixed& rhs)
+Fixed	Fixed::operator+(const Fixed& rhs)
 {
-	return (this->toFloat() + rhs.toFloat());
+	return (Fixed(this->toFloat() + rhs.toFloat()));
 }
 
-float	Fixed::operator-(const Fixed& rhs)
+Fixed	Fixed::operator-(const Fixed& rhs)
 {
-	return (this->toFloat() - rhs.toFloat());
+	return (Fixed(this->toFloat() - rhs.toFloat()));
 }
 
-float	Fixed::operator*(const Fixed& rhs)
+Fixed	Fixed::operator*(const Fixed& rhs)
 {
-	return (this->toFloat() * rhs.toFloat());
+	return (Fixed(this->toFloat() * rhs.toFloat()));
 }
 
-float	Fixed::operator/(const Fixed& rhs)
+Fixed	Fixed::operator/(const Fixed& rhs)
 {
-	return (this->toFloat() / rhs.toFloat());
+	return (Fixed(this->toFloat() / rhs.toFloat()));
 }
 
 /*----------Increment & Decrement----------*/
