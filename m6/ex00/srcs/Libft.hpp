@@ -72,8 +72,8 @@ public:
 	 * @param c Character to be checked.
 	 * @return Return True if the character is in the ASCII code.
 	 */
-	static int			ft_isascii(int c);
-	static int			ft_atoi(std::string& str);
+	static int	ft_isascii(int c);
+	static int	ft_atoi(std::string& str);
 
 	/**
 	 * Get line from std::cin.
@@ -81,8 +81,16 @@ public:
 	 * @param str String to be stored.
 	 * @return Return 1 if success, 0 if EOF, -1 if error.
 	 */
-	static int			getline_wrap(std::istream& is, std::string& str);
+	static int	getline_wrap(std::istream& is, std::string& str);
+
+	template<typename RangeType, typename ValueType>
+	static bool isWithinRange(ValueType value){
+		return (std::numeric_limits<RangeType>::min() <= value
+				&& value <= std::numeric_limits<RangeType>::max());};
+
 private:
+	Libft(void);
+	Libft(const Libft& other);
 };
 
 #endif

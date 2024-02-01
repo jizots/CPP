@@ -1,11 +1,12 @@
 #include "Libft.hpp"
 #include "ScalarConverter.hpp"
+#include <cmath>
 
 /*
  C++ has four cast.
  static_cast: ex.float to int, int to float. Must verify overflow from big type to little type.
- const_cast:
- dynamic_cast:
+ const_cast: Add or Remove const attribute. Will not use in this exercise.
+ dynamic_cast: 
  reinterpret_cast:
 */
 
@@ -21,13 +22,23 @@ int main(int ac, char **av)
 		return (1);
 	}
 	literal = av[1];
-	if (literal.empty() || Libft::is_string_composed_with_func(literal, std::isspace) == true)
+	if (literal.empty())
 	{
 		Libft::print_colored_string_endl("Error. Argument is invalid literal.", red, std::cerr);
 		return (1);
 	}
 	ScalarConverter::convert(literal);
+	std::cout << std::endl;
+	std::cout << "------------- my test -------------" << std::endl;
+	std::istringstream iss(".5");
+	char c;
+	int i;
+	float f;
+	double d;
+	iss >> f;
+	std::cout << f <<std::endl;
 	return (0);
+	(void)c;(void)i;(void)f;(void)d;
 }
 
 /*

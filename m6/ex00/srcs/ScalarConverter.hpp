@@ -4,6 +4,11 @@
 # include <string>
 # include <sstream>
 # include <stdexcept>
+# define type_char		0
+# define type_int		1
+# define type_float		2
+# define type_double	3
+
 
 class ScalarConverter
 {
@@ -23,15 +28,23 @@ public:
 private:
 	ScalarConverter(void);
 	~ScalarConverter(void);
-	static void	toChar(const std::string& literal);
-	static void	toInt(const std::string& literal);
-	static void	toFloat(const std::string& literal);
-	static void	toDouble(const std::string& literal);
+	static void	analyzeLiteralType(const std::string& literal);
+	static bool	isChar(const std::string& literal);
+	static bool	isInt(const std::string& literal);
+	static bool	isFloat(const std::string& literal);
+	static bool	isDouble(const std::string& literal);
+	static bool	isNum(const std::string& str);
+	static bool	isFloatingPointNum(const std::string& str);
+	static void	printAsChar(void);
+	static void	printAsInt(void);
+	static void	printAsFloat(void);
+	static void	printAsDouble(void);
 
 	static char		m_val_char;
 	static int		m_val_int;
 	static float	m_val_float;
 	static double	m_val_double;
+	static unsigned char	m_type;
 };
 
 /*
