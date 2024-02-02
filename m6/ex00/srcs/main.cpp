@@ -31,14 +31,14 @@ int main(int ac, char **av)
 	std::cout << std::endl;
 	std::cout << "------------- my test -------------" << std::endl;
 	std::istringstream iss(".5");
-	char c;
-	int i;
-	float f;
-	double d;
+	char c = 'a';
+	int i = 'a';
+	float f = 'a';
+	double d = 'a';
+	std::cout << "char: " << c << ", int: " << i <<", float: " << f << ", double: " << d << std::endl;
 	iss >> f;
 	std::cout << f <<std::endl;
 	return (0);
-	(void)c;(void)i;(void)f;(void)d;
 }
 
 /*

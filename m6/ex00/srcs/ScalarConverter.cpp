@@ -147,6 +147,10 @@ void	ScalarConverter::analyzeLiteralType(const std::string& literal)
 		ScalarConverter::m_type = (1 << type_char);
 		ScalarConverter::m_type += (1 << type_int);
 		ScalarConverter::m_val_int = static_cast<int>(ScalarConverter::m_val_char);
+		ScalarConverter::m_type += (1 << type_float);
+		ScalarConverter::m_val_float = static_cast<float>(ScalarConverter::m_val_char);
+		ScalarConverter::m_type += (1 << type_double);
+		ScalarConverter::m_val_double = static_cast<double>(ScalarConverter::m_val_char);
 	}
 	else if (isInt(literal))
 	{
