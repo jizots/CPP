@@ -35,4 +35,4 @@ Applies STL in advanced applications, tackling real-world programming challenges
 - Exception Handling: Ability to design robust applications using exceptions for error management, ensuring software reliability.  
 - Type Conversion and Casting: Proficiency in safe and effective type conversion, essential for low-level programming and performance optimization.  
 - Generic Programming with Templates: Expertise in templated functions and classes, enabling flexible and type-safe code across various data types.  
-STL Proficiency: Comprehensive understanding of STL for data management and manipulation, enhancing efficiency in solving complex problems.
+- STL Proficiency: Comprehensive understanding of STL for data management and manipulation, enhancing efficiency in solving complex problems.  
