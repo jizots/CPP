@@ -5,11 +5,10 @@
 /*
  C++ has four cast.
  static_cast: ex.float to int, int to float. Must verify overflow from big type to little type.
- const_cast: Add or Remove const attribute. Will not use in this exercise.
- dynamic_cast: 
- reinterpret_cast:
+ const_cast: Add or Remove const attribute.
+ dynamic_cast: Use for polymorphism(;cast to correct class(type)). If it is not polymorphism, return null.
+ reinterpret_cast: Convert any type to any type. It is not safe. Only use when recast to same type.
 */
-
 
 int main(int ac, char **av)
 {
