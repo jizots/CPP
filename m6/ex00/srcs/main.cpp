@@ -8,6 +8,7 @@
  const_cast: Add or Remove const attribute.
  dynamic_cast: Use for polymorphism(;cast to correct class(type)). If it is not polymorphism, return null.
  reinterpret_cast: Convert any type to any type. It is not safe. Only use when recast to same type.
+ https://learn.microsoft.com/ja-jp/cpp/cpp/casting-operators?view=msvc-170
 */
 
 int main(int ac, char **av)

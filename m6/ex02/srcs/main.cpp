@@ -2,6 +2,11 @@
 #include "Base.hpp"
 #include "Utils.hpp"
 
+/*
+ * Use dynamic_cast to cast to correct class(type).
+	https://www.ibm.com/docs/ja/i/7.1?topic=ssw_ibm_i_71/rzarg/keyword_dynamic_cast.html
+*/
+
 int	main()
 {
 	Base a;
@@ -29,7 +34,3 @@ static void destructor()
 {
 	system("leaks -q cpp06ex02");
 }
-
-/*
-	https://www.ibm.com/docs/ja/i/7.1?topic=ssw_ibm_i_71/rzarg/keyword_dynamic_cast.html
-*/

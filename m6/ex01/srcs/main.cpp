@@ -1,6 +1,11 @@
 #include "Serializer.hpp"
 #include <iostream>
 
+/*
+ * Use reinterpret_cast to convert any type to any type.
+	https://learn.microsoft.com/ja-jp/cpp/cpp/reinterpret-cast-operator?view=msvc-170
+*/
+
 int	main()
 {
 	std::cout << "------------- Subject Test -------------" << std::endl;
@@ -19,5 +24,3 @@ int	main()
 	// char ptr_c = reinterpret_cast<char>(&d1); // Compile error
 	return (0);
 }
-
-/*https://learn.microsoft.com/ja-jp/cpp/cpp/reinterpret-cast-operator?view=msvc-170*/
