@@ -85,7 +85,7 @@ public:
 
 	template<typename RangeType, typename ValueType>
 	static bool isWithinRange(ValueType value){
-		return (std::numeric_limits<RangeType>::min() <= value
+		return (std::numeric_limits<RangeType>::lowest() <= value
 				&& value <= std::numeric_limits<RangeType>::max());};
 
 private:

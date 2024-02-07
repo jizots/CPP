@@ -106,7 +106,7 @@ bool	ScalarConverter::isFloatingPointNum(const std::string& str)
 	}
 	for ( ;i < str.size() && std::isdigit(static_cast<int>(str[i])); ++i)
 		hasDigits = true;
-	return (hasDigits && hasPeriod && i == str.size());
+	return (hasDigits && i == str.size());
 }
 
 bool	ScalarConverter::isFloat(const std::string& literal)

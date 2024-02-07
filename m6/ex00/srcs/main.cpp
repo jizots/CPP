@@ -30,14 +30,22 @@ int main(int ac, char **av)
 	ScalarConverter::convert(literal);
 	std::cout << std::endl;
 	std::cout << "------------- my test -------------" << std::endl;
-	std::istringstream iss(".5");
-	char c = 'a';
-	int i = 'a';
-	float f = 'a';
-	double d = 'a';
-	std::cout << "char: " << c << ", int: " << i <<", float: " << f << ", double: " << d << std::endl;
-	iss >> f;
-	std::cout << f <<std::endl;
+	std::cout << "-----> a <-----" << std::endl;
+	ScalarConverter::convert("a");
+	std::cout << "-----> 31 <-----" << std::endl;
+	ScalarConverter::convert("31"); //ascii but unprintable
+	std::cout << "-----> 126 <-----" << std::endl;
+	ScalarConverter::convert("126"); //ascii printable limit
+	std::cout << "-----> 2147483647 <-----" << std::endl;
+	ScalarConverter::convert("2147483647"); // int max
+	std::cout << "-----> 2147483648 <-----" << std::endl;
+	ScalarConverter::convert("2147483648"); // int overflow
+	std::cout << "-----> -2147483648 <-----" << std::endl;
+	ScalarConverter::convert("-2147483648"); // int min
+	std::cout << "-----> -2147483649 <-----" << std::endl;
+	ScalarConverter::convert("-2147483649"); // int overflow
+
+	std::cout << std::numeric_limits<float>::min() << std::endl;
 	return (0);
 }
 
