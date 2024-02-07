@@ -137,7 +137,7 @@ bool	ScalarConverter::isDouble(const std::string& literal)
 	return (iss
 			&& (isFloatingPointNum(literal)
 				|| std::isnan(ScalarConverter::m_val_double)
-				|| std::isinf(ScalarConverter::m_val_double)));
+				|| std::isinf(ScalarConverter::m_val_double)));// isnan, isinf is forbidden...
 }
 
 void	ScalarConverter::analyzeLiteralType(const std::string& literal)
