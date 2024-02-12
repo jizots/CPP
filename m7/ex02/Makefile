@@ -1,6 +1,6 @@
 .PHONY:all clean fclean re
 
-NAME	=	cpp07ex03
+NAME	=	cpp07ex02
 CXX		=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror
 CXXFLAGS	+=	-std=c++98
