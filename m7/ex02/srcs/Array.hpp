@@ -12,6 +12,7 @@ public:
 	Array(const Array& other);
 	Array(const unsigned int& n);
 	~Array(void);
+	unsigned int	size(void) const;
 
 	class OutOfIndexException : public std::exception
 	{
