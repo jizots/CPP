@@ -31,7 +31,7 @@ template <typename T>
 Array<T>::~Array(void)
 {
 	std::cout << "Destructor called" << std::endl;
-	delete m_array;
+	delete [] m_array;
 }
 
 template <typename T>
@@ -42,7 +42,7 @@ Array<T>&	Array<T>::operator=(const Array& rhs)
 		return (*this);
 	delete m_array;
 	m_lengthArray = rhs.m_lengthArray;
-	m_array = new T(m_lengthArray);
+	m_array = new T[m_lengthArray];
 	for (unsigned int i = 0; i < m_lengthArray; ++i)
 		m_array[i] = rhs.m_array[i];
 	return (*this);

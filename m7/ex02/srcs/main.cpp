@@ -7,20 +7,20 @@ int main(int, char**)
     Array<int> numbers(MAX_VAL);
     int* mirror = new int[MAX_VAL];
     srand(time(NULL));
-    std::cout << "value entry" << std::endl;
+    std::cout << "--- value entry" << std::endl;
     for (int i = 0; i < MAX_VAL; i++)
     {
         const int value = rand();
         numbers[i] = value;
         mirror[i] = value;
     }
-    std::cout << "copy assignment" << std::endl;
+    std::cout << "--- copy assignment" << std::endl;
     //SCOPE
     {
         Array<int> tmp = numbers;
         Array<int> test(tmp);
     }
-    std::cout << "comparison" << std::endl;
+    std::cout << "--- comparison" << std::endl;
     for (int i = 0; i < MAX_VAL; i++)
     {
         if (mirror[i] != numbers[i])
@@ -29,7 +29,7 @@ int main(int, char**)
             return 1;
         }
     }
-    std::cout << "try catch" << std::endl;
+    std::cout << "--- try catch" << std::endl;
     try
     {
         numbers[-2] = 0;
@@ -47,6 +47,7 @@ int main(int, char**)
         std::cerr << e.what() << '\n';
     }
 
+    std::cout << "--- use [] operator" << std::endl;
     for (int i = 0; i < MAX_VAL; i++)
     {
         numbers[i] = rand();
@@ -55,4 +56,10 @@ int main(int, char**)
     }
     delete [] mirror;//
     return 0;
+}
+
+__attribute__((destructor))
+static void destructor()
+{
+    system("leaks -q cpp07ex02");
 }

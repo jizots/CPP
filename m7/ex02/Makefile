@@ -4,7 +4,7 @@ NAME	=	cpp07ex02
 CXX		=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror
 CXXFLAGS	+=	-std=c++98
-CXXFLAGS	+= -g
+# CXXFLAGS	+= -g
 
 SRCS	=	main.cpp
 
