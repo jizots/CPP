@@ -51,9 +51,18 @@ int main(int, char**)
     for (int i = 0; i < MAX_VAL; i++)
     {
         numbers[i] = rand();
-        if (i < 10)
+        if (i < 5)
             std::cout << numbers[i] << std::endl;// oh.. not overload '<<'
     }
+
+    std::cout << "--- size() function" << std::endl;
+    for (unsigned int i = 0; i < numbers.size(); i++)
+    {
+        numbers[i] = rand();
+        if (i < 5)
+            std::cout << numbers[i] << std::endl;
+    }
+
     delete [] mirror;//
     return 0;
 }
