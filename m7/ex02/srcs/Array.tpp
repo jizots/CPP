@@ -35,6 +35,13 @@ Array<T>::~Array(void)
 }
 
 template <typename T>
+unsigned int	Array<T>::size(void) const
+{
+	return (m_lengthArray);
+}
+
+
+template <typename T>
 Array<T>&	Array<T>::operator=(const Array& rhs)
 {
 	std::cout << " '=' called" << std::endl;
