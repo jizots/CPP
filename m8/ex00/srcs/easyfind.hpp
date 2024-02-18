@@ -1,10 +1,14 @@
 #ifndef EASYFIND_HPP
 # define EASYFIND_HPP
 
-template <typename T>
-bool	easyfind(const T container, const int data)
+# include <algorithm>
+
+template <typename CONTAINER, typename target>
+bool	easyfind(const CONTAINER& container, const target& data)
 {
-	if (container)
+	if (std::find(container.begin(), container.end(), data) == container.end())
+		return (false);
+	return (true);
 }
 
 #endif
