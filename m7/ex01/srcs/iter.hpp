@@ -4,7 +4,7 @@
 # include <cstddef>
 
 template <typename TArray, typename TFunction>
-void	iter(TArray *addressArray, size_t lengthArray, TFunction)
+void	iter(TArray *addressArray, size_t lengthArray, TFunction func)
 {
 	if (addressArray == NULL || func == NULL)
 		return ;
