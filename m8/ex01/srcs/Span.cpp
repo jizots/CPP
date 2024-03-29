@@ -63,7 +63,7 @@ void	Span::addManyNumbers(unsigned int sizeAdd)
 	for (unsigned int i = 0; i < sizeAdd && i < m_containerSize; ++i)
 	{
 		tmp.push_back(std::rand() * 2);
-		std::cout << "Added element: " << tmp.back() << std::endl;
+		// std::cout << "Added element: " << tmp.back() << std::endl;
 	}
 	fillSpanUsingIterator(tmp.begin(), tmp.end());
 	m_sorted = false;
