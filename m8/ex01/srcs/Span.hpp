@@ -32,6 +32,7 @@ private:
 private:
 	Span(void);
 	void hasMultiElement(void);
+	void fillSpanUsingIterator(const std::vector<int>::iterator& begin, const std::vector<int>::iterator& end);
 
 public:
 	Span&	operator=(const Span &rhs);

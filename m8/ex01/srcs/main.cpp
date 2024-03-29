@@ -34,9 +34,10 @@ int main() {
 			std::cout << std::endl;
 		}
 		{
+			unsigned int size = 10;
 			std::cout << "[addManyNumbers]" << std::endl;
-			Span sp = Span(20000);
-			sp.addManyNumbers(20000);
+			Span sp = Span(size);
+			sp.addManyNumbers(size);
 			std::cout << sp.shortestSpan() << std::endl;
 			std::cout << sp.longestSpan() << std::endl;
 			std::cout << std::endl;

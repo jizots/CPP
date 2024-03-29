@@ -53,9 +53,17 @@ unsigned int	Span::shortestSpan(void)
 
 void	Span::addManyNumbers(unsigned int sizeAdd)
 {
+	std::vector<int> tmp;
 	std::srand(std::time(NULL));
+
+	if (m_elements.size() + sizeAdd > m_containerSize)
+		throw (SpanException("Too many element added"));
 	for (unsigned int i = 0; i < sizeAdd && i < m_containerSize; ++i)
-		addNumber(std::rand());
+	{
+		tmp.push_back(std::rand() * 2);
+		std::cout << "Added element: " << tmp.back() << std::endl;
+	}
+	fillSpanUsingIterator(tmp.begin(), tmp.end());
 };
 
 Span&	Span::operator=(const Span &rhs)
@@ -74,6 +82,12 @@ void	Span::hasMultiElement(void)
 	if (m_elements.size() < 2)
 		throw (SpanException("There is no element to compare"));
 };
+
+void	Span::fillSpanUsingIterator(const std::vector<int>::iterator& begin, const std::vector<int>::iterator& end)
+{
+	m_elements.insert(m_elements.end(), begin, end);
+}
+
 
 /*****
  * Exception
