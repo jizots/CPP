@@ -28,9 +28,11 @@ public:
 private:
 	std::vector<int>	m_elements;
 	const unsigned int	m_containerSize;
+	bool				m_sorted;
 
 private:
 	Span(void);
+	void hasContainerSpace(const unsigned int& size);
 	void hasMultiElement(void);
 	void fillSpanUsingIterator(const std::vector<int>::iterator& begin, const std::vector<int>::iterator& end);
 
