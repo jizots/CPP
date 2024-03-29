@@ -1,5 +1,7 @@
 #include "Span.hpp"
 #include <algorithm>
+#include <cstdlib>
+#include <iostream>
 
 Span::Span(const int &containerSize)
 	:m_containerSize(containerSize)
@@ -16,24 +18,29 @@ Span::~Span(void)
 void	Span::addNumber(int element)
 {
 	if (m_elements.size() < m_containerSize)
+	{
 		m_elements.push_back(element);
+		// std::cout << "Added element: " << element << std::endl;
+	}
 	else
 		throw (SpanException("[Error] Too many element added."));
 };
 
-unsigned int	Span::shortestSpan(void)
+unsigned int	Span::longestSpan(void)
 {
 	hasMultiElement();
+	std::cout << "longestSpan: ";
 	std::sort(m_elements.begin(), m_elements.end());
 	return (*(m_elements.end() - 1) - *m_elements.begin());
 };
 
-unsigned int	Span::longestSpan(void)
+unsigned int	Span::shortestSpan(void)
 {
 	unsigned int	result = UINT_MAX;
 	unsigned int	diff;
 
 	hasMultiElement();
+	std::cout << "shortestSpan: ";
 	std::sort(m_elements.begin(), m_elements.end());
 	for (unsigned int i = 0; i < m_elements.size() - 1; ++i)
 	{
@@ -46,7 +53,9 @@ unsigned int	Span::longestSpan(void)
 
 void	Span::addManyNumbers(unsigned int sizeAdd)
 {
-	(void)sizeAdd;
+	std::srand(std::time(NULL));
+	for (unsigned int i = 0; i < sizeAdd && i < m_containerSize; ++i)
+		addNumber(std::rand());
 };
 
 Span&	Span::operator=(const Span &rhs)

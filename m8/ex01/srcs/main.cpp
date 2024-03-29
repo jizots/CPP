@@ -14,6 +14,7 @@ int main() {
 		// sp.addNumber(11);//too many element added
 		std::cout << sp.shortestSpan() << std::endl;
 		std::cout << sp.longestSpan() << std::endl;
+		std::cout << std::endl;
 
 		std::cout << "-- my test --" << std::endl;
 		{
@@ -21,6 +22,7 @@ int main() {
 			Span copy(sp);
 			std::cout << copy.shortestSpan() << std::endl;
 			std::cout << copy.longestSpan() << std::endl;
+			std::cout << std::endl;
 		}
 		{
 			std::cout << "[copy assignment]" << std::endl;
@@ -29,6 +31,15 @@ int main() {
 			copy = sp;
 			std::cout << copy.shortestSpan() << std::endl;
 			std::cout << copy.longestSpan() << std::endl;
+			std::cout << std::endl;
+		}
+		{
+			std::cout << "[addManyNumbers]" << std::endl;
+			Span sp = Span(20000);
+			sp.addManyNumbers(20000);
+			std::cout << sp.shortestSpan() << std::endl;
+			std::cout << sp.longestSpan() << std::endl;
+			std::cout << std::endl;
 		}
 	}
 	catch(const std::exception& e)
