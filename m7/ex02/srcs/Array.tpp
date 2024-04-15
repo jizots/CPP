@@ -47,7 +47,7 @@ Array<T>&	Array<T>::operator=(const Array& rhs)
 	std::cout << " '=' called" << std::endl;
 	if (this == &rhs)
 		return (*this);
-	delete m_array;
+	delete [] m_array;
 	m_lengthArray = rhs.m_lengthArray;
 	m_array = new T[m_lengthArray];
 	for (unsigned int i = 0; i < m_lengthArray; ++i)
