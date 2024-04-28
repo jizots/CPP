@@ -2,18 +2,42 @@
 # define BITCOINEXCHANGE_HPP
 
 # include <map>
+# include <iostream>
 
 class BitcoinExchange
 {
 public:
-	BitcoinExchange(void);
+	BitcoinExchange(const std::string& filePath);
 	BitcoinExchange(const BitcoinExchange& other);
 	~BitcoinExchange(void);
 
+	float getExchangeRate(const std::string& exchangeDate) const;
+
 private:
+	std::map<std::string, float> m_exchangeRate;
+	std::string m_targetDate;
+	float m_targetAmount;
+
+private:
+	BitcoinExchange(void);
+	void inputExchangeRate(const std::string& filePath);
+	const std::string& getNextCSVLine(std::ifstream& ifs);
+	void addMapByCSVLine(const std::string& line);
+	template <typename T>
+	T& isNumericType(const std::string& literal)
+	{
+		std::istringstream iss(literal);
+		T t;
+
+		iss >> t;
+		if (iss.fail() || !iss.eof())
+			throw std::invalid_argument("Error. Argument is invalid literal.");
+		return (t);
+	};
 
 public:
 	BitcoinExchange& operator=(const BitcoinExchange& rhs);
+
 };
 
 #endif
