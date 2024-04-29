@@ -23,6 +23,8 @@ private:
 	void 				inputExchangeRate(const std::string& filePath);
 	void				addMapByCSVLine(const std::string& line);
 	const bool			isCsvLine(const std::string& line);
+	const bool			isValidDataFormat(const std::string& date);
+	static bool			isStringComposedWithFunc(const std::string& str, int (*f)(int));
 	template <typename T>
 	T isNumericType(const std::string& literal)
 	{
