@@ -2,8 +2,8 @@
 # define BITCOINEXCHANGE_HPP
 
 # include <map>
-# include <iostream>
-
+# include <sstream>
+# define CSV_ITEM 2
 class BitcoinExchange
 {
 public:
@@ -20,11 +20,11 @@ private:
 
 private:
 	BitcoinExchange(void);
-	void inputExchangeRate(const std::string& filePath);
-	const std::string& getNextCSVLine(std::ifstream& ifs);
-	void addMapByCSVLine(const std::string& line);
+	void 				inputExchangeRate(const std::string& filePath);
+	void				addMapByCSVLine(const std::string& line);
+	const bool			isCsvLine(const std::string& line);
 	template <typename T>
-	T& isNumericType(const std::string& literal)
+	T isNumericType(const std::string& literal)
 	{
 		std::istringstream iss(literal);
 		T t;
