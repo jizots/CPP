@@ -3,7 +3,8 @@
 
 # include <map>
 # include <sstream>
-# define CSV_ITEM 2
+# define NUM_ITEMS_PER_LINE 2
+# define WHITE_SPACE "\t\n\v\f\r "
 
 struct Date{
 	int year;
@@ -23,15 +24,17 @@ public:
 
 private:
 	std::map<std::string, float> m_exchangeRate;
-	std::string m_targetDate;
-	float	m_targetAmount;
 	Date	m_date;
+	float	m_targetAmount;
 
 private:
 	BitcoinExchange(void);
-	void 		inputExchangeRate(const std::string& filePath);
-	void		addMapByCSVLine(const std::string& line);
+	void 		handleLineFromFile(const std::string& filePath, void (BitcoinExchange::*func)(const std::string& line));
+	void		handleCsvToMap(const std::string& line);
 	void		handleCsvHeader(const std::string& line);
+	void		addMapByCSVLine(const std::string& line);
+	void		handleInputToOutput(const std::string& line);
+	const bool	isEffectiveInput(const std::string& line);
 	const bool	isCsvLine(const std::string& line);
 	const bool	isValidDateFormat(const std::string& date);
 	static bool	isEffectiveDate(const int year, const int month, const int day);
