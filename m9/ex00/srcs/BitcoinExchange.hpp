@@ -18,14 +18,15 @@ public:
 	BitcoinExchange(const std::string& filePath);
 	BitcoinExchange(const BitcoinExchange& other);
 	~BitcoinExchange(void);
-
-	void  outputExchangeResult(const std::string& filePath);
-	float getExchangeRate(const std::string& exchangeDate) const;
+	double 		getExchangeRate(const std::string& exchangeDate) const;
 
 private:
-	std::map<std::string, float> m_exchangeRate;
-	Date	m_date;
-	float	m_targetAmount;
+	std::string 					m_filePath;
+	std::map<std::string, double>	m_exchangeRate;
+	std::string m_targetDate;
+	double		m_targetAmount;
+	Date		m_date;
+	static bool isHead;
 
 private:
 	BitcoinExchange(void);
@@ -34,9 +35,10 @@ private:
 	void		handleCsvHeader(const std::string& line);
 	void		addMapByCSVLine(const std::string& line);
 	void		handleInputToOutput(const std::string& line);
-	const bool	isEffectiveInput(const std::string& line);
-	const bool	isCsvLine(const std::string& line);
-	const bool	isValidDateFormat(const std::string& date);
+	void  		outputExchangeResult(const std::string& filePath);
+	bool		isEffectiveInput(const std::string& line);
+	bool		isCsvLine(const std::string& line);
+	bool		isValidDateFormat(const std::string& date);
 	static bool	isEffectiveDate(const int year, const int month, const int day);
 	static bool	isLeapYear(const int year);
 	static bool	isStringComposedWithFunc(const std::string& str, int (*f)(int));
@@ -48,7 +50,7 @@ private:
 
 		iss >> t;
 		if (iss.fail() || !iss.eof())
-			throw std::invalid_argument("Error. Argument is invalid literal.");
+			throw ("Error: Argument is invalid literal => " + literal);
 		return (t);
 	};
 
