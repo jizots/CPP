@@ -20,8 +20,25 @@ private:
 	RPN(void);
 
 	template <typename T>
+	bool isUnsigned(){ return (true); };
+
+	template <>
+	bool isUnsigned<uint8_t>(){ return (true); };
+
+	template <>
+	bool isUnsigned<uint16_t>(){ return (true); };
+
+	template <>
+	bool isUnsigned<uint32_t>(){ return (true); };
+
+	template <>
+	bool isUnsigned<uint64_t>(){ return (true); };
+
+	template <typename T>
 	bool isNumericType(const std::string& literal)
 	{
+		if (isUnsigned<T>() && literal.find('-') != std::string::npos)
+			return (false);
 		std::istringstream iss(literal);
 		T t;
 
