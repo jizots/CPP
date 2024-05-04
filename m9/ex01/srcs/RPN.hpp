@@ -13,13 +13,12 @@ public:
 	RPN& operator=(const RPN& rhs);
 
 private:
-	std::stack<u_int8_t> m_stack;
+	std::stack<double> m_stack;
 	std::istringstream m_iss;
-	double	m_result;
 
 private:
 	RPN(void);
-	
+
 	template <typename T>
 	bool isNumericType(const std::string& literal)
 	{
@@ -46,7 +45,6 @@ private:
 
 	bool isArithmeticOparator(const std::string& token);
 	std::string popNextToken(void);
-	void clearStream(void);
 };
 
 #endif
