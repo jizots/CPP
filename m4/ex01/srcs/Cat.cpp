@@ -14,9 +14,9 @@ Cat::Cat(void)
 }
 
 Cat::Cat(const Cat& other)
+	:Animal(other.getType())
 {
 	Libft::print_colored_string_endl("Cat copy constructor called", green);
-	m_type = other.getType();
 	m_brain = new(std::nothrow) Brain(*other.m_brain);
 	if (m_brain == NULL)
 	{
@@ -34,8 +34,14 @@ Cat::~Cat(void)
 Cat&	Cat::operator=(const Cat& rhs)
 {
 	Libft::print_colored_string_endl("Cat copy assignment operator called", blue);
-	m_type = rhs.getType();
-	m_brain = rhs.m_brain;
+	if (this == &rhs)
+		;
+	else
+	{
+		m_type = rhs.getType();
+		delete m_brain;
+		m_brain = new Brain(*rhs.m_brain);
+	}
 	return (*this);
 }
 

@@ -34,8 +34,14 @@ Dog::~Dog(void)
 Dog&	Dog::operator=(const Dog& rhs)
 {
 	Libft::print_colored_string_endl("Dog copy assignment operator called", blue);
-	m_type = rhs.getType();
-	m_brain = rhs.m_brain;
+	if (this == &rhs)
+		;
+	else
+	{
+		delete m_brain;
+		m_type = rhs.getType();
+		m_brain = new Brain(*rhs.m_brain);
+	}
 	return (*this);
 }
 
