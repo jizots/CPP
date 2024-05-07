@@ -9,7 +9,7 @@ BitcoinExchange::BitcoinExchange(const std::string& filePath)
 {
 	handleLineFromFile("data.csv", &BitcoinExchange::handleCsvToMap);
 	if (m_exchangeRate.size() == 0)
-		throw ("CSV was not exist");
+		throw ("CSV dose not exist");
 	handleLineFromFile(m_filePath, &BitcoinExchange::handleInputToOutput);
 };
 
@@ -183,7 +183,7 @@ bool	BitcoinExchange::isCsvLine(const std::string& line)
 
 bool	BitcoinExchange::isValidDateFormat(const std::string& date)
 {
-	//expect yyyy-mm-dd
+	//expect xxxx-xx-xx
 	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
 		return (false);
 	if (!isStringComposedWithFunc(date.substr(0, 4), std::isdigit)
@@ -191,7 +191,7 @@ bool	BitcoinExchange::isValidDateFormat(const std::string& date)
 		|| !isStringComposedWithFunc(date.substr(8), std::isdigit))
 		return (false);
 
-	//check date
+	//expect number-number-number
 	std::stringstream ss;
 	int val;
 
