@@ -27,13 +27,16 @@ bool compairVec(std::vector<T>& vec1, std::vector<T>& vec2)
 template <typename T>
 void insertionSort(std::vector<T>& vec)
 {
+	// 要素を1つづつ走査（i）
 	for (typename std::vector<T>::size_type i = 1; i < vec.size(); ++i)
 	{
+		// vec[i]と、それより前方にある要素を比較するためのインデックス(j)
 		typename std::vector<T>::size_type j = i;
+		// 1つ前方の要素と比較し、前方の方が大きければswapする
 		while (j > 0 && vec[j - 1] > vec[j])
 		{
 			std::swap(vec[j - 1], vec[j]);
-			--j;
+			--j; // インデックスをデクリメントして、次はさらに前の要素と比較する
 		}
 	}
 }
