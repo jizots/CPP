@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+//https://spica-git.github.io/gh-projects/demo/rpn.html - RPN calculator
+
 int main(int ac, char **av)
 {
 	if (ac != 2)
@@ -11,7 +13,14 @@ int main(int ac, char **av)
 	}
 	try
 	{
+		std::cout << "--- Basic test ---" << std::endl;
 		RPN culculator(av[1]);
+		std::cout << "--- Copy constructor ---" << std::endl;
+		RPN c2(culculator);
+		std::cout << "--- Assignation operator ---" << std::endl;
+		RPN c3 = culculator;
+		std::cout << "--- Const Class ---" << std::endl;
+		const RPN c4(av[1]);
 	}
 	catch(const std::exception& e)
 	{
