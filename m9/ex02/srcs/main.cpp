@@ -1,7 +1,23 @@
+#include "PmergeMe.hpp"
+#include <iostream>
 
-
-
-
+int	main(int ac, char** argv)
+{
+	try
+	{
+		PmergeMe data1(ac, argv);
+	}
+	catch(const std::exception& e)
+	{
+		std::cout << e.what() << '\n';
+		return (1);
+	}
+	catch(const std::string& e)
+	{
+		std::cout << e << '\n';
+		return (1);
+	}
+}
 
 
 // Tool
