@@ -55,19 +55,25 @@ void mergeVector(std::vector<T>& result, unsigned int startLeft, unsigned int mi
 	// vecLeft or vecRightを走査し終わるまで、それぞれのインデックスの要素を比較
 	while (iLeft < vecLeft.size() && iRight < vecRight.size())
 	{
+		++compairCount;
 		if (vecLeft[iLeft] <= vecRight[iRight])
 			result[index++] = vecLeft[iLeft++]; //vecLeftの要素の方が小さければresultに挿入。そしてvecLeftを走査するインデックスをインクリメント
 		else
 			result[index++] = vecRight[iRight++];
-		++compairCount;
 	}
 
 	// vecLeftが走査し終わっていなければ、vecLeftの残りの要素をresultに挿入
 	while (iLeft < vecLeft.size())
+	{
 		result[index++] = vecLeft[iLeft++];
+		// ++compairCount;
+	}
 	// vecRight 〃
 	while (iRight < vecRight.size())
+	{
 		result[index++] = vecRight[iRight++];
+		// ++compairCount;
+	}
 }
 
 //要素の集合を再帰的に分割する
@@ -99,7 +105,7 @@ int main(int ac, char **av)
 	std::vector<unsigned int> before;//ソートしたい元データ
 	for (int i = 0; i < SIZE_DATA; ++i)//元データにランダムな数値を挿入
 		before.push_back(std::rand());
-	
+
 	//元データを出力
 	std::cout << "Before sort: " << std::endl;
 	for (int i = 0; i < SIZE_DATA; ++i)

@@ -14,10 +14,13 @@
 int compairCount = 0;
 
 template <typename T>
-bool compairVec(std::vector<T>& vec1, std::vector<T>& vec2)
+bool compairVec(const std::vector<T>& vec1, const std::vector<T>& vec2)
 {
 	if (vec1.size() != vec2.size())
+	{
+		std::cout << "[Error] vector size is different" << std::endl;
 		return (false);
+	}
 	for (typename std::vector<T>::size_type i = 0; i < vec1.size(); ++i)
 	{
 		if (vec1[i] != vec2[i])
@@ -27,21 +30,42 @@ bool compairVec(std::vector<T>& vec1, std::vector<T>& vec2)
 }
 
 template <typename T>
-typename std::vector<T>::iterator recursiveSearchInsertPos(typename std::vector<T>::iterator begin,
-	typename std::vector<T>::iterator end, const T val)
+const typename std::vector<T>::const_iterator recursiveSearchInsertPos(const typename std::vector<T>::const_iterator begin,
+	const typename std::vector<T>::const_iterator end, const T targetVal)
 {
-
+	if (begin == end)
+		return (begin);
+	else if ((end - begin) == 1)
+	{
+		++compairCount;
+		if (targetVal < *begin)
+			return (begin);
+		else
+			return (begin + 1);
+	}
+	else
+	{
+		++compairCount;
+		const typename std::vector<T>::const_iterator middle = begin + ((end - begin) / 2);
+		std::cout << "compair: " << *middle << " vs " << targetVal << std::endl;
+		if (targetVal < *middle)
+			return (recursiveSearchInsertPos<T>(begin, middle, targetVal));
+		else
+			return (recursiveSearchInsertPos<T>(middle + 1, end, targetVal));
+	}
 }
 
 template <typename T>
 void binarySearchInsertionSort(std::vector<T>& vec)
 {
-	for (typename std::vector<T>::iterator itr = vec.begin() + 1; itr < vec.size(); ++itr)
+	for (typename std::vector<T>::size_type index = 1; index < vec.size(); ++index)
 	{
-		T valueToMove = *itr;
-		typename std::vector<T>::iterator insertPos = recursiveSerchInsertPos(vec.begin(), itr, valueToMove);
-		// itrの値をvectorから除去する
-		// valueToMoveを正しい位置に挿入する　
+		T valueToMove = vec[index];
+		const typename std::vector<T>::const_iterator insertPos = recursiveSearchInsertPos<T>(vec.begin(), vec.begin() + index, valueToMove);
+		vec.erase((vec.begin() + index));
+		vec.insert(insertPos, valueToMove);
+		for (int i = 0; i < vec.size(); ++i) std::cout << vec[i] << " ";
+		std::cout << std::endl;
 	}
 }
 
@@ -52,7 +76,7 @@ int main(int ac, char **av)
 
 	std::vector<unsigned int> before;//ソートしたい元データ
 	for (int i = 0; i < SIZE_DATA; ++i)//元データにランダムな数値を挿入
-		before.push_back(std::rand());
+		before.push_back(std::rand() / 100000);
 	
 	std::cout << "Before sort: " << std::endl;
 	for (int i = 0; i < SIZE_DATA; ++i)
@@ -60,7 +84,7 @@ int main(int ac, char **av)
 	std::cout << std::endl;
 
 	std::vector<unsigned int> copyVec1(before);
-	// binarySearchInsertionSort<unsigned int>(copyVec1);
+	binarySearchInsertionSort<unsigned int>(copyVec1);
 
 	std::cout << "After sort: " << std::endl;
 	for (int i = 0; i < SIZE_DATA; ++i)
@@ -70,6 +94,7 @@ int main(int ac, char **av)
 	std::vector<unsigned int> copyVec2(before);
 	std::sort(copyVec2.begin(), copyVec2.end());
 
+	std::cout << "compairCount: " << compairCount << std::endl;
 	//自作ソートと、std::sortの結果を比較
 	if (compairVec(copyVec1, copyVec2))
 	{

@@ -1,3 +1,9 @@
+
+
+
+
+
+
 // Tool
 //  https://jp.piliapp.com/random/number/ 乱数ジェネレーター
 // Background knowledge
