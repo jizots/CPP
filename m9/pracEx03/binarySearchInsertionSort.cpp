@@ -27,20 +27,21 @@ bool compairVec(std::vector<T>& vec1, std::vector<T>& vec2)
 }
 
 template <typename T>
-void insertionSort(std::vector<T>& vec)
+typename std::vector<T>::iterator recursiveSearchInsertPos(typename std::vector<T>::iterator begin,
+	typename std::vector<T>::iterator end, const T val)
 {
-	// 要素を1つづつ走査（i）
-	for (typename std::vector<T>::size_type i = 1; i < vec.size(); ++i)
+
+}
+
+template <typename T>
+void binarySearchInsertionSort(std::vector<T>& vec)
+{
+	for (typename std::vector<T>::iterator itr = vec.begin() + 1; itr < vec.size(); ++itr)
 	{
-		// vec[i]と、それより前方にある要素を比較するためのインデックス(j)
-		typename std::vector<T>::size_type j = i;
-		// 1つ前方の要素と比較し、前方の方が大きければswapする
-		while (j > 0 && vec[j - 1] > vec[j])
-		{
-			std::swap(vec[j - 1], vec[j]);
-			--j; // インデックスをデクリメントして、次はさらに前の要素と比較する
-			++compairCount;
-		}
+		T valueToMove = *itr;
+		typename std::vector<T>::iterator insertPos = recursiveSerchInsertPos(vec.begin(), itr, valueToMove);
+		// itrの値をvectorから除去する
+		// valueToMoveを正しい位置に挿入する　
 	}
 }
 
@@ -59,7 +60,7 @@ int main(int ac, char **av)
 	std::cout << std::endl;
 
 	std::vector<unsigned int> copyVec1(before);
-	insertionSort<unsigned int>(copyVec1);
+	// binarySearchInsertionSort<unsigned int>(copyVec1);
 
 	std::cout << "After sort: " << std::endl;
 	for (int i = 0; i < SIZE_DATA; ++i)
@@ -69,7 +70,6 @@ int main(int ac, char **av)
 	std::vector<unsigned int> copyVec2(before);
 	std::sort(copyVec2.begin(), copyVec2.end());
 
-	std::cout << "compairCount: " << compairCount << std::endl;
 	//自作ソートと、std::sortの結果を比較
 	if (compairVec(copyVec1, copyVec2))
 	{

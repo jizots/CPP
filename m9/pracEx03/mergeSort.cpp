@@ -11,7 +11,9 @@
 //coding with c++98
 #include <stdio.h>
 
-#define SIZE_DATA 15
+#define SIZE_DATA 21
+
+int compairCount = 0;
 
 template <typename T>
 bool compairVec(std::vector<T>& vec1, std::vector<T>& vec2)
@@ -57,6 +59,7 @@ void mergeVector(std::vector<T>& result, unsigned int startLeft, unsigned int mi
 			result[index++] = vecLeft[iLeft++]; //vecLeftの要素の方が小さければresultに挿入。そしてvecLeftを走査するインデックスをインクリメント
 		else
 			result[index++] = vecRight[iRight++];
+		++compairCount;
 	}
 
 	// vecLeftが走査し終わっていなければ、vecLeftの残りの要素をresultに挿入
@@ -91,6 +94,7 @@ void mergeSort(std::vector<T>& vec, unsigned int left, unsigned int right)
 int main(int ac, char **av)
 {
 	std::srand((unsigned int) std::time(NULL));
+	// std::vector<unsigned int> before {21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};//c++11
 
 	std::vector<unsigned int> before;//ソートしたい元データ
 	for (int i = 0; i < SIZE_DATA; ++i)//元データにランダムな数値を挿入
@@ -117,6 +121,7 @@ int main(int ac, char **av)
 	std::vector<unsigned int> copyVec2(before);
 	std::sort(copyVec2.begin(), copyVec2.end());
 
+	std::cout << "compairCount: " << compairCount << std::endl;
 	//自作ソートと、std::sortの結果を比較
 	if (compairVec(copyVec1, copyVec2))
 	{
