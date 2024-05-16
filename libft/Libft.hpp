@@ -6,6 +6,7 @@
 # include <string>
 # include <sstream>
 # include <cerrno>
+# include <vector>
 
 /*----enum----*/
 enum Font_Color
@@ -83,10 +84,53 @@ public:
 	 */
 	static int	getline_wrap(std::istream& is, std::string& str);
 
+	static std::vector<std::string> splitByChars(const std::string& src, const std::string& chars);
+
 	template<typename RangeType, typename ValueType>
 	static bool isWithinRange(ValueType value){
 		return (std::numeric_limits<RangeType>::lowest() <= value
 				&& value <= std::numeric_limits<RangeType>::max());};
+
+	template <typename T>
+	static bool isUnsigned(){ return (true); };
+
+	template <>
+	bool isUnsigned<uint8_t>(){ return (true); };
+
+	template <>
+	bool isUnsigned<uint16_t>(){ return (true); };
+
+	template <>
+	bool isUnsigned<uint32_t>(){ return (true); };
+
+	template <>
+	bool isUnsigned<uint64_t>(){ return (true); };
+
+	template <typename T>
+	static bool isNumericType(const std::string& literal)
+	{
+		if (isUnsigned<T>() && literal.find('-') != std::string::npos)
+			return (false);
+		std::istringstream iss(literal);
+		T t;
+
+		iss >> t;
+		if (iss.fail() || !iss.eof())
+			return (false);
+		return (true);
+	};
+
+	template <typename T>
+	static T toNumericType(const std::string& literal)
+	{
+		std::istringstream iss(literal);
+		T t;
+
+		iss >> t;
+		if (iss.fail() || !iss.eof())
+			throw ("Error: Argument is invalid literal => " + literal);
+		return (t);
+	};
 
 private:
 	Libft(void);

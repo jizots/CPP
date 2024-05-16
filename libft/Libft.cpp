@@ -85,3 +85,31 @@ int	Libft::getline_wrap(std::istream& is, std::string& str)
 	}
 	return (0);
 }
+
+std::vector<std::string> Libft::splitByChars(const std::string& src, const std::string& chars)
+{
+	std::vector<std::string> splitedStr;
+	size_t i = 0;
+	size_t wc = 0;
+	bool hasDelimiter = false;
+
+	for (; i < src.size(); ++i)
+	{
+		if (std::strchr(chars.c_str(), static_cast<int>(src[i])))
+		{
+			if (wc)
+				hasDelimiter = true;
+		}
+		else
+			++wc;
+		if (hasDelimiter && wc)
+		{
+			splitedStr.push_back(std::string(src, i - wc, wc));
+			wc = 0;
+			hasDelimiter = false;
+		}
+	}
+	if (wc)
+		splitedStr.push_back(std::string(src, i - wc, wc));
+	return (splitedStr);
+};
