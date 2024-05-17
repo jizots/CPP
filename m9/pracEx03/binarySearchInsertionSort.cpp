@@ -9,7 +9,7 @@
 #include <fstream>
 #include <sstream>
 
-#define SIZE_DATA 21
+#define SIZE_DATA 10
 
 int compairCount = 0;
 
@@ -73,10 +73,11 @@ int main(int ac, char **av)
 {
 	std::srand((unsigned int) std::time(NULL));
 	// std::vector<unsigned int> before {21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};//c++11
+	std::vector<unsigned int> before {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};//c++11
 
-	std::vector<unsigned int> before;//ソートしたい元データ
-	for (int i = 0; i < SIZE_DATA; ++i)//元データにランダムな数値を挿入
-		before.push_back(std::rand() / 100000);
+	// std::vector<unsigned int> before;//ソートしたい元データ
+	// for (int i = 0; i < SIZE_DATA; ++i)//元データにランダムな数値を挿入
+	// 	before.push_back(std::rand() / 100000);
 	
 	std::cout << "Before sort: " << std::endl;
 	for (int i = 0; i < SIZE_DATA; ++i)

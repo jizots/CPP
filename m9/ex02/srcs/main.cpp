@@ -24,6 +24,7 @@ int	main(int ac, char** argv)
 //  https://jp.piliapp.com/random/number/ 乱数ジェネレーター
 // Background knowledge
 //  Jacobsthal number: J(0) = 0, J(1) = 1, J(n) = J(n-1) + (J(n-2) * 2) -> 0,1,1,3,5,11,21,43, J(8) = 85,…
+// https://warwick.ac.uk/fac/sci/dcs/teaching/material-archive/cs341/fj.pdf
 
 /* initial 1~21 をランダムに配置*/
 //  9 2 16 21 20 18 15 13 5 7 10 8 14 3 1 17 19 6 4 11 12
