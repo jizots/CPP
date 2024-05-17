@@ -92,7 +92,7 @@ void mergeSort(std::vector<T>& vec, unsigned int left, unsigned int right)
 		mergeSort(vec, left, middle);//集合の左半分を、再帰的に（仮想）分割する
 		mergeSort(vec, middle + 1, right);// 〃 右半分 〃
 
-		// ここにきたとき、要素（left - right + 1）は2つ以上で、かつmiddleを境にソートされた集合になっている。
+		// ここにきたとき、要素（left - right + 1）は2つ以上で、かつ、middleとmiddle + 1、を境にソートされた集合になっている。
 		mergeVector(vec, left, middle, right);
 	}
 }
