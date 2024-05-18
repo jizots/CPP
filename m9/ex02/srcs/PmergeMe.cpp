@@ -11,9 +11,6 @@ PmergeMe::PmergeMe(int ac, char** argv)
 	printPairContainer< std::vector <std::pair<int64_t,int64_t> > >(m_pairContainer);
 	std::cout << "compare count: " << m_compareCount << std::endl;
 
-	binarySearchInsertionSort(m_pairContainer);
-	printPairContainer< std::vector <std::pair<int64_t,int64_t> > >(m_pairContainer);
-	std::cout << "compare count: " << m_compareCount << std::endl;
 };
 
 PmergeMe::PmergeMe(const PmergeMe& other)
@@ -64,17 +61,17 @@ void PmergeMe::addContainerByArgs(int ac, char** argv)
 
 void PmergeMe::mergeInsertionSort()
 {
-	paitMakeAndCompare();
+	pairMakeAndCompare();
 	pairBinaryInsertionSort();
 };
 
-void PmergeMe::paitMakeAndCompare()
+void PmergeMe::pairMakeAndCompare()
 {
 	std::vector<uint32_t>::size_type i = 0;
 
 	while (i < m_containerVec.size() - 1)
 	{
-		m_pairContainer.push_back( (m_containerVec[i] > m_containerVec[i + 1]) ? std::make_pair(m_containerVec[i], m_containerVec[i + 1]) : std::make_pair(m_containerVec[i + 1], m_containerVec[i]));
+		m_pairContainer.push_back(std::make_pair(std::max(m_containerVec[i], m_containerVec[i + 1]), std::min(m_containerVec[i], m_containerVec[i + 1])));
 		i += 2;
 		m_compareCount += 1;
 	}

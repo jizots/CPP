@@ -34,7 +34,7 @@ public:
 private:
 	void addContainerByArgs(int ac, char** argv);
 	void mergeInsertionSort();
-	void paitMakeAndCompare();
+	void pairMakeAndCompare();
 	void pairBinaryInsertionSort();
 
 	template <typename TContainer>
