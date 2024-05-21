@@ -34,39 +34,56 @@ private:
 	void addContainerByArgs(int ac, char** argv);
 
 	template <typename TContainer>
-	void mergeInsertionSort(TContainer& data, const typename TContainer::size_type chunkSize)
+	void mergeInsertionSort(TContainer& data, const typename TContainer::size_type chunkScale, const typename TContainer::size_type chunkSize)
 	{
-		if (data.size() < chunkSize * 2)
+		if (chunkSize < 2)
 		{
 			return ;
 		}
-		for (typename TContainer::size_type i = 0; i + (chunkSize * 2) <= TContainer.size(); i += (chunkSize * 2)) // iがさすのは、比較元（chunkLight）の開始位置
-		{
-++m_compareCount;
-			if (!isLitteleLeftChunk(data, chunkSize, i + (chunkSize - 1), i + (chunkSize * 2) - 1))
-			{
-				swapChunk(data, chunkSize, i, i + chunkSize);
-			}
-		}
+		compareChunkAndSwap(data, chunkScale);
+		printContainer(data);
+		mergeInsertionSort(data, chunkScale * 2, chunkSize / 2);
+		integrateToMainChain(data, chunkScale, chunkSize);
 	};
 
 	template <typename TContainer>
-	bool isLitteleLeftChunk(TContainer& data, const typename TContainer::size_type chunkSize,
+	void compareChunkAndSwap(TContainer& data, const typename TContainer::size_type chunkScale)
+	{
+		for (typename TContainer::size_type i = 0; i + (chunkScale * 2) <= TContainer.size(); i += (chunkScale * 2)) // iがさすのは、比較元（chunkLeft）の開始位置
+		{
+			if (!isLittleLeftChunk(data, chunkScale, i + (chunkScale - 1), i + (chunkScale * 2) - 1))
+			{
+				swapChunk(data, chunkScale, i, i + chunkScale);
+			}
+		}
+	}
+
+	template <typename TContainer>
+	bool isLittleLeftChunk(TContainer& data, const typename TContainer::size_type chunkScale,
 		const typename TContainer::size_type iLeftChunkEnd, const typename TContainer::size_type iRightChunkEnd)
 	{
+++m_compareCount;
+std::cout << "compareChunk: " << data[iLeftChunkEnd] << " vs " data[iRightChunkEnd] << std::endl;
 		if (data[iLeftChunkEnd] <= data[iRightChunkEnd])
 			return (true);
 		return (false);
 	}
 
 	template <typename TContainer>
-	void swapChunk(TContainer& data, const typename TContainer::size_type chunkSize,
+	void swapChunk(TContainer& data, const typename TContainer::size_type chunkScale,
 		const typename TContainer::size_type iLeftChunkStart, const typename TContainer::size_type iRightChunkStart)
 	{
-		TContainer copyRight(data.begin() + iRightChunkStart, data.begin() + iRightChunkStart + chunkSize);
+		TContainer copyRight(data.begin() + iRightChunkStart, data.begin() + iRightChunkStart + chunkScale);
 
-		data.erase(data.begin() + iRightChunkStart, data.begin() + iRightChunkStart + chunkSize);
+		data.erase(data.begin() + iRightChunkStart, data.begin() + iRightChunkStart + chunkScale);
 		data.insert(data.begin() + iLeftChunkStart, copyRight.begin(), copyRight.end());
+	}
+
+	template <typename TContainer>
+	void integrateToMainChain(TContainer& data, const typename TContainer::size_type chunkScale, const typename TContainer::size_type chunkSize)
+	{
+		
+
 	}
 
 	template <typename TContainer>
@@ -74,17 +91,6 @@ private:
 	{
 		for (typename TContainer::size_type i = 0; i < data.size(); ++i)
 			std::cout << data[i] << " ";
-		std::cout << std::endl;
-	};
-
-	template <typename TContainer>
-	void printPairContainer(const TContainer& data)
-	{
-		for (typename TContainer::size_type i = 0; i < data.size(); ++i)
-			std::cout << std::setw(2) << data[i].first << " ";
-		std::cout << std::endl;
-		for (typename TContainer::size_type i = 0; i < data.size(); ++i)
-			std::cout << std::setw(2) << data[i].second << " ";
 		std::cout << std::endl;
 	};
 
