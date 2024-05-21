@@ -8,6 +8,7 @@
 # include <iostream>
 # include <ctime>
 # include <iomanip> //setw()
+# include <cmath> // pow()
 
 # define DEFAULT_DATA_SIZE 21
 
@@ -34,16 +35,19 @@ private:
 	void addContainerByArgs(int ac, char** argv);
 
 	template <typename TContainer>
-	void mergeInsertionSort(TContainer& data, const typename TContainer::size_type chunkScale, const typename TContainer::size_type chunkSize)
+	void mergeInsertionSort(TContainer& data, const typename TContainer::size_type chunkScale, const typename TContainer::size_type chunkSize, const bool hasRemainder)
 	{
 		if (chunkSize < 2)
 		{
 			return ;
 		}
+		// ここでchunkScale内のbiggest要素をとなりのchunkと比較して小大の順に並べる
 		compareChunkAndSwap(data, chunkScale);
-		printContainer(data);
-		mergeInsertionSort(data, chunkScale * 2, chunkSize / 2);
-		integrateToMainChain(data, chunkScale, chunkSize);
+printContainer(data);
+		// 再帰から帰ってくると、chunkSize + 1の要素が降順に並んだ状態になっている
+		mergeInsertionSort(data, chunkScale * 2, chunkSize / 2, chunkSize % 2);
+		// chunkSize * 2の要素数を、一列に並べる。
+		integrateToMainChain(data, chunkScale, chunkSize, (hasRemainder ? 1 : 0));
 	};
 
 	template <typename TContainer>
@@ -62,8 +66,8 @@ private:
 	bool isLittleLeftChunk(TContainer& data, const typename TContainer::size_type chunkScale,
 		const typename TContainer::size_type iLeftChunkEnd, const typename TContainer::size_type iRightChunkEnd)
 	{
-++m_compareCount;
 std::cout << "compareChunk: " << data[iLeftChunkEnd] << " vs " data[iRightChunkEnd] << std::endl;
+		++m_compareCount;
 		if (data[iLeftChunkEnd] <= data[iRightChunkEnd])
 			return (true);
 		return (false);
@@ -80,10 +84,31 @@ std::cout << "compareChunk: " << data[iLeftChunkEnd] << " vs " data[iRightChunkE
 	}
 
 	template <typename TContainer>
-	void integrateToMainChain(TContainer& data, const typename TContainer::size_type chunkScale, const typename TContainer::size_type chunkSize)
+	typename TContainer::size_type getNextIntegratePos(const typename TContainer::size_type number)
 	{
-		
+		return ((std::pow(2, number + 1) + std::pow(-1, number)) / 3);
+	}
 
+	template <typename TContainer, typename TVal>
+	void integrateToMainChain(TContainer& data, const typename TContainer::size_type chunkScale, const typename TContainer::size_type chunkSize, int hasRemainder)
+	{
+		typename TContainer::size_type iEnd = getNextIntegratePos(1); //return 1
+	
+		for (typename TContainer::size_type i = 2; iEnd < chunkSize + hasRemainder; ++i)
+		{
+			typename TContainer::size_type iStart = getNextIntegratePos(i) - 1;
+			while (iEnd <= iStart)
+			{
+				if (iStart < (chunkSize + hasRemainder))
+				{
+					TVal targetVal = chunkScale * iStart
+				// hikaku and insert
+
+				}
+				--iStart;
+			}
+			iEnd = iStart + 1;
+		}
 	}
 
 	template <typename TContainer>

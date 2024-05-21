@@ -7,7 +7,7 @@ PmergeMe::PmergeMe(int ac, char** argv)
 	std::cout << "Before: ";
 	printContainer< std::vector <uint32_t> >(m_containerVec);
 
-	mergeInsertionSort(m_containerVec, 1, m_containerVec.size());
+	mergeInsertionSort(m_containerVec, 1, m_containerVec.size(), false);
 	std::cout << "compare count: " << m_compareCount << std::endl;
 
 };
