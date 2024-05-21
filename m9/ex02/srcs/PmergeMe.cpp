@@ -7,7 +7,7 @@ PmergeMe::PmergeMe(int ac, char** argv)
 	std::cout << "Before: ";
 	printContainer< std::vector <uint32_t> >(m_containerVec);
 
-	mergeInsertionSort();
+	mergeInsertionSort(m_containerVec, 1);
 	printPairContainer< std::vector <std::pair<int64_t,int64_t> > >(m_pairContainer);
 	std::cout << "compare count: " << m_compareCount << std::endl;
 
@@ -57,29 +57,4 @@ void PmergeMe::addContainerByArgs(int ac, char** argv)
 		else
 			throw ("[erorr] " + std::string(argv[i]) + " is not an acceptable number");
 	}
-};
-
-void PmergeMe::mergeInsertionSort()
-{
-	pairMakeAndCompare();
-	pairBinaryInsertionSort();
-};
-
-void PmergeMe::pairMakeAndCompare()
-{
-	std::vector<uint32_t>::size_type i = 0;
-
-	while (i < m_containerVec.size() - 1)
-	{
-		m_pairContainer.push_back(std::make_pair(std::max(m_containerVec[i], m_containerVec[i + 1]), std::min(m_containerVec[i], m_containerVec[i + 1])));
-		i += 2;
-		m_compareCount += 1;
-	}
-	if (i == m_containerVec.size() - 1)
-		m_pairContainer.push_back(std::make_pair(-1, m_containerVec[i]));
-}
-
-void PmergeMe::pairBinaryInsertionSort()
-{
-
 };

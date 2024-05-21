@@ -26,16 +26,48 @@ private:
 	std::deque<uint32_t> m_containerDeque;
 	std::clock_t m_startTime;
 	size_t m_compareCount;
-	std::vector<std::pair<int64_t, int64_t> > m_pairContainer;
 
 public:
 	PmergeMe& operator=(const PmergeMe& rhs);
 
 private:
 	void addContainerByArgs(int ac, char** argv);
-	void mergeInsertionSort();
-	void pairMakeAndCompare();
-	void pairBinaryInsertionSort();
+
+	template <typename TContainer>
+	void mergeInsertionSort(TContainer& data, const typename TContainer::size_type chunkSize)
+	{
+		if (data.size() < chunkSize * 2)
+		{
+			return ;
+		}
+		for (typename TContainer::size_type i = 0; i + (chunkSize * 2) <= TContainer.size(); i += (chunkSize * 2)) // iがさすのは、比較元（chunkLight）の開始位置
+		{
+++m_compareCount;
+			if (!isLitteleLeftChunk(data, chunkSize, i + (chunkSize - 1), i + (chunkSize * 2) - 1))
+			{
+				swapChunk(data, chunkSize, i, i + chunkSize);
+			}
+		}
+	};
+
+	template <typename TContainer>
+	bool isLitteleLeftChunk(TContainer& data, const typename TContainer::size_type chunkSize,
+		const typename TContainer::size_type iLeftChunkEnd, const typename TContainer::size_type iRightChunkEnd)
+	{
+		if (data[iLeftChunkEnd] <= data[iRightChunkEnd])
+			return (true);
+		return (false);
+	}
+
+	template <typename TContainer>
+	void swapChunk(TContainer& data, const typename TContainer::size_type chunkSize,
+		const typename TContainer::size_type iLeftChunkStart, const typename TContainer::size_type iRightChunkStart)
+	{
+		TContainer copyRight(data.begin() + iRightChunkStart, data.begin() + iRightChunkStart + chunkSize);
+
+		data.erase(data.begin() + iRightChunkStart, data.begin() + iRightChunkStart + chunkSize);
+		data.insert(data.begin() + iLeftChunkStart, copyRight.begin(), copyRight.end());
+	}
 
 	template <typename TContainer>
 	void printContainer(const TContainer& data)
