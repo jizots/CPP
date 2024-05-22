@@ -116,7 +116,7 @@ private:
 					std::cout << "targetVal: " << targetVal << std::endl;
 					# endif //DEBUG
 					const typename std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> >::const_iterator insertPos 
-						= recursiveSearchInsertPos(tmpMainChain.begin(), tmpMainChain.end(), std::make_pair(targetVal, data.begin() + targetIndex));
+						= recursiveSearchInsertPos<std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> > >(tmpMainChain.begin(), tmpMainChain.end(), std::make_pair(targetVal, data.begin() + targetIndex));
 					tmpMainChain.insert(insertPos, std::make_pair(targetVal, data.begin() + targetIndex));
 					# ifdef DEBUG
 					std::cout << "tmpMainChain: ";
@@ -143,7 +143,7 @@ private:
 
 	template <typename T>
 	const typename T::const_iterator recursiveSearchInsertPos(const typename T::const_iterator begin,
-		const typename T::const_iterator end, const T targetVal)
+		const typename T::const_iterator end, const std::pair<typename T::value_type, typename T::const_iterator> targetVal)
 	{
 		if (begin == end)
 			return (begin);
