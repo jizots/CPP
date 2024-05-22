@@ -1,19 +1,19 @@
-.PHONY:all clean fclean re
+.PHONY: all clean fclean re debug
 
-NAME	=	PmergeMe
-CXX		=	c++
-CXXFLAGS	=	-Wall -Wextra -Werror
-CXXFLAGS	+=	-std=c++98
-CXXFLAGS	+=	-g
+NAME    = PmergeMe
+CXX     = c++
+CXXFLAGS    = -Wall -Wextra -Werror
+CXXFLAGS    += -std=c++98
+CXXFLAGS    += -g
 
-SRCS	=	main.cpp PmergeMe.cpp
+SRCS    = main.cpp PmergeMe.cpp
 
-SRCS_DIR	=	./srcs/
-OBJS_DIR	=	./objs/
+SRCS_DIR    = ./srcs/
+OBJS_DIR    = ./objs/
 
-OBJS	=	${addprefix ${OBJS_DIR},${SRCS:%.cpp=%.o}}
+OBJS    = ${addprefix ${OBJS_DIR},${SRCS:%.cpp=%.o}}
 
-all:	${OBJS_DIR} ${NAME}
+all: ${OBJS_DIR} ${NAME}
 
 ${OBJS_DIR}:
 	mkdir -p ${OBJS_DIR}
@@ -23,6 +23,9 @@ ${OBJS_DIR}%.o: ${SRCS_DIR}%.cpp
 
 $(NAME): ${OBJS}
 	${CXX} ${CXXFLAGS} -o ${NAME} ${OBJS}
+
+debug: CXXFLAGS += -DDEBUG
+debug: fclean ${OBJS_DIR} ${NAME}
 
 clean:
 	rm -rf ${OBJS_DIR}

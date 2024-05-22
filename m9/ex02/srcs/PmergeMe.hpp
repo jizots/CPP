@@ -43,19 +43,22 @@ private:
 		}
 		// ここでchunkScale内のbiggest要素をとなりのchunkと比較して小大の順に並べる
 		compareChunkAndSwap(data, chunkScale);
-printContainer(data);
+		# ifdef DEBUG
+			std::cout << "### compare Chunk ###" << std::endl;
+			printContainer(data);
+		# endif //DEBUG
 		// 再帰から帰ってくると、chunkSize + 1の要素が降順に並んだ状態になっている
 		mergeInsertionSort(data, chunkScale * 2, chunkSize / 2, chunkSize % 2);
 		// chunkSize * 2の要素数を、一列に並べる。
-		integrateToMainChain(data, chunkScale, chunkSize, (hasRemainder ? 1 : 0));
+		integrateToMainChain<TContainer, typename TContainer::value_type>(data, chunkScale, chunkSize, (hasRemainder ? 1 : 0));
 	};
 
 	template <typename TContainer>
 	void compareChunkAndSwap(TContainer& data, const typename TContainer::size_type chunkScale)
 	{
-		for (typename TContainer::size_type i = 0; i + (chunkScale * 2) <= TContainer.size(); i += (chunkScale * 2)) // iがさすのは、比較元（chunkLeft）の開始位置
+		for (typename TContainer::size_type i = 0; i + (chunkScale * 2) <= data.size(); i += (chunkScale * 2)) // iがさすのは、比較元（chunkLeft）の開始位置
 		{
-			if (!isLittleLeftChunk(data, chunkScale, i + (chunkScale - 1), i + (chunkScale * 2) - 1))
+			if (!isLittleLeftChunk(data, i + (chunkScale - 1), i + (chunkScale * 2) - 1))
 			{
 				swapChunk(data, chunkScale, i, i + chunkScale);
 			}
@@ -63,10 +66,12 @@ printContainer(data);
 	}
 
 	template <typename TContainer>
-	bool isLittleLeftChunk(TContainer& data, const typename TContainer::size_type chunkScale,
+	bool isLittleLeftChunk(TContainer& data,
 		const typename TContainer::size_type iLeftChunkEnd, const typename TContainer::size_type iRightChunkEnd)
 	{
-std::cout << "compareChunk: " << data[iLeftChunkEnd] << " vs " data[iRightChunkEnd] << std::endl;
+		# ifdef DEBUG
+			std::cout << "compareChunk: " << data[iLeftChunkEnd] << " vs " << data[iRightChunkEnd] << std::endl;
+		# endif //DEBUG
 		++m_compareCount;
 		if (data[iLeftChunkEnd] <= data[iRightChunkEnd])
 			return (true);
@@ -92,22 +97,29 @@ std::cout << "compareChunk: " << data[iLeftChunkEnd] << " vs " data[iRightChunkE
 	template <typename TContainer, typename TVal>
 	void integrateToMainChain(TContainer& data, const typename TContainer::size_type chunkScale, const typename TContainer::size_type chunkSize, int hasRemainder)
 	{
-		typename TContainer::size_type iEnd = getNextIntegratePos(1); //return 1
+		typename TContainer::size_type iEnd = getNextIntegratePos<TContainer>(1); //return 1
 	
-		for (typename TContainer::size_type i = 2; iEnd < chunkSize + hasRemainder; ++i)
+		for (typename TContainer::size_type iIntegrateGroup = 2; iEnd < chunkSize + hasRemainder; ++iIntegrateGroup)
 		{
-			typename TContainer::size_type iStart = getNextIntegratePos(i) - 1;
-			while (iEnd <= iStart)
+			typename TContainer::size_type iTarget = getNextIntegratePos<TContainer>(iIntegrateGroup) - 1;
+			# ifdef DEBUG
+			std::cout << "iTarget: " << iTarget << ", iEnd: " << iEnd << std::endl;
+			# endif //DEBUG
+			while (iEnd <= iTarget)
 			{
-				if (iStart < (chunkSize + hasRemainder))
+				if (iTarget < (chunkSize + hasRemainder))
 				{
-					TVal targetVal = chunkScale * iStart
+					TVal targetVal = data[(chunkScale * iTarget) + (chunkScale / 2) - 1];
+					# ifdef DEBUG
+					std::cout << "targetVal: " << targetVal << std::endl;
+					# endif //DEBUG
+					(void)targetVal;
 				// hikaku and insert
 
 				}
-				--iStart;
+				--iTarget;
 			}
-			iEnd = iStart + 1;
+			iEnd = getNextIntegratePos<TContainer>(iIntegrateGroup);
 		}
 	}
 
@@ -127,7 +139,9 @@ std::cout << "compareChunk: " << data[iLeftChunkEnd] << " vs " data[iRightChunkE
 			return (begin);
 		else if ((end - begin) == 1)
 		{
-std::cout << "compare: " << (*begin).first << " vs " << targetVal.first << std::endl;
+			# ifdef DEBUG
+				std::cout << "compare: " << (*begin).first << " vs " << targetVal.first << std::endl;
+			# endif //DEBUG
 			++m_compareCount;
 			if (targetVal < *begin)
 				return (begin);
@@ -138,7 +152,9 @@ std::cout << "compare: " << (*begin).first << " vs " << targetVal.first << std::
 		{
 			++m_compareCount;
 			const typename std::vector<T>::const_iterator middle = begin + ((end - begin) / 2);
-std::cout << "compare: " << (*middle).first << " vs " << targetVal.first << std::endl;
+			# ifdef DEBUG
+				std::cout << "compare: " << (*middle).first << " vs " << targetVal.first << std::endl;
+			# endif //DEBUG
 			if (targetVal < *middle)
 				return (recursiveSearchInsertPos<T>(begin, middle, targetVal));
 			else
@@ -155,7 +171,9 @@ std::cout << "compare: " << (*middle).first << " vs " << targetVal.first << std:
 			const typename std::vector<T>::const_iterator insertPos = recursiveSearchInsertPos<T>(vec.begin(), vec.begin() + index, valueToMove);
 			vec.erase((vec.begin() + index));
 			vec.insert(insertPos, valueToMove);
-printPairContainer(m_pairContainer);
+			# ifdef DEBUG
+				printContainer(m_containerVec);
+			# endif //DEBUG
 		}
 	}
 
@@ -201,4 +219,4 @@ printPairContainer(m_pairContainer);
 	};
 };
 
-#endif
+# endif //PMERGEME_HPP

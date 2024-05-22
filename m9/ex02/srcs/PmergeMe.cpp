@@ -4,8 +4,10 @@ PmergeMe::PmergeMe(int ac, char** argv)
 	:m_compareCount(0)
 {
 	addContainerByArgs(ac, argv);
-	std::cout << "Before: ";
+	# ifdef DEBUG
+	std::cout << "### Initial ###" << std::endl;
 	printContainer< std::vector <uint32_t> >(m_containerVec);
+	# endif //DEBUG
 
 	mergeInsertionSort(m_containerVec, 1, m_containerVec.size(), false);
 	std::cout << "compare count: " << m_compareCount << std::endl;
