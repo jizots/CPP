@@ -5,12 +5,14 @@ PmergeMe::PmergeMe(int ac, char** argv)
 {
 	addContainerByArgs(ac, argv);
 	# ifdef DEBUG
-	std::cout << "### Initial ###" << std::endl;
-	printContainer< std::vector <uint32_t> >(m_containerVec);
+		std::cout << "### Initial ###" << std::endl;
+		printContainer< std::vector <uint32_t> >(m_containerVec);
 	# endif //DEBUG
 
 	mergeInsertionSort(m_containerVec, 1, m_containerVec.size(), false);
-	std::cout << "compare count: " << m_compareCount << std::endl;
+	# ifdef DEBUG
+		std::cout << "compare count: " << m_compareCount << std::endl;
+	# endif //DEBUG
 
 };
 
@@ -38,7 +40,7 @@ void PmergeMe::addContainerByArgs(int ac, char** argv)
 {
 	if (ac < 2)
 	{
-		unsigned int defaultData[] = {21, 1, 20, 2, 19, 3, 18, 4, 17, 5, 16, 6, 15, 7, 14, 8, 13, 9, 12, 10, 11};
+		unsigned int defaultData[] = {21, 1, 13, 2, 17, 3, 12, 4, 20, 5, 15, 6, 19, 7, 14, 8, 18, 9, 16, 10, 11};
 	
 		std::cout << "[notif] Set default data" << std::endl;
 		for (unsigned int i = 0; i < DEFAULT_DATA_SIZE; ++i)

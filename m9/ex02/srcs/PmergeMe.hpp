@@ -50,7 +50,8 @@ private:
 		// 再帰から帰ってくると、chunkSize + 1の要素が降順に並んだ状態になっている
 		mergeInsertionSort(data, chunkScale * 2, chunkSize / 2, chunkSize % 2);
 		// chunkSize * 2の要素数を、一列に並べる。
-		integrateToMainChain<TContainer>(data, chunkScale, chunkSize, (hasRemainder ? 1 : 0));
+		if (1 < chunkScale)
+			integrateToMainChain<TContainer>(data, chunkScale, chunkSize, (hasRemainder ? 1 : 0));
 	};
 
 	template <typename TContainer>
@@ -89,12 +90,6 @@ private:
 	}
 
 	template <typename TContainer>
-	typename TContainer::size_type getNextIntegratePos(const typename TContainer::size_type number)
-	{
-		return ((std::pow(2, number + 1) + std::pow(-1, number)) / 3);
-	}
-
-	template <typename TContainer>
 	void integrateToMainChain(TContainer& data, const typename TContainer::size_type chunkScale, const typename TContainer::size_type chunkSize, int hasRemainder)
 	{
 		typename TContainer::size_type iEnd = getNextIntegratePos<TContainer>(1); //return 1
@@ -103,31 +98,54 @@ private:
 		for (typename TContainer::size_type iIntegrateGroup = 2; iEnd < chunkSize + hasRemainder; ++iIntegrateGroup)
 		{
 			typename TContainer::size_type iTarget = getNextIntegratePos<TContainer>(iIntegrateGroup) - 1;
-			# ifdef DEBUG
-			std::cout << "iTarget: " << iTarget << ", iEnd: " << iEnd << ", chunkScale: " << chunkScale << std::endl;
-			# endif //DEBUG
 			while (iEnd <= iTarget)
 			{
+				typename TContainer::size_type targetIndex = (chunkScale * iTarget) + (chunkScale / 2) - 1;
+				# ifdef DEBUG
+					std::cout << "iTarget: " << iTarget << ", iEnd: " << iEnd << ", targetIndex: " << targetIndex << ", chunkScale: " << chunkScale << std::endl;
+				# endif //DEBUG
 				if (iTarget < (chunkSize + hasRemainder))
 				{
-					int targetIndex = (chunkScale * iTarget) + (chunkScale / 2) - 1;
 					typename TContainer::value_type targetVal = data[targetIndex];
 					# ifdef DEBUG
-					std::cout << "targetVal: " << targetVal << std::endl;
+						std::cout << "targetVal: " << targetVal << std::endl;
 					# endif //DEBUG
 					const typename std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> >::const_iterator insertPos 
-						= recursiveSearchInsertPos<std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> > >(tmpMainChain.begin(), tmpMainChain.end(), std::make_pair(targetVal, data.begin() + targetIndex));
+						= recursiveSearchInsertPos<std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> > >
+							(tmpMainChain.begin(), 
+								(targetIndex + 1 < chunkScale * chunkSize ? 
+									std::find(
+										tmpMainChain.begin(),
+										tmpMainChain.end(),
+										std::make_pair(
+											data[targetIndex + (chunkScale / 2)],
+											static_cast<typename TContainer::const_iterator>(data.begin() + targetIndex + (chunkScale / 2)))
+									)
+									: tmpMainChain.end()
+								)
+								, std::make_pair(targetVal, data.begin() + targetIndex));
 					tmpMainChain.insert(insertPos, std::make_pair(targetVal, data.begin() + targetIndex));
 					# ifdef DEBUG
-					std::cout << "tmpMainChain: ";
-					for (typename std::vector< std::pair<uint32_t, typename TContainer::const_iterator> >::size_type i = 0; i < tmpMainChain.size(); ++i) std::cout << *(tmpMainChain[i].second) << " ";
-					std::cout << std::endl;
+						std::cout << "tmpMainChain: ";
+						for (typename std::vector< std::pair<uint32_t, typename TContainer::const_iterator> >::size_type i = 0; i < tmpMainChain.size(); ++i) std::cout << *(tmpMainChain[i].second) << " ";
+						std::cout << std::endl;
 					# endif //DEBUG
 				}
 				--iTarget;
 			}
 			iEnd = getNextIntegratePos<TContainer>(iIntegrateGroup);
 		}
+		data = reconstructContainerFromMainChain(data, chunkScale / 2, tmpMainChain);
+		# ifdef DEBUG
+			std::cout << "reconstruct vec: ";
+			printContainer(data);
+		# endif //DEBUG
+	}
+
+	template <typename TContainer>
+	typename TContainer::size_type getNextIntegratePos(const typename TContainer::size_type number)
+	{
+		return ((std::pow(2, number + 1) + std::pow(-1, number)) / 3);
 	}
 
 	template <typename TContainer>
@@ -136,21 +154,27 @@ private:
 		std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> > tmpMainChain;
 
 		tmpMainChain.push_back(std::make_pair(data[(chunkScale / 2) - 1], data.begin() + (chunkScale / 2) - 1));
-		tmpMainChain.push_back(std::make_pair(data[chunkScale - 1], data.begin() + chunkScale - 1));
-		tmpMainChain.push_back(std::make_pair(data[(chunkScale * 2) - 1], data.begin() + (chunkScale * 2) - 1));
+		for (typename TContainer::size_type i = 1; i * chunkScale < data.size(); ++i)
+		{
+			tmpMainChain.push_back(std::make_pair(data[(chunkScale * i) - 1], data.begin() + (chunkScale * i) - 1));
+		}
 		return (tmpMainChain);
 	}
 
 	template <typename T>
 	const typename T::const_iterator recursiveSearchInsertPos(const typename T::const_iterator begin,
-		const typename T::const_iterator end, const std::pair<typename T::value_type, typename T::const_iterator> targetVal)
+		const typename T::const_iterator end, const typename T::value_type targetVal)
 	{
 		if (begin == end)
 			return (begin);
 		else if ((end - begin) == 1)
 		{
 			++m_compareCount;
-			if (targetVal < *begin)
+
+			# ifdef DEBUG
+				std::cout << "compair: " << (*begin).first << " vs " << targetVal.first << std::endl;
+			# endif //DEBUG
+			if (targetVal.first < (*begin).first)
 				return (begin);
 			else
 				return (begin + 1);
@@ -159,12 +183,32 @@ private:
 		{
 			++m_compareCount;
 			const typename T::const_iterator middle = begin + ((end - begin) / 2);
-			std::cout << "compair: " << *middle << " vs " << targetVal << std::endl;
+			# ifdef DEBUG
+				std::cout << "compair: " << (*middle).first << " vs " << targetVal.first << std::endl;
+			# endif //DEBUG
 			if (targetVal < *middle)
-				return (recursiveSearchInsertPos(begin, middle, targetVal));
+				return (recursiveSearchInsertPos<T>(begin, middle, targetVal));
 			else
-				return (recursiveSearchInsertPos(middle + 1, end, targetVal));
+				return (recursiveSearchInsertPos<T>(middle + 1, end, targetVal));
 		}
+	}
+
+	template <typename TContainer, typename TMainChain>
+	TContainer reconstructContainerFromMainChain(const TContainer& data, const typename TContainer::size_type& chunkScale, const TMainChain& mainChain)
+	{
+		TContainer	reconstructData;
+		unsigned int remainData = data.size() % chunkScale;
+
+		reconstructData.reserve(data.size());
+		for (typename TContainer::size_type i = 0; i < mainChain.size(); ++i)
+		{
+			reconstructData.insert(reconstructData.end(), mainChain[i].second - chunkScale + 1, mainChain[i].second + 1);
+		}
+		if (remainData)
+		{
+			reconstructData.insert(reconstructData.end(), data.end() - remainData, data.end());
+		}
+		return (reconstructData);
 	}
 
 	template <typename TContainer>
