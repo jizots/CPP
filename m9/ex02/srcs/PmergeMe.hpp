@@ -210,14 +210,31 @@ private:
 		}
 	}
 
-	template <typename TContainer, typename TMainChain>
-	TContainer reconstructContainerFromMainChain(const TContainer& data, const typename TContainer::size_type& chunkScale, const TMainChain& mainChain)
+	template <typename TMainChain>
+	std::vector<uint32_t> reconstructContainerFromMainChain(const std::vector<uint32_t>& data, const typename std::vector<uint32_t>::size_type& chunkScale, const TMainChain& mainChain)
 	{
-		TContainer	reconstructData;
+		std::vector<uint32_t>	reconstructData;
 		unsigned int remainData = data.size() % chunkScale;
 
 		reconstructData.reserve(data.size());
-		for (typename TContainer::size_type i = 0; i < mainChain.size(); ++i)
+		for (typename std::vector<uint32_t>::size_type i = 0; i < mainChain.size(); ++i)
+		{
+			reconstructData.insert(reconstructData.end(), mainChain[i].second - chunkScale + 1, mainChain[i].second + 1);
+		}
+		if (remainData)
+		{
+			reconstructData.insert(reconstructData.end(), data.end() - remainData, data.end());
+		}
+		return (reconstructData);
+	}
+
+	template <typename TMainChain>
+	std::deque<uint32_t> reconstructContainerFromMainChain(const std::deque<uint32_t>& data, const typename std::deque<uint32_t>::size_type& chunkScale, const TMainChain& mainChain)
+	{
+		std::deque<uint32_t>	reconstructData;
+		unsigned int remainData = data.size() % chunkScale;
+
+		for (typename std::deque<uint32_t>::size_type i = 0; i < mainChain.size(); ++i)
 		{
 			reconstructData.insert(reconstructData.end(), mainChain[i].second - chunkScale + 1, mainChain[i].second + 1);
 		}

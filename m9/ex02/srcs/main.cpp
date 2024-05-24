@@ -30,7 +30,6 @@ int mysortVSstdsort(P data1, T1 copyContainerVec, T2 copyContainerDeque)
 	if (compairVec(data1.getContainerVec(), copyContainerVec))
 	{
 		std::cout << "success" << std::endl;
-		return (EXIT_SUCCESS);
 	}
 	else
 	{
@@ -41,13 +40,13 @@ int mysortVSstdsort(P data1, T1 copyContainerVec, T2 copyContainerDeque)
 	if (compairVec(data1.getContainerDeque(), copyContainerDeque))
 	{
 		std::cout << "success" << std::endl;
-		return (EXIT_SUCCESS);
 	}
 	else
 	{
 		std::cout << "fail" << std::endl;
 		return (EXIT_FAILURE);
 	}
+	return (EXIT_SUCCESS);
 }
 
 int	main(int ac, char** argv)
@@ -56,8 +55,8 @@ int	main(int ac, char** argv)
 	{
 		PmergeMe data1(ac, argv);
 
-			std::vector<uint32_t> copyContainerVec = data1.getContainerVec();
-			std::deque<uint32_t> copyContainerDeque = data1.getContainerDeque();
+		std::vector<uint32_t> copyContainerVec = data1.getContainerVec();
+		std::deque<uint32_t> copyContainerDeque = data1.getContainerDeque();
 
 		data1.mergeInsertionSort(data1.getContainerVec(), 1, data1.getContainerVec().size(), false);
 		data1.mergeInsertionSort(data1.getContainerDeque(), 1, data1.getContainerDeque().size(), false);
@@ -75,6 +74,7 @@ int	main(int ac, char** argv)
 		std::cout << e << '\n';
 		return (1);
 	}
+	return (0);
 }
 
 
