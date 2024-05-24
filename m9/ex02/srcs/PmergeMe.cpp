@@ -8,12 +8,6 @@ PmergeMe::PmergeMe(int ac, char** argv)
 		std::cout << "### Initial ###" << std::endl;
 		printContainer< std::vector <uint32_t> >(m_containerVec);
 	# endif //DEBUG
-
-	mergeInsertionSort(m_containerVec, 1, m_containerVec.size(), false);
-	# ifdef DEBUG
-		std::cout << "compare count: " << m_compareCount << std::endl;
-	# endif //DEBUG
-
 };
 
 PmergeMe::PmergeMe(const PmergeMe& other)
@@ -35,6 +29,27 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& rhs)
 	}
 	return (*this);
 };
+
+std::vector<uint32_t>& PmergeMe::getContainerVec(void)
+{
+	return (m_containerVec);
+};
+
+const std::vector<uint32_t>& PmergeMe::getContainerVec(void) const
+{
+	return (m_containerVec);
+};
+
+std::deque<uint32_t>& PmergeMe::getContainerDeque(void)
+{
+	return (m_containerDeque);
+};
+
+const std::deque<uint32_t>& PmergeMe::getContainerDeque(void) const
+{
+	return (m_containerDeque);
+};
+
 
 void PmergeMe::addContainerByArgs(int ac, char** argv)
 {

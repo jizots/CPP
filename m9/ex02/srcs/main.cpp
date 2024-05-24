@@ -1,11 +1,68 @@
 #include "PmergeMe.hpp"
 #include <iostream>
 
+template <typename T>
+bool compairVec(const T& vec1, const T& vec2)
+{
+	if (vec1.size() != vec2.size())
+	{
+		std::cout << "fail at size: " << vec1.size() << " vs " << vec2.size() << "(std::sort)" << std::endl;
+		return (false);
+	}
+	for (typename std::vector<T>::size_type i = 0; i < vec1.size(); ++i)
+	{
+		if (vec1[i] != vec2[i])
+		{
+			std::cout << "fail at element: " << vec1[i] << " vs " << vec2[i] << "(std::sort)" << std::endl;
+			return (false);
+		}
+	}
+	return (true);
+}
+
+template <typename P, typename T1, typename T2>
+int mysortVSstdsort(P data1, T1 copyContainerVec, T2 copyContainerDeque)
+{
+	std::cout << "--- my::sort vs std::sort ---" << std::endl;
+	std::sort(copyContainerVec.begin(), copyContainerVec.end());
+	std::sort(copyContainerDeque.begin(), copyContainerDeque.end());
+	std::cout << "-- part Vector --" << std::endl;
+	if (compairVec(data1.getContainerVec(), copyContainerVec))
+	{
+		std::cout << "success" << std::endl;
+		return (EXIT_SUCCESS);
+	}
+	else
+	{
+		std::cout << "fail" << std::endl;
+		return (EXIT_FAILURE);
+	}
+	std::cout << "-- part Deque --" << std::endl;
+	if (compairVec(data1.getContainerDeque(), copyContainerDeque))
+	{
+		std::cout << "success" << std::endl;
+		return (EXIT_SUCCESS);
+	}
+	else
+	{
+		std::cout << "fail" << std::endl;
+		return (EXIT_FAILURE);
+	}
+}
+
 int	main(int ac, char** argv)
 {
 	try
 	{
 		PmergeMe data1(ac, argv);
+
+			std::vector<uint32_t> copyContainerVec = data1.getContainerVec();
+			std::deque<uint32_t> copyContainerDeque = data1.getContainerDeque();
+
+		data1.mergeInsertionSort(data1.getContainerVec(), 1, data1.getContainerVec().size(), false);
+
+		//自作ソートと、std::sortの結果を比較
+		return (mysortVSstdsort(data1, copyContainerVec, copyContainerDeque));
 	}
 	catch(const std::exception& e)
 	{

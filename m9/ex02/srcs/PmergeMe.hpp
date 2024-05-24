@@ -30,14 +30,16 @@ private:
 
 public:
 	PmergeMe& operator=(const PmergeMe& rhs);
-
-private:
-	void addContainerByArgs(int ac, char** argv);
+	std::vector<uint32_t>& getContainerVec(void);
+	const std::vector<uint32_t>& getContainerVec(void) const;
+	std::deque<uint32_t>& getContainerDeque(void);
+	const std::deque<uint32_t>& getContainerDeque(void) const;
 
 	template <typename TContainer>
-	void mergeInsertionSort(TContainer& data, const typename TContainer::size_type chunkScale, const typename TContainer::size_type chunkSize, const bool hasRemainder)
+	void mergeInsertionSort(TContainer& data, const typename TContainer::size_type chunkScale,
+		const typename TContainer::size_type chunkSize, const bool hasRemainder)
 	{
-		if (chunkSize < 2)
+		if (chunkSize < 1)
 		{
 			return ;
 		}
@@ -52,7 +54,14 @@ private:
 		// chunkSize * 2の要素数を、一列に並べる。
 		if (1 < chunkScale)
 			integrateToMainChain<TContainer>(data, chunkScale, chunkSize, (hasRemainder ? 1 : 0));
+		# ifdef DEBUG
+			if (chunkScale == 1)
+				std::cout << "compare count: " << m_compareCount << std::endl;
+		# endif //DEBUG
 	};
+
+private:
+	void addContainerByArgs(int ac, char** argv);
 
 	template <typename TContainer>
 	void compareChunkAndSwap(TContainer& data, const typename TContainer::size_type chunkScale)
