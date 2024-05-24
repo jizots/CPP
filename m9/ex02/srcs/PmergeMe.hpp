@@ -46,7 +46,7 @@ public:
 		// ここでchunkScale内のbiggest要素をとなりのchunkと比較して小大の順に並べる
 		compareChunkAndSwap(data, chunkScale);
 		# ifdef DEBUG
-			std::cout << "### compare Chunk ###" << std::endl;
+			std::cout << "### After compare Chunk ###" << std::endl;
 			printContainer(data);
 		# endif //DEBUG
 		// 再帰から帰ってくると、chunkSize + 1の要素が降順に並んだ状態になっている
@@ -99,11 +99,18 @@ private:
 	}
 
 	template <typename TContainer>
-	void integrateToMainChain(TContainer& data, const typename TContainer::size_type chunkScale, const typename TContainer::size_type chunkSize, int hasRemainder)
+	void integrateToMainChain(TContainer& data, const typename TContainer::size_type chunkScale,
+		const typename TContainer::size_type chunkSize, int hasRemainder)
 	{
 		typename TContainer::size_type iEnd = getNextIntegratePos<TContainer>(1); //return 1
-		std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> > tmpMainChain = makeTempMainChain(data, chunkScale);
-	
+		std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> > tmpMainChain
+			= makeTempMainChain(data, chunkScale);
+		# ifdef DEBUG
+			std::cout << "tmpMainChain: ";
+			for (typename std::vector< std::pair<uint32_t, typename TContainer::const_iterator> >::size_type i = 0; i < tmpMainChain.size(); ++i) std::cout << *(tmpMainChain[i].second) << " ";
+			std::cout << std::endl;
+		# endif //DEBUG	
+
 		for (typename TContainer::size_type iIntegrateGroup = 2; iEnd < chunkSize + hasRemainder; ++iIntegrateGroup)
 		{
 			typename TContainer::size_type iTarget = getNextIntegratePos<TContainer>(iIntegrateGroup) - 1;
@@ -158,12 +165,13 @@ private:
 	}
 
 	template <typename TContainer>
-	std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> > makeTempMainChain(TContainer& data, const typename TContainer::size_type chunkScale)
+	std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> >
+		makeTempMainChain(TContainer& data, const typename TContainer::size_type chunkScale)
 	{
 		std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> > tmpMainChain;
 
 		tmpMainChain.push_back(std::make_pair(data[(chunkScale / 2) - 1], data.begin() + (chunkScale / 2) - 1));
-		for (typename TContainer::size_type i = 1; i * chunkScale < data.size(); ++i)
+		for (typename TContainer::size_type i = 1; (i * chunkScale - 1) < data.size(); ++i)
 		{
 			tmpMainChain.push_back(std::make_pair(data[(chunkScale * i) - 1], data.begin() + (chunkScale * i) - 1));
 		}

@@ -60,6 +60,7 @@ int	main(int ac, char** argv)
 			std::deque<uint32_t> copyContainerDeque = data1.getContainerDeque();
 
 		data1.mergeInsertionSort(data1.getContainerVec(), 1, data1.getContainerVec().size(), false);
+		data1.mergeInsertionSort(data1.getContainerDeque(), 1, data1.getContainerDeque().size(), false);
 
 		//自作ソートと、std::sortの結果を比較
 		return (mysortVSstdsort(data1, copyContainerVec, copyContainerDeque));
