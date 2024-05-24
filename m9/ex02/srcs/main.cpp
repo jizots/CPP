@@ -55,11 +55,30 @@ int	main(int ac, char** argv)
 	{
 		PmergeMe data1(ac, argv);
 
+		std::clock_t save;
 		std::vector<uint32_t> copyContainerVec = data1.getContainerVec();
 		std::deque<uint32_t> copyContainerDeque = data1.getContainerDeque();
 
+		// time start
+		save = std::clock();
+		// sort
 		data1.mergeInsertionSort(data1.getContainerVec(), 1, data1.getContainerVec().size(), false);
+		// time end
+		double duration = static_cast<double>(std::clock() - save) / CLOCKS_PER_SEC;
+		std::cout << "After:  ";
+		data1.printContainer< std::vector <uint32_t> >(data1.getContainerVec());
+		// time to sort
+		std::cout << "Time to process a range of " <<  data1.getContainerVec().size() << " elements with std::vector : " << duration * 1000000 << " us(microsecond)" << std::endl;
+
+		// time start
+		save = std::clock();
+		// sort
 		data1.mergeInsertionSort(data1.getContainerDeque(), 1, data1.getContainerDeque().size(), false);
+		// time end
+		duration = static_cast<double>(std::clock() - save) / CLOCKS_PER_SEC;
+		// time to sort
+		std::cout << "Time to process a range of " <<  data1.getContainerVec().size() << " elements with std::deque : " << duration * 1000000 << " us(microsecond)" << std::endl;
+
 
 		//自作ソートと、std::sortの結果を比較
 		return (mysortVSstdsort(data1, copyContainerVec, copyContainerDeque));

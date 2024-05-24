@@ -26,6 +26,8 @@ private:
 	std::vector<uint32_t> m_containerVec;
 	std::deque<uint32_t> m_containerDeque;
 	std::clock_t m_startTime;
+	std::clock_t m_vectorTime;
+	std::clock_t m_dequeTime;
 	size_t m_compareCount;
 
 public:
@@ -58,6 +60,14 @@ public:
 			if (chunkScale == 1)
 				std::cout << "compare count: " << m_compareCount << std::endl;
 		# endif //DEBUG
+	};
+
+	template <typename TContainer>
+	void printContainer(const TContainer& data)
+	{
+		for (typename TContainer::size_type i = 0; i < data.size(); ++i)
+			std::cout << data[i] << " ";
+		std::cout << std::endl;
 	};
 
 private:
@@ -244,14 +254,6 @@ private:
 		}
 		return (reconstructData);
 	}
-
-	template <typename TContainer>
-	void printContainer(const TContainer& data)
-	{
-		for (typename TContainer::size_type i = 0; i < data.size(); ++i)
-			std::cout << data[i] << " ";
-		std::cout << std::endl;
-	};
 
 	template <typename T>
 	static bool isUnsigned(){ return (true); };

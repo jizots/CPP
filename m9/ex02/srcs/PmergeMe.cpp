@@ -4,10 +4,8 @@ PmergeMe::PmergeMe(int ac, char** argv)
 	:m_compareCount(0)
 {
 	addContainerByArgs(ac, argv);
-	# ifdef DEBUG
-		std::cout << "### Initial ###" << std::endl;
-		printContainer< std::vector <uint32_t> >(m_containerVec);
-	# endif //DEBUG
+	std::cout << "Before: ";
+	printContainer< std::vector <uint32_t> >(m_containerVec);
 };
 
 PmergeMe::PmergeMe(const PmergeMe& other)
