@@ -25,9 +25,6 @@ private:
 private:
 	std::vector<uint32_t> m_containerVec;
 	std::deque<uint32_t> m_containerDeque;
-	std::clock_t m_startTime;
-	std::clock_t m_vectorTime;
-	std::clock_t m_dequeTime;
 	size_t m_compareCount;
 
 public:
@@ -58,7 +55,10 @@ public:
 			integrateToMainChain<TContainer>(data, chunkScale, chunkSize, (hasRemainder ? 1 : 0));
 		# ifdef DEBUG
 			if (chunkScale == 1)
+			{
 				std::cout << "compare count: " << m_compareCount << std::endl;
+				m_compareCount = 0;
+			}
 		# endif //DEBUG
 	};
 
@@ -256,7 +256,7 @@ private:
 	}
 
 	template <typename T>
-	static bool isUnsigned(){ return (true); };
+	static bool isUnsigned(){ return (false); };
 
 	template <>
 	bool isUnsigned<uint8_t>(){ return (true); };

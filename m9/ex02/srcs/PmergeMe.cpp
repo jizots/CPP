@@ -10,7 +10,8 @@ PmergeMe::PmergeMe(int ac, char** argv)
 
 PmergeMe::PmergeMe(const PmergeMe& other)
 	:m_containerVec(other.m_containerVec),
-	 m_containerDeque(other.m_containerDeque)
+	 m_containerDeque(other.m_containerDeque),
+	 m_compareCount(other.m_compareCount)
 {};
 
 PmergeMe::~PmergeMe(void)
@@ -24,6 +25,7 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& rhs)
 	{
 		m_containerVec = rhs.m_containerVec;
 		m_containerDeque = rhs.m_containerDeque;
+		m_compareCount = rhs.m_compareCount;
 	}
 	return (*this);
 };
