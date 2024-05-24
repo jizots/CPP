@@ -237,7 +237,7 @@ private:
 	template <typename T>
 	static bool isNumericType(const std::string& literal)
 	{
-		if (isUnsigned<T>() && literal.find('-') != std::string::npos)
+		if (isUnsigned<T>() && (literal.find('-') != std::string::npos))
 			return (false);
 		std::istringstream iss(literal);
 		T val;
