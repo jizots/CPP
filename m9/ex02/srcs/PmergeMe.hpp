@@ -124,7 +124,7 @@ private:
 			= makeTempMainChain(data, chunkScale);
 		# ifdef DEBUG
 			std::cout << "tmpMainChain: ";
-			for (typename std::vector< std::pair<uint32, typename TContainer::const_iterator> >::size_type i = 0; i < tmpMainChain.size(); ++i)
+			for (typename std::vector< PAIR_VAL_AND_ITR >::size_type i = 0; i < tmpMainChain.size(); ++i)
 				std::cout << *(tmpMainChain[i].second) << " ";
 			std::cout << std::endl;
 		# endif //DEBUG	
