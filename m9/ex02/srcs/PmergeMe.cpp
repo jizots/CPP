@@ -120,7 +120,8 @@ bool PmergeMe::isLittleLeftChunk(const vecContainer::size_type iLeftChunkEnd,
 	const vecContainer::size_type iRightChunkEnd)
 {
 	# ifdef DEBUG
-		std::cout << "compareChunk: " << m_containerVec[iLeftChunkEnd] << " vs " << m_containerVec[iRightChunkEnd] << std::endl;
+		std::cout << "compareChunk: " << m_containerVec[iLeftChunkEnd] << " vs " 
+			<< m_containerVec[iRightChunkEnd] << std::endl;
 	# endif //DEBUG
 	++m_compareCount;
 	if (m_containerVec[iLeftChunkEnd] <= m_containerVec[iRightChunkEnd])
@@ -157,7 +158,8 @@ void PmergeMe::integrateToMainChain(const vecContainer::size_type chunkScale,
 			// targetIndexが示すのは、MainChainに挿入したい数値のTContainer上のindex
 			vecContainer::size_type targetIndex = (chunkScale * iTarget) + (chunkScale / 2) - 1;
 			# ifdef DEBUG
-				std::cout << "iTarget: " << iTarget << ", iEnd: " << iEnd << ", targetIndex: " << targetIndex << ", chunkScale: " << chunkScale << std::endl;
+				std::cout << "iTarget: " << iTarget << ", iEnd: " << iEnd 
+				<< ", targetIndex: " << targetIndex << ", chunkScale: " << chunkScale << std::endl;
 			# endif //DEBUG
 			if (iTarget < (chunkSize + hasRemainder))
 			{
