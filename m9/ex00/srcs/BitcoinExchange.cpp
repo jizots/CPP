@@ -21,7 +21,7 @@ void	BitcoinExchange::handleLineFromFile(const std::string& filePath,
 	bool isHead = true;
 
 	if (ifs.fail())
-		throw ("failed to open: " + filePath);
+		throw (std::invalid_argument("failed to open: " + filePath));
 	else
 	{
 		std::string line;
@@ -31,9 +31,9 @@ void	BitcoinExchange::handleLineFromFile(const std::string& filePath,
 			isHead = false;
 		}
 		if (ifs.bad())
-			throw ("ifs.bad() occured.");
+			throw (std::runtime_error("ifs.bad() occured."));
 		else if (!ifs.eof())
-			throw ("!ifs.eof() detected.");
+			throw (std::runtime_error("!ifs.eof() detected."));
 	}
 	isHead = true;
 	return ;
@@ -51,7 +51,7 @@ void	BitcoinExchange::handleCsvToMap(const std::string& line, const bool isHead)
 			if (isCsvLine(line))
 				addMapByCSVLine(line);
 			else
-				throw ("CSV format error.");
+				throw (std::invalid_argument("CSV format error."));
 		}
 	}
 }
@@ -59,7 +59,7 @@ void	BitcoinExchange::handleCsvToMap(const std::string& line, const bool isHead)
 void	BitcoinExchange::handleCsvHeader(const std::string& line)
 {
 	if (!isCsvLine(line))
-		throw ("CSV format error.");
+		throw (std::invalid_argument("CSV format error."));
 }
 
 void	BitcoinExchange::addMapByCSVLine(const std::string& line)
@@ -69,12 +69,12 @@ void	BitcoinExchange::addMapByCSVLine(const std::string& line)
 	bool isInserted;
 
 	if (!isValidDateFormat(date))
-		throw ("Not effective date: " + line);
+		throw (std::invalid_argument("Not effective date: " + line));
 	double value = isNumericType<double>(line.substr(pos + 1));
 
 	isInserted = (m_exchangeRate.insert(std::pair<std::string, double>(date, value))).second;
 	if (!isInserted)
-		throw ("Date duplicated: " + line);
+		throw (std::invalid_argument("Date duplicated: " + line));
 	return ;
 };
 
@@ -103,9 +103,9 @@ void	BitcoinExchange::handleInputToOutput(const std::string& line, const bool is
 			else
 				std::cout << "Error: bad input => " << line << std::endl;
 		}
-		catch(const std::string& e)
+		catch(const std::exception& e)
 		{
-			std::cout << e << '\n';
+			std::cout << e.what() << '\n';
 		}
 	}
 }
@@ -122,7 +122,7 @@ double BitcoinExchange::getExchangeRate(const std::string& exchangeDate) const
 
 	itr = m_exchangeRate.lower_bound(exchangeDate);
 	if (itr->first == m_exchangeRate.begin()->first && exchangeDate < itr->first)
-		throw ("Error: bad input => " + exchangeDate);
+		throw (std::out_of_range("Error: bad input => " + exchangeDate));
 	else
 	{
 		--itr;
@@ -142,7 +142,7 @@ bool	BitcoinExchange::isEffectiveInput(const std::string& line, std::string& tar
 	end -= 1;
 	targetDate = line.substr(start, end - start + 1);
 	if (!isValidDateFormat(targetDate))
-		throw ("Error: bad input => " + targetDate);
+		throw (std::invalid_argument("Error: bad input => " + targetDate));
 
 	//verify double value
 	start = line.find_first_of("|", end + 1);
@@ -158,9 +158,9 @@ bool	BitcoinExchange::isEffectiveInput(const std::string& line, std::string& tar
 		end -= 1;
 	targetAmount = isNumericType<double>(line.substr(start, end - start + 1));
 	if (targetAmount < 0)
-		throw ("Error: not a positive number => " + line.substr(start, end - start + 1));
+		throw (std::invalid_argument("Error: not a positive number => " + line.substr(start, end - start + 1)));
 	if (1000 < targetAmount)
-		throw ("Error: too large a number => " + line.substr(start, end - start + 1));
+		throw (std::invalid_argument("Error: too large a number => " + line.substr(start, end - start + 1)));
 	return (true);
 };
 
@@ -196,21 +196,21 @@ bool	BitcoinExchange::isValidDateFormat(const std::string& date)
 	ss << date.substr(0, 4);
 	ss >> year;
 	if (ss.fail())
-		throw ("unexpected error: year " + date);
+		throw (std::runtime_error("unexpected error: year " + date));
 	ss.str("");
 	ss.clear(std::stringstream::goodbit);
 
 	ss << date.substr(5, 2);
 	ss >> month;
 	if (ss.fail())
-		throw ("unexpected error: month " + date);
+		throw (std::runtime_error("unexpected error: month " + date));
 	ss.str("");
 	ss.clear(std::stringstream::goodbit);
 
 	ss << date.substr(8);
 	ss >> day;
 	if (ss.fail())
-		throw ("unexpected error: day " + date);
+		throw (std::runtime_error("unexpected error: day " + date));
 	ss.str("");
 	ss.clear(std::stringstream::goodbit);
 

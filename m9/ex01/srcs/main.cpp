@@ -26,15 +26,5 @@ int main(int ac, char **av)
 		std::cout << e.what() << '\n';
 		return (1);
 	}
-	catch(const std::string& e)
-	{
-		std::cout << e << '\n';
-		return (1);
-	}
-	catch(const char* e)
-	{
-		std::cout << e << '\n';
-		return (1);
-	}
-	
+	return (0);
 }
