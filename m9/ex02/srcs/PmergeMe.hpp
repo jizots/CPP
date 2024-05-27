@@ -291,7 +291,7 @@ private:
 
 		iss >> val;
 		if (iss.fail() || !iss.eof())
-			throw ("Error: Argument is invalid literal => " + literal);
+			throw (std::runtime_error("Error: iss.fail() or iss.eof()"));
 		return (val);
 	};
 };

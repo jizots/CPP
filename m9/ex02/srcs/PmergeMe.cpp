@@ -75,6 +75,6 @@ void PmergeMe::addContainerByArgs(int ac, char** argv)
 			m_containerDeque.push_back(toNumericType<uint32_t>(std::string(argv[i])));
 		}
 		else
-			throw ("[erorr] " + std::string(argv[i]) + " is not an acceptable number");
+			throw (std::invalid_argument("[erorr] " + std::string(argv[i]) + " is not an acceptable number"));
 	}
 };

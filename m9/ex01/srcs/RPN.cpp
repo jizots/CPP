@@ -10,7 +10,7 @@ double RPN::Calculation(const std::string& calculationSrc)
 	std::istringstream iss(calculationSrc);
 
 	if (iss.fail())
-		throw ("iss.fail(): Constructor");
+		throw (std::runtime_error("iss.fail(): Constructor"));
 	while (!iss.eof())
 	{
 		std::string token = popNextToken(iss);
@@ -18,7 +18,7 @@ double RPN::Calculation(const std::string& calculationSrc)
 		{
 			uint16_t val = toNumericType<uint16_t>(token);
 			if (9 < val)
-				throw ("Error. Number's must be less than 10"); 
+				throw (std::invalid_argument("Error. Number's must be less than 10")); 
 			m_stack.push(static_cast<double>(val));
 		}
 		else if (isArithmeticOparator(token))
@@ -39,19 +39,19 @@ double RPN::Calculation(const std::string& calculationSrc)
 					m_stack.push(lhs * rhs);
 			}
 			else
-				throw ("Error. stack does not has 2 or more items");
+				throw (std::invalid_argument("Error. stack does not has 2 or more items"));
 		}
 		else if (token.size() == 0)
 			continue ;
 		else
-			throw ("Error: " + token + " can't accept");
+			throw (std::invalid_argument("Error: " + token + " can't accept"));
 	}
 	if (m_stack.size() == 1)
 		return (m_stack.top());
 	else if (m_stack.size() == 0)
 		throw (std::invalid_argument("Error. Source string is empty"));
 	else
-		throw (std::string("Error. stack has more than one items"));
+		throw (std::invalid_argument("Error. stack has more than one items"));
 };
 
 RPN::RPN(const RPN& other)
@@ -87,7 +87,7 @@ std::string RPN::popNextToken(std::istringstream& iss)
 		if (iss.eof())
 			return ("");
 		else
-			throw ("Error: iss.fail()");
+			throw (std::runtime_error("Error: iss.fail()"));
 	}
 	return (token);
 }		

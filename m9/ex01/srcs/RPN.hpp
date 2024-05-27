@@ -55,7 +55,7 @@ private:
 
 		iss >> t;
 		if (iss.fail() || !iss.eof())
-			throw ("Error: Argument is invalid literal => " + literal);
+			throw (std::invalid_argument("Error: Argument is invalid literal => " + literal));
 		return (t);
 	};
 

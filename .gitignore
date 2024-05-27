@@ -4,5 +4,3 @@ a.out
 test.*
 *gch
 test.cpp
-*.csv
-*.txt

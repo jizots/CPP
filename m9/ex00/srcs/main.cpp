@@ -13,8 +13,6 @@ int main(int argc, char **argv)
 		std::cout << "+++ basic test +++" << std::endl; 
 		BitcoinExchange exchange;
 		exchange.handleLineFromFile("data.csv", &BitcoinExchange::handleCsvToMap);
-		if (exchange.getExchangeRateData().size() == 0)
-			throw ("CSV data does not exist");
 		exchange.handleLineFromFile(argv[1], &BitcoinExchange::handleInputToOutput);
 		std::cout << std::endl; 
 
@@ -47,13 +45,6 @@ int main(int argc, char **argv)
 	{
 		std::cout << e.what() << '\n';
 	}
-	catch(const char* e)
-	{
-		std::cout << e << '\n';
-	}
-	catch(const std::string& e)
-	{
-		std::cout << e << '\n';
-	}
+
 	return (0);
 }
