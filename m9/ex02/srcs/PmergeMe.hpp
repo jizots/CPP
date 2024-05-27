@@ -6,7 +6,6 @@
 # include <string>
 # include <sstream>
 # include <iostream>
-# include <ctime>
 # include <iomanip> //setw()
 # include <cmath> // pow()
 

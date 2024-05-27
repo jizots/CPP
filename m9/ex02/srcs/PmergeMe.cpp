@@ -1,3 +1,5 @@
+# include <ctime>
+
 #include "PmergeMe.hpp"
 
 PmergeMe::PmergeMe(int ac, char** argv)

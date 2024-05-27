@@ -80,7 +80,7 @@ int	main(int ac, char** argv)
 		std::cout << "Time to process a range of " <<  data1.getContainerVec().size() << " elements with std::deque : " << duration * 1000000 << " us(microsecond)" << std::endl;
 
 
-		//自作ソートと、std::sortの結果を比較
+		// compare mySort vs std::sort for verify sorted or not
 		return (mysortVSstdsort(data1, copyContainerVec, copyContainerDeque));
 	}
 	catch(const std::exception& e)
