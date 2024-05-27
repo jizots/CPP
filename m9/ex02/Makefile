@@ -4,6 +4,7 @@ NAME    = PmergeMe
 CXX     = c++
 CXXFLAGS    = -Wall -Wextra -Werror
 CXXFLAGS    += -std=c++98
+CXXFLAGS	+=	-MMD -MP
 CXXFLAGS    += -g
 
 SRCS    = main.cpp PmergeMe.cpp
@@ -12,6 +13,7 @@ SRCS_DIR    = ./srcs/
 OBJS_DIR    = ./objs/
 
 OBJS    = ${addprefix ${OBJS_DIR},${SRCS:%.cpp=%.o}}
+DEPS    = ${OBJS:.o=.d}
 
 all: ${OBJS_DIR} ${NAME}
 
@@ -34,3 +36,5 @@ fclean: clean
 	rm -f ${NAME}
 
 re: fclean all
+
+-include ${DEPS}

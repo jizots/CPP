@@ -4,21 +4,12 @@
 #include <algorithm>
 #include <iostream>
 
-BitcoinExchange::BitcoinExchange(const std::string& filePath)
-	:m_filePath(filePath)
-{
-	handleLineFromFile("data.csv", &BitcoinExchange::handleCsvToMap);
-	if (m_exchangeRate.size() == 0)
-		throw ("CSV dose not exist");
-	handleLineFromFile(m_filePath, &BitcoinExchange::handleInputToOutput);
-};
+BitcoinExchange::BitcoinExchange(void)
+{};
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& other)
-	:m_filePath(other.m_filePath),
-	 m_exchangeRate(other.m_exchangeRate)
-{
-	handleLineFromFile(m_filePath, &BitcoinExchange::handleInputToOutput);
-};
+	:m_exchangeRate(other.m_exchangeRate)
+{};
 
 BitcoinExchange::~BitcoinExchange(void)
 {};
@@ -97,14 +88,17 @@ void	BitcoinExchange::handleInputToOutput(const std::string& line, const bool is
 	{
 		try
 		{
-			if(isEffectiveInput(line))
+			std::string targetDate;
+			double		targetAmount;
+
+			if(isEffectiveInput(line, targetDate, targetAmount))
 			{
-				double rate = getExchangeRate(m_targetDate);
-				std::cout << m_targetDate;
+				double rate = getExchangeRate(targetDate);
+				std::cout << targetDate;
 				std::cout << " => ";
-				std::cout << m_targetAmount;
+				std::cout << targetAmount;
 				std::cout << " = ";
-				std::cout << (m_targetAmount * rate) << std::endl;
+				std::cout << (targetAmount * rate) << std::endl;
 			}
 			else
 				std::cout << "Error: bad input => " << line << std::endl;
@@ -120,6 +114,9 @@ double BitcoinExchange::getExchangeRate(const std::string& exchangeDate) const
 {
 	std::map<std::string, double>::const_iterator itr = m_exchangeRate.find(exchangeDate);
 
+	if (m_exchangeRate.empty())
+		throw (std::range_error("Exchange rate data does not exist"));
+
 	if (itr != m_exchangeRate.end())
 		return (itr->second);
 
@@ -133,7 +130,7 @@ double BitcoinExchange::getExchangeRate(const std::string& exchangeDate) const
 	}
 };
 
-bool	BitcoinExchange::isEffectiveInput(const std::string& line)
+bool	BitcoinExchange::isEffectiveInput(const std::string& line, std::string& targetDate, double& targetAmount)
 {
 	//verify date
 	std::string::size_type start = line.find_first_not_of(WHITE_SPACE, 0);
@@ -143,9 +140,9 @@ bool	BitcoinExchange::isEffectiveInput(const std::string& line)
 	if (end == std::string::npos || start == end)
 		return (false);
 	end -= 1;
-	m_targetDate = line.substr(start, end - start + 1);
-	if (!isValidDateFormat(m_targetDate))
-		throw ("Error: bad input => " + m_targetDate);
+	targetDate = line.substr(start, end - start + 1);
+	if (!isValidDateFormat(targetDate))
+		throw ("Error: bad input => " + targetDate);
 
 	//verify double value
 	start = line.find_first_of("|", end + 1);
@@ -159,10 +156,10 @@ bool	BitcoinExchange::isEffectiveInput(const std::string& line)
 		end = line.size() - 1;
 	else
 		end -= 1;
-	m_targetAmount = isNumericType<double>(line.substr(start, end - start + 1));
-	if (m_targetAmount < 0)
+	targetAmount = isNumericType<double>(line.substr(start, end - start + 1));
+	if (targetAmount < 0)
 		throw ("Error: not a positive number => " + line.substr(start, end - start + 1));
-	if (1000 < m_targetAmount)
+	if (1000 < targetAmount)
 		throw ("Error: too large a number => " + line.substr(start, end - start + 1));
 	return (true);
 };
@@ -194,33 +191,30 @@ bool	BitcoinExchange::isValidDateFormat(const std::string& date)
 
 	//expect number-number-number
 	std::stringstream ss;
-	int val;
+	int year, month, day;
 
 	ss << date.substr(0, 4);
-	ss >> val;
+	ss >> year;
 	if (ss.fail())
 		throw ("unexpected error: year " + date);
-	m_date.year = val;
 	ss.str("");
 	ss.clear(std::stringstream::goodbit);
 
 	ss << date.substr(5, 2);
-	ss >> val;
+	ss >> month;
 	if (ss.fail())
 		throw ("unexpected error: month " + date);
-	m_date.month = val;
 	ss.str("");
 	ss.clear(std::stringstream::goodbit);
 
 	ss << date.substr(8);
-	ss >> val;
+	ss >> day;
 	if (ss.fail())
 		throw ("unexpected error: day " + date);
-	m_date.day = val;
 	ss.str("");
 	ss.clear(std::stringstream::goodbit);
 
-	if (!isEffectiveDate(m_date.year, m_date.month, m_date.day))
+	if (!isEffectiveDate(year, month, day))
 		return (false);	
 	return (true);
 };
@@ -289,11 +283,16 @@ bool	BitcoinExchange::isStringComposedWithFunc(const std::string& str, int (*f)(
 	return (true);
 }
 
+const std::map<std::string, double>& BitcoinExchange::getExchangeRateData(void) const
+{
+	return (m_exchangeRate);
+};
+
+
 BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& rhs)
 {
 	if (this == &rhs)
 		return (*this);
 	m_exchangeRate = rhs.m_exchangeRate;
-	m_filePath = rhs.m_filePath;
 	return (*this);
 };
