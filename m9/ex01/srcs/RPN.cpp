@@ -2,14 +2,18 @@
 
 #include <iostream>
 
-RPN::RPN(const char *calculationSrc)
-	:m_iss((std::string(calculationSrc)))
+RPN::RPN(void)
+{}
+
+double RPN::Calculation(const std::string& calculationSrc)
 {
-	if (m_iss.fail())
+	std::istringstream iss(calculationSrc);
+
+	if (iss.fail())
 		throw ("iss.fail(): Constructor");
-	while (!m_iss.eof())
+	while (!iss.eof())
 	{
-		std::string token = popNextToken();
+		std::string token = popNextToken(iss);
 		if (isNumericType<uint16_t>(token))
 		{
 			uint16_t val = toNumericType<uint16_t>(token);
@@ -35,7 +39,7 @@ RPN::RPN(const char *calculationSrc)
 					m_stack.push(lhs * rhs);
 			}
 			else
-				throw ("Error. stack hasn't 2 or more item's");
+				throw ("Error. stack does not has 2 or more items");
 		}
 		else if (token.size() == 0)
 			continue ;
@@ -43,9 +47,11 @@ RPN::RPN(const char *calculationSrc)
 			throw ("Error: " + token + " can't accept");
 	}
 	if (m_stack.size() == 1)
-		std::cout << m_stack.top() << std::endl;
+		return (m_stack.top());
+	else if (m_stack.size() == 0)
+		throw (std::invalid_argument("Error. Source string is empty"));
 	else
-		throw (std::string("Error. stack has more than one item's"));
+		throw (std::string("Error. stack has more than one items"));
 };
 
 RPN::RPN(const RPN& other)
@@ -71,14 +77,14 @@ bool RPN::isArithmeticOparator(const std::string& token)
 	return (false);
 };
 
-std::string RPN::popNextToken(void)
+std::string RPN::popNextToken(std::istringstream& iss)
 {
 	std::string token;
 
-	m_iss >> token;
-	if (m_iss.fail())
+	iss >> token;
+	if (iss.fail())
 	{
-		if (m_iss.eof())
+		if (iss.eof())
 			return ("");
 		else
 			throw ("Error: iss.fail()");

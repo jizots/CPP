@@ -7,17 +7,16 @@
 class RPN
 {
 public:
-	RPN(const char *calculationSrc);
+	RPN(void);
 	RPN(const RPN& other);
 	~RPN(void);
 	RPN& operator=(const RPN& rhs);
+	double Calculation(const std::string& calculationSrc);
 
 private:
 	std::stack<double> m_stack;
-	std::istringstream m_iss;
 
 private:
-	RPN(void);
 
 	template <typename T>
 	bool isUnsigned(){ return (true); };
@@ -61,7 +60,7 @@ private:
 	};
 
 	bool isArithmeticOparator(const std::string& token);
-	std::string popNextToken(void);
+	std::string popNextToken(std::istringstream& iss);
 };
 
 #endif
