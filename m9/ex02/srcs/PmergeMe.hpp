@@ -62,6 +62,8 @@ public:
 			{
 				std::cout << "compare count: " << m_compareCount << std::endl;
 				m_compareCount = 0;
+				std::cout << std::endl;
+				std::cout << std::endl;
 			}
 		# endif //DEBUG
 	};
@@ -205,7 +207,7 @@ private:
 			++m_compareCount;
 
 			# ifdef DEBUG
-				std::cout << "compair: " << (*begin).first << " vs " << targetVal.first << std::endl;
+				std::cout << "compare: " << (*begin).first << " vs " << targetVal.first << std::endl;
 			# endif //DEBUG
 			if (targetVal.first < (*begin).first)
 				return (begin);
@@ -217,7 +219,7 @@ private:
 			++m_compareCount;
 			const typename T::const_iterator middle = begin + ((end - begin) / 2);
 			# ifdef DEBUG
-				std::cout << "compair: " << (*middle).first << " vs " << targetVal.first << std::endl;
+				std::cout << "compare: " << (*middle).first << " vs " << targetVal.first << std::endl;
 			# endif //DEBUG
 			if (targetVal < *middle)
 				return (recursiveSearchInsertPos<T>(begin, middle, targetVal));
