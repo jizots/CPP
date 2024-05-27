@@ -10,6 +10,11 @@
 # include <cmath> // pow()
 
 # define DEFAULT_DATA_SIZE 21
+# define PAIR_VAL_AND_ITR std::pair<typename TContainer::value_type, typename TContainer::const_iterator>
+
+typedef unsigned char uint8;
+typedef unsigned short int uint16;
+typedef unsigned int uint32;
 
 class PmergeMe
 {
@@ -22,16 +27,16 @@ private:
 	PmergeMe(void);
 
 private:
-	std::vector<uint32_t> m_containerVec;
-	std::deque<uint32_t> m_containerDeque;
+	std::vector<uint32> m_containerVec;
+	std::deque<uint32> m_containerDeque;
 	size_t m_compareCount;
 
 public:
 	PmergeMe& operator=(const PmergeMe& rhs);
-	std::vector<uint32_t>& getContainerVec(void);
-	const std::vector<uint32_t>& getContainerVec(void) const;
-	std::deque<uint32_t>& getContainerDeque(void);
-	const std::deque<uint32_t>& getContainerDeque(void) const;
+	std::vector<uint32>& getContainerVec(void);
+	const std::vector<uint32>& getContainerVec(void) const;
+	std::deque<uint32>& getContainerDeque(void);
+	const std::deque<uint32>& getContainerDeque(void) const;
 
 	template <typename TContainer>
 	void mergeInsertionSort(TContainer& data, const typename TContainer::size_type chunkScale,
@@ -75,7 +80,8 @@ private:
 	template <typename TContainer>
 	void compareChunkAndSwap(TContainer& data, const typename TContainer::size_type chunkScale)
 	{
-		for (typename TContainer::size_type i = 0; i + (chunkScale * 2) <= data.size(); i += (chunkScale * 2)) // iがさすのは、比較元（chunkLeft）の開始位置
+		// iがさすのは、比較元（chunkLeft）の開始位置
+		for (typename TContainer::size_type i = 0; i + (chunkScale * 2) <= data.size(); i += (chunkScale * 2))
 		{
 			if (!isLittleLeftChunk(data, i + (chunkScale - 1), i + (chunkScale * 2) - 1))
 			{
@@ -112,11 +118,12 @@ private:
 		const typename TContainer::size_type chunkSize, int hasRemainder)
 	{
 		typename TContainer::size_type iEnd = getNextIntegratePos<TContainer>(1); //return 1
-		std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> > tmpMainChain
+		std::vector< PAIR_VAL_AND_ITR > tmpMainChain
 			= makeTempMainChain(data, chunkScale);
 		# ifdef DEBUG
 			std::cout << "tmpMainChain: ";
-			for (typename std::vector< std::pair<uint32_t, typename TContainer::const_iterator> >::size_type i = 0; i < tmpMainChain.size(); ++i) std::cout << *(tmpMainChain[i].second) << " ";
+			for (typename std::vector< std::pair<uint32, typename TContainer::const_iterator> >::size_type i = 0; i < tmpMainChain.size(); ++i)
+				std::cout << *(tmpMainChain[i].second) << " ";
 			std::cout << std::endl;
 		# endif //DEBUG	
 
@@ -125,6 +132,7 @@ private:
 			typename TContainer::size_type iTarget = getNextIntegratePos<TContainer>(iIntegrateGroup) - 1;
 			while (iEnd <= iTarget)
 			{
+				// targetIndexが示すのは、MainChainに挿入したい数値のTContainer上のindex
 				typename TContainer::size_type targetIndex = (chunkScale * iTarget) + (chunkScale / 2) - 1;
 				# ifdef DEBUG
 					std::cout << "iTarget: " << iTarget << ", iEnd: " << iEnd << ", targetIndex: " << targetIndex << ", chunkScale: " << chunkScale << std::endl;
@@ -135,8 +143,8 @@ private:
 					# ifdef DEBUG
 						std::cout << "targetVal: " << targetVal << std::endl;
 					# endif //DEBUG
-					const typename std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> >::const_iterator insertPos 
-						= recursiveSearchInsertPos<std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> > >
+					const typename std::vector< PAIR_VAL_AND_ITR >::const_iterator insertPos 
+						= recursiveSearchInsertPos<std::vector< PAIR_VAL_AND_ITR > >
 							(tmpMainChain.begin(), 
 								(targetIndex + 1 < chunkScale * chunkSize ? 
 									std::find(
@@ -152,7 +160,7 @@ private:
 					tmpMainChain.insert(insertPos, std::make_pair(targetVal, data.begin() + targetIndex));
 					# ifdef DEBUG
 						std::cout << "tmpMainChain: ";
-						for (typename std::vector< std::pair<uint32_t, typename TContainer::const_iterator> >::size_type i = 0; i < tmpMainChain.size(); ++i) std::cout << *(tmpMainChain[i].second) << " ";
+						for (typename std::vector< std::pair<uint32, typename TContainer::const_iterator> >::size_type i = 0; i < tmpMainChain.size(); ++i) std::cout << *(tmpMainChain[i].second) << " ";
 						std::cout << std::endl;
 					# endif //DEBUG
 				}
@@ -174,10 +182,9 @@ private:
 	}
 
 	template <typename TContainer>
-	std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> >
-		makeTempMainChain(TContainer& data, const typename TContainer::size_type chunkScale)
+	std::vector< PAIR_VAL_AND_ITR > makeTempMainChain(TContainer& data, const typename TContainer::size_type chunkScale)
 	{
-		std::vector< std::pair<typename TContainer::value_type, typename TContainer::const_iterator> > tmpMainChain;
+		std::vector< PAIR_VAL_AND_ITR > tmpMainChain;
 
 		tmpMainChain.push_back(std::make_pair(data[(chunkScale / 2) - 1], data.begin() + (chunkScale / 2) - 1));
 		for (typename TContainer::size_type i = 1; (i * chunkScale - 1) < data.size(); ++i)
@@ -220,13 +227,14 @@ private:
 	}
 
 	template <typename TMainChain>
-	std::vector<uint32_t> reconstructContainerFromMainChain(const std::vector<uint32_t>& data, const typename std::vector<uint32_t>::size_type& chunkScale, const TMainChain& mainChain)
+	std::vector<uint32> reconstructContainerFromMainChain(const std::vector<uint32>& data,
+		const typename std::vector<uint32>::size_type& chunkScale, const TMainChain& mainChain)
 	{
-		std::vector<uint32_t>	reconstructData;
+		std::vector<uint32>	reconstructData;
 		unsigned int remainData = data.size() % chunkScale;
 
 		reconstructData.reserve(data.size());
-		for (typename std::vector<uint32_t>::size_type i = 0; i < mainChain.size(); ++i)
+		for (typename std::vector<uint32>::size_type i = 0; i < mainChain.size(); ++i)
 		{
 			reconstructData.insert(reconstructData.end(), mainChain[i].second - chunkScale + 1, mainChain[i].second + 1);
 		}
@@ -238,12 +246,13 @@ private:
 	}
 
 	template <typename TMainChain>
-	std::deque<uint32_t> reconstructContainerFromMainChain(const std::deque<uint32_t>& data, const typename std::deque<uint32_t>::size_type& chunkScale, const TMainChain& mainChain)
+	std::deque<uint32> reconstructContainerFromMainChain(const std::deque<uint32>& data,
+		const typename std::deque<uint32>::size_type& chunkScale, const TMainChain& mainChain)
 	{
-		std::deque<uint32_t>	reconstructData;
+		std::deque<uint32>	reconstructData;
 		unsigned int remainData = data.size() % chunkScale;
 
-		for (typename std::deque<uint32_t>::size_type i = 0; i < mainChain.size(); ++i)
+		for (typename std::deque<uint32>::size_type i = 0; i < mainChain.size(); ++i)
 		{
 			reconstructData.insert(reconstructData.end(), mainChain[i].second - chunkScale + 1, mainChain[i].second + 1);
 		}
@@ -258,16 +267,13 @@ private:
 	static bool isUnsigned(){ return (false); };
 
 	template <>
-	bool isUnsigned<uint8_t>(){ return (true); };
+	bool isUnsigned<uint8>(){ return (true); };
 
 	template <>
-	bool isUnsigned<uint16_t>(){ return (true); };
+	bool isUnsigned<uint16>(){ return (true); };
 
 	template <>
-	bool isUnsigned<uint32_t>(){ return (true); };
-
-	template <>
-	bool isUnsigned<uint64_t>(){ return (true); };
+	bool isUnsigned<uint32>(){ return (true); };
 
 	template <typename T>
 	static bool isNumericType(const std::string& literal)

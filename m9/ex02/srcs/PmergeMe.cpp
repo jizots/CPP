@@ -7,7 +7,7 @@ PmergeMe::PmergeMe(int ac, char** argv)
 {
 	addContainerByArgs(ac, argv);
 	std::cout << "Before: ";
-	printContainer< std::vector <uint32_t> >(m_containerVec);
+	printContainer< std::vector <uint32> >(m_containerVec);
 };
 
 PmergeMe::PmergeMe(const PmergeMe& other)
@@ -32,22 +32,22 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& rhs)
 	return (*this);
 };
 
-std::vector<uint32_t>& PmergeMe::getContainerVec(void)
+std::vector<uint32>& PmergeMe::getContainerVec(void)
 {
 	return (m_containerVec);
 };
 
-const std::vector<uint32_t>& PmergeMe::getContainerVec(void) const
+const std::vector<uint32>& PmergeMe::getContainerVec(void) const
 {
 	return (m_containerVec);
 };
 
-std::deque<uint32_t>& PmergeMe::getContainerDeque(void)
+std::deque<uint32>& PmergeMe::getContainerDeque(void)
 {
 	return (m_containerDeque);
 };
 
-const std::deque<uint32_t>& PmergeMe::getContainerDeque(void) const
+const std::deque<uint32>& PmergeMe::getContainerDeque(void) const
 {
 	return (m_containerDeque);
 };
@@ -69,12 +69,12 @@ void PmergeMe::addContainerByArgs(int ac, char** argv)
 	}
 	for (int i = 1; i < ac; ++i)
 	{
-		if (isNumericType<uint32_t>(std::string(argv[i])))
+		if (isNumericType<uint32>(std::string(argv[i])))
 		{
-			m_containerVec.push_back(toNumericType<uint32_t>(std::string(argv[i])));
-			m_containerDeque.push_back(toNumericType<uint32_t>(std::string(argv[i])));
+			m_containerVec.push_back(toNumericType<uint32>(std::string(argv[i])));
+			m_containerDeque.push_back(toNumericType<uint32>(std::string(argv[i])));
 		}
 		else
-			throw (std::invalid_argument("[erorr] " + std::string(argv[i]) + " is not an acceptable number"));
+			throw (std::invalid_argument("[error] " + std::string(argv[i]) + " is not an acceptable number"));
 	}
 };

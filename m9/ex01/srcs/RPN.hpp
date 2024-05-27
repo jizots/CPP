@@ -4,6 +4,10 @@
 #include <stack>
 #include <sstream>
 
+typedef unsigned char uint8;
+typedef unsigned short int uint16;
+typedef unsigned int uint32;
+
 class RPN
 {
 public:
@@ -19,19 +23,16 @@ private:
 private:
 
 	template <typename T>
-	bool isUnsigned(){ return (true); };
+	bool isUnsigned(){ return (false); };
 
 	template <>
-	bool isUnsigned<uint8_t>(){ return (true); };
+	bool isUnsigned<uint8>(){ return (true); };
 
 	template <>
-	bool isUnsigned<uint16_t>(){ return (true); };
+	bool isUnsigned<uint16>(){ return (true); };
 
 	template <>
-	bool isUnsigned<uint32_t>(){ return (true); };
-
-	template <>
-	bool isUnsigned<uint64_t>(){ return (true); };
+	bool isUnsigned<uint32>(){ return (true); };
 
 	template <typename T>
 	bool isNumericType(const std::string& literal)
