@@ -14,9 +14,9 @@ double RPN::Calculation(const std::string& calculationSrc)
 	while (!iss.eof())
 	{
 		std::string token = popNextToken(iss);
-		if (isNumericType<uint16_t>(token))
+		if (isNumericType<uint16>(token))
 		{
-			uint16_t val = toNumericType<uint16_t>(token);
+			uint16 val = toNumericType<uint16>(token);
 			if (9 < val)
 				throw (std::invalid_argument("Error. Number's must be less than 10")); 
 			m_stack.push(static_cast<double>(val));
