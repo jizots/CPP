@@ -26,19 +26,19 @@ private:
 	std::string m_targetDate;
 	double		m_targetAmount;
 	Date		m_date;
-	static bool isHead;
 
 private:
 	BitcoinExchange(void);
-	void 		handleLineFromFile(const std::string& filePath, void (BitcoinExchange::*func)(const std::string& line));
-	void		handleCsvToMap(const std::string& line);
-	void		handleCsvHeader(const std::string& line);
-	void		addMapByCSVLine(const std::string& line);
-	void		handleInputToOutput(const std::string& line);
-	void  		outputExchangeResult(const std::string& filePath);
-	bool		isEffectiveInput(const std::string& line);
-	bool		isCsvLine(const std::string& line);
-	bool		isValidDateFormat(const std::string& date);
+	void 	handleLineFromFile(const std::string& filePath,
+			void (BitcoinExchange::*func)(const std::string& line, const bool isHead));
+	void	handleCsvToMap(const std::string& line, const bool isHead);
+	void	handleCsvHeader(const std::string& line);
+	void	addMapByCSVLine(const std::string& line);
+	void	handleInputToOutput(const std::string& line, const bool isHead);
+	void  	outputExchangeResult(const std::string& filePath);
+	bool	isEffectiveInput(const std::string& line);
+	bool	isCsvLine(const std::string& line);
+	bool	isValidDateFormat(const std::string& date);
 	static bool	isEffectiveDate(const int year, const int month, const int day);
 	static bool	isLeapYear(const int year);
 	static bool	isStringComposedWithFunc(const std::string& str, int (*f)(int));

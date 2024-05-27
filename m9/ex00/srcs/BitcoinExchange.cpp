@@ -23,11 +23,11 @@ BitcoinExchange::BitcoinExchange(const BitcoinExchange& other)
 BitcoinExchange::~BitcoinExchange(void)
 {};
 
-bool BitcoinExchange::isHead = true;
-
-void	BitcoinExchange::handleLineFromFile(const std::string& filePath, void (BitcoinExchange::*func)(const std::string& line))
+void	BitcoinExchange::handleLineFromFile(const std::string& filePath, 
+	void (BitcoinExchange::*func)(const std::string& line, const bool isHead))
 {
 	std::ifstream	ifs(filePath);
+	bool isHead = true;
 
 	if (ifs.fail())
 		throw ("failed to open: " + filePath);
@@ -35,7 +35,10 @@ void	BitcoinExchange::handleLineFromFile(const std::string& filePath, void (Bitc
 	{
 		std::string line;
 		while (std::getline(ifs, line))
-			(this->*func)(line);
+		{
+			(this->*func)(line, isHead);
+			isHead = false;
+		}
 		if (ifs.bad())
 			throw ("ifs.bad() occured.");
 		else if (!ifs.eof())
@@ -45,13 +48,12 @@ void	BitcoinExchange::handleLineFromFile(const std::string& filePath, void (Bitc
 	return ;
 };
 
-void	BitcoinExchange::handleCsvToMap(const std::string& line)
+void	BitcoinExchange::handleCsvToMap(const std::string& line, const bool isHead)
 {
 	{
 		if (isHead)
 		{
 			handleCsvHeader(line);
-			isHead = false;
 		}
 		else
 		{
@@ -85,12 +87,11 @@ void	BitcoinExchange::addMapByCSVLine(const std::string& line)
 	return ;
 };
 
-void	BitcoinExchange::handleInputToOutput(const std::string& line)
+void	BitcoinExchange::handleInputToOutput(const std::string& line, const bool isHead)
 {
 	if (isHead)
 	{
 		// Ignore header
-		isHead = false;
 	}
 	else
 	{
