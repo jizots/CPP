@@ -11,20 +11,21 @@
 
 # define DEFAULT_DATA_SIZE 21
 
-typedef unsigned char uint8;
-typedef unsigned short int uint16;
-typedef unsigned int uint32;
-
-typedef std::vector<uint32> vecContainer;
-typedef std::pair<uint32, vecContainer::const_iterator> pairMainChain;
-typedef std::vector< pairMainChain > vecMainChain;
-
-typedef std::deque<uint32> deqContainer;
-typedef std::pair<uint32, deqContainer::const_iterator> pairMainChainDeq;
-typedef std::vector< pairMainChainDeq > vecMainChainDeq;
-
 class PmergeMe
 {
+private:
+	typedef unsigned char uint8;
+	typedef unsigned short int uint16;
+	typedef unsigned int uint32;
+
+	typedef std::vector<uint32> vecContainer;
+	typedef std::pair<uint32, vecContainer::const_iterator> pairMainChain;
+	typedef std::vector< pairMainChain > vecMainChain;
+
+	typedef std::deque<uint32> deqContainer;
+	typedef std::pair<uint32, deqContainer::const_iterator> pairMainChainDeq;
+	typedef std::vector< pairMainChainDeq > vecMainChainDeq;
+
 public:
 	PmergeMe(int ac, char** argv);
 	PmergeMe(const PmergeMe& other);
@@ -38,7 +39,7 @@ public:
 	void mergeInsertionSortVec(const vecContainer::size_type chunkScale, 
 		const vecContainer::size_type chunkSize, const bool hasRemainder);
 
-private:
+private:	
 	PmergeMe(void);
 
 private:

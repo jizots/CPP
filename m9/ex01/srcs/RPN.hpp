@@ -4,10 +4,6 @@
 #include <stack>
 #include <sstream>
 
-typedef unsigned char uint8;
-typedef unsigned short int uint16;
-typedef unsigned int uint32;
-
 class RPN
 {
 public:
@@ -21,6 +17,9 @@ private:
 	std::stack<double> m_stack;
 
 private:
+	typedef unsigned char uint8;
+	typedef unsigned short int uint16;
+	typedef unsigned int uint32;
 
 	template <typename T>
 	bool isUnsigned(){ return (false); };
