@@ -26,26 +26,19 @@ int mysortVSstdsort(P data1, T1 copyContainerVec, T2 copyContainerDeque)
 	std::cout << "--- my::sort vs std::sort ---" << std::endl;
 	std::sort(copyContainerVec.begin(), copyContainerVec.end());
 	std::sort(copyContainerDeque.begin(), copyContainerDeque.end());
+
 	std::cout << "-- part Vector --" << std::endl;
-	if (compairVec(data1.getContainerVec(), copyContainerVec))
-	{
-		std::cout << "success" << std::endl;
-	}
-	else
-	{
-		std::cout << "fail" << std::endl;
+	bool vecResult = compairVec(data1.getContainerVec(), copyContainerVec);
+	std::cout << (vecResult ? "success" : "fail") << std::endl;
+	if (!vecResult)
 		return (EXIT_FAILURE);
-	}
+
 	std::cout << "-- part Deque --" << std::endl;
-	if (compairVec(data1.getContainerDeque(), copyContainerDeque))
-	{
-		std::cout << "success" << std::endl;
-	}
-	else
-	{
-		std::cout << "fail" << std::endl;
+	bool deqResult = compairVec(data1.getContainerDeque(), copyContainerDeque);
+	std::cout << (deqResult ? "success" : "fail") << std::endl;
+	if (!deqResult)
 		return (EXIT_FAILURE);
-	}
+
 	return (EXIT_SUCCESS);
 }
 
@@ -56,8 +49,8 @@ int	main(int ac, char** argv)
 		PmergeMe data1(ac, argv);
 
 		std::clock_t save;
-		std::vector<uint32> copyContainerVec = data1.getContainerVec();
-		std::deque<uint32> copyContainerDeque = data1.getContainerDeque();
+		PmergeMe::vecContainer copyContainerVec = data1.getContainerVec();
+		PmergeMe::deqContainer copyContainerDeque = data1.getContainerDeque();
 
 		// time start
 		save = std::clock();
@@ -66,7 +59,7 @@ int	main(int ac, char** argv)
 		// time end
 		double duration = static_cast<double>(std::clock() - save) / CLOCKS_PER_SEC;
 		std::cout << "After:  ";
-		data1.printContainer< std::vector <uint32> >(data1.getContainerVec());
+		data1.printContainer(data1.getContainerVec());
 		// time to sort
 		std::cout << "Time to process a range of " <<  data1.getContainerVec().size() << " elements with std::vector : " << duration * 1000000 << " us(microsecond)" << std::endl;
 
@@ -77,7 +70,7 @@ int	main(int ac, char** argv)
 		// time end
 		duration = static_cast<double>(std::clock() - save) / CLOCKS_PER_SEC;
 		// time to sort
-		std::cout << "Time to process a range of " <<  data1.getContainerVec().size() << " elements with std::deque : " << duration * 1000000 << " us(microsecond)" << std::endl;
+		std::cout << "Time to process a range of " <<  data1.getContainerDeque().size() << " elements with std::deque : " << duration * 1000000 << " us(microsecond)" << std::endl;
 
 
 		// compare mySort vs std::sort for verify sorted or not
