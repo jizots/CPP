@@ -139,6 +139,67 @@ void PmergeMe::integrateToMainChain(vecContainer& data, const vecContainer::size
 	# endif //DEBUG
 }
 
+void PmergeMe::integrateToMainChain(deqContainer& data, const deqContainer::size_type chunkScale,
+		const deqContainer::size_type chunkSize, int hasRemainder)
+{
+	deqContainer::size_type iEnd = getNextIntegratePos<deqContainer>(1); //return 1
+	deqMainChain tmpMainChain = makeTempMainChain(data, chunkScale);
+	# ifdef DEBUG
+		std::cout << "tmpMainChain: ";
+		for (deqMainChain::size_type i = 0; i < tmpMainChain.size(); ++i)
+			std::cout << *(tmpMainChain[i].second) << " ";
+		std::cout << std::endl;
+	# endif //DEBUG	
+
+	for (deqContainer::size_type iIntegrateGroup = 2; iEnd < chunkSize + hasRemainder; ++iIntegrateGroup)
+	{
+		deqContainer::size_type iTarget = getNextIntegratePos<deqContainer>(iIntegrateGroup) - 1;
+		while (iEnd <= iTarget)
+		{
+			// targetIndexが示すのは、MainChainに挿入したい数値のTContainer上のindex
+			deqContainer::size_type targetIndex = (chunkScale * iTarget) + (chunkScale / 2) - 1;
+			# ifdef DEBUG
+				std::cout << "iTarget: " << iTarget << ", iEnd: " << iEnd 
+				<< ", targetIndex: " << targetIndex << ", chunkScale: " << chunkScale << std::endl;
+			# endif //DEBUG
+			if (iTarget < (chunkSize + hasRemainder))
+			{
+				deqContainer::value_type targetVal = data[targetIndex];
+				# ifdef DEBUG
+					std::cout << "targetVal: " << targetVal << std::endl;
+				# endif //DEBUG
+				const deqMainChain::const_iterator insertPos = recursiveSearchInsertPos<deqMainChain>
+						(tmpMainChain.begin(), 
+							(targetIndex + 1 < chunkScale * chunkSize ? 
+								std::find(
+									tmpMainChain.begin(),
+									tmpMainChain.end(),
+									std::make_pair(
+										data[targetIndex + (chunkScale / 2)],
+										static_cast<deqContainer::const_iterator>(data.begin() + targetIndex + (chunkScale / 2)))
+								)
+								: tmpMainChain.end()
+							)
+							, std::make_pair(targetVal, data.begin() + targetIndex)
+						);
+				tmpMainChain.insert(insertPos, std::make_pair(targetVal, data.begin() + targetIndex));
+				# ifdef DEBUG
+					std::cout << "tmpMainChain: ";
+					for (deqMainChain::size_type i = 0; i < tmpMainChain.size(); ++i) std::cout << *(tmpMainChain[i].second) << " ";
+					std::cout << std::endl;
+				# endif //DEBUG
+			}
+			--iTarget;
+		}
+		iEnd = getNextIntegratePos<deqContainer>(iIntegrateGroup);
+	}
+	data = buildContainerFromMainchain(data, chunkScale / 2, tmpMainChain);
+	# ifdef DEBUG
+		std::cout << "reconstruct vec: ";
+		printContainer(data);
+	# endif //DEBUG
+}
+
 PmergeMe::vecMainChain PmergeMe::makeTempMainChain(const vecContainer& data, const vecContainer::size_type chunkScale)
 {
 	vecMainChain tmpMainChain;

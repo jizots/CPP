@@ -55,7 +55,7 @@ int	main(int ac, char** argv)
 		// time start
 		save = std::clock();
 		// sort
-		data1.mergeInsertionSortVec(data1.getContainerVec(), 1, data1.getContainerVec().size(), false);
+		data1.mergeInsertionSort(data1.getContainerVec(), 1, data1.getContainerVec().size(), false);
 		// time end
 		double duration = static_cast<double>(std::clock() - save) / CLOCKS_PER_SEC;
 		std::cout << "After:  ";
@@ -66,7 +66,7 @@ int	main(int ac, char** argv)
 		// time start
 		save = std::clock();
 		// sort
-		// data1.mergeInsertionSort(data1.getContainerDeque(), 1, data1.getContainerDeque().size(), false);
+		data1.mergeInsertionSort(data1.getContainerDeque(), 1, data1.getContainerDeque().size(), false);
 		// time end
 		duration = static_cast<double>(std::clock() - save) / CLOCKS_PER_SEC;
 		// time to sort

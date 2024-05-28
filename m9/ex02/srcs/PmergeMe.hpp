@@ -37,7 +37,7 @@ public:
 	const deqContainer& getContainerDeque(void) const;
 
 	template <typename TContainer>
-	void mergeInsertionSortVec(TContainer& data, const vecContainer::size_type chunkScale,
+	void mergeInsertionSort(TContainer& data, const vecContainer::size_type chunkScale,
 		const vecContainer::size_type chunkSize, const bool hasRemainder)
 	{
 		if (chunkSize < 1)
@@ -49,7 +49,7 @@ public:
 			printContainer(m_containerVec);
 		# endif //DEBUG
 		// 再帰から帰ってくると、chunkSize + 1の要素が降順に並んだ状態になっている
-		mergeInsertionSortVec(data, chunkScale * 2, chunkSize / 2, chunkSize % 2);
+		mergeInsertionSort(data, chunkScale * 2, chunkSize / 2, chunkSize % 2);
 		// chunkSize * 2の要素数を、一列に並べる。
 		if (1 < chunkScale)
 			integrateToMainChain(data, chunkScale, chunkSize, (hasRemainder ? 1 : 0));
@@ -89,6 +89,8 @@ private:
 	deqMainChain makeTempMainChain(const deqContainer& data, const deqContainer::size_type chunkScale);
 	void integrateToMainChain(vecContainer& data, const vecContainer::size_type chunkScale,
 		const vecContainer::size_type chunkSize, int hasRemainder);
+	void integrateToMainChain(deqContainer& data, const deqContainer::size_type chunkScale,
+		const deqContainer::size_type chunkSize, int hasRemainder);
 	vecContainer buildContainerFromMainchain(const vecContainer& data,
 		const vecContainer::size_type& chunkScale, const vecMainChain& mainChain);
 	deqContainer buildContainerFromMainchain(const deqContainer& data,
