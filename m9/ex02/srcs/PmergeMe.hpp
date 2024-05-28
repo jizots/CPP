@@ -19,6 +19,10 @@ typedef std::vector<uint32> vecContainer;
 typedef std::pair<uint32, vecContainer::const_iterator> pairMainChain;
 typedef std::vector< pairMainChain > vecMainChain;
 
+typedef std::deque<uint32> deqContainer;
+typedef std::pair<uint32, deqContainer::const_iterator> pairMainChainDeq;
+typedef std::vector< pairMainChainDeq > vecMainChainDeq;
+
 class PmergeMe
 {
 public:

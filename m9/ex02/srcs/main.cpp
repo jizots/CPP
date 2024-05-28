@@ -26,26 +26,19 @@ int mysortVSstdsort(P data1, T1 copyContainerVec, T2 copyContainerDeque)
 	std::cout << "--- my::sort vs std::sort ---" << std::endl;
 	std::sort(copyContainerVec.begin(), copyContainerVec.end());
 	std::sort(copyContainerDeque.begin(), copyContainerDeque.end());
+
 	std::cout << "-- part Vector --" << std::endl;
-	if (compairVec(data1.getContainerVec(), copyContainerVec))
-	{
-		std::cout << "success" << std::endl;
-	}
-	else
-	{
-		std::cout << "fail" << std::endl;
+	bool vecResult = compairVec(data1.getContainerVec(), copyContainerVec);
+	std::cout << (vecResult ? "success" : "fail") << std::endl;
+	if (!vecResult)
 		return (EXIT_FAILURE);
-	}
+
 	std::cout << "-- part Deque --" << std::endl;
-	if (compairVec(data1.getContainerDeque(), copyContainerDeque))
-	{
-		std::cout << "success" << std::endl;
-	}
-	else
-	{
-		std::cout << "fail" << std::endl;
+	bool deqResult = compairVec(data1.getContainerDeque(), copyContainerDeque);
+	std::cout << (deqResult ? "success" : "fail") << std::endl;
+	if (!deqResult)
 		return (EXIT_FAILURE);
-	}
+
 	return (EXIT_SUCCESS);
 }
 
