@@ -13,7 +13,7 @@
 
 class PmergeMe
 {
-private:
+public:
 	typedef unsigned char uint8;
 	typedef unsigned short int uint16;
 	typedef unsigned int uint32;
@@ -33,8 +33,8 @@ public:
 
 	vecContainer& getContainerVec(void);
 	const vecContainer& getContainerVec(void) const;
-	std::deque<uint32>& getContainerDeque(void);
-	const std::deque<uint32>& getContainerDeque(void) const;
+	deqContainer& getContainerDeque(void);
+	const deqContainer& getContainerDeque(void) const;
 
 	void mergeInsertionSortVec(const vecContainer::size_type chunkScale, 
 		const vecContainer::size_type chunkSize, const bool hasRemainder);
@@ -44,7 +44,7 @@ private:
 
 private:
 	vecContainer m_containerVec;
-	std::deque<uint32> m_containerDeque;
+	deqContainer m_containerDeque;
 	size_t m_compareCount;
 
 public:

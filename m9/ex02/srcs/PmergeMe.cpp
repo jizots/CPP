@@ -32,22 +32,22 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& rhs)
 	return (*this);
 };
 
-vecContainer& PmergeMe::getContainerVec(void)
+PmergeMe::vecContainer& PmergeMe::getContainerVec(void)
 {
 	return (m_containerVec);
 };
 
-const vecContainer& PmergeMe::getContainerVec(void) const
+const PmergeMe::vecContainer& PmergeMe::getContainerVec(void) const
 {
 	return (m_containerVec);
 };
 
-std::deque<uint32>& PmergeMe::getContainerDeque(void)
+PmergeMe::deqContainer& PmergeMe::getContainerDeque(void)
 {
 	return (m_containerDeque);
 };
 
-const std::deque<uint32>& PmergeMe::getContainerDeque(void) const
+const PmergeMe::deqContainer& PmergeMe::getContainerDeque(void) const
 {
 	return (m_containerDeque);
 };
@@ -199,12 +199,12 @@ void PmergeMe::integrateToMainChain(const vecContainer::size_type chunkScale,
 	# endif //DEBUG
 }
 
-vecContainer::size_type PmergeMe::getNextIntegratePos(const vecContainer::size_type number)
+PmergeMe::vecContainer::size_type PmergeMe::getNextIntegratePos(const vecContainer::size_type number)
 {
 	return ((std::pow(2, number + 1) + std::pow(-1, number)) / 3);
 }
 
-vecMainChain PmergeMe::makeTempMainChain(const vecContainer::size_type chunkScale)
+PmergeMe::vecMainChain PmergeMe::makeTempMainChain(const vecContainer::size_type chunkScale)
 {
 	vecMainChain tmpMainChain;
 
@@ -214,7 +214,7 @@ vecMainChain PmergeMe::makeTempMainChain(const vecContainer::size_type chunkScal
 	return (tmpMainChain);
 }
 
-const vecMainChain::const_iterator PmergeMe::recursiveSearchInsertPos(const vecMainChain::const_iterator begin,
+const PmergeMe::vecMainChain::const_iterator PmergeMe::recursiveSearchInsertPos(const vecMainChain::const_iterator begin,
 	const vecMainChain::const_iterator end, const vecMainChain::value_type targetVal)
 {
 	if (begin == end)
@@ -245,7 +245,7 @@ const vecMainChain::const_iterator PmergeMe::recursiveSearchInsertPos(const vecM
 	}
 }
 
-vecContainer PmergeMe::buildContainerFromMainchain(const vecContainer::size_type& chunkScale, const vecMainChain& mainChain)
+PmergeMe::vecContainer PmergeMe::buildContainerFromMainchain(const vecContainer::size_type& chunkScale, const vecMainChain& mainChain)
 {
 	vecContainer	reconstructData;
 	unsigned int remainData = m_containerVec.size() % chunkScale;
